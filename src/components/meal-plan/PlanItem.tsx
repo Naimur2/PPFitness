@@ -1,6 +1,7 @@
 import React from 'react';
 import {Image, Pressable, Text, VStack} from 'native-base';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import {fontSizes} from '@theme/typography';
 
 interface Item {
   title: string;
@@ -19,7 +20,7 @@ export default function PlanItem({items, title}: Props) {
 
   return (
     <VStack space="2">
-      <Text fontSize="lg" fontWeight={700} color="black">
+      <Text fontSize={fontSizes.lg} fontWeight={700} color="black">
         {title}
       </Text>
       {items.map((item, index) => (
@@ -41,10 +42,19 @@ export default function PlanItem({items, title}: Props) {
             rounded="lg"
           />
           <VStack justifyContent="space-between" py={2}>
-            <Text fontSize="lg" fontWeight={700} color="black">
+            <Text
+              fontSize={fontSizes.md}
+              fontWeight={700}
+              color="black"
+              numberOfLines={1}
+              maxW={230}>
               {item.title}
             </Text>
-            <Text fontSize="xs" fontWeight={600} color="gray.2">
+            <Text
+              fontSize="xs"
+              fontWeight={600}
+              color="gray.2"
+              numberOfLines={1}>
               {item.description}
             </Text>
           </VStack>

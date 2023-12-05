@@ -132,7 +132,7 @@ export default function MealPlan() {
             borderColor="primary.100"
             py={2}>
             <AddIcon />
-            <Text color="primary.100" fontSize="sm" fontWeight={700}>
+            <Text color="primary.100" fontSize="xs" fontWeight={700}>
               Create Meal Plan
             </Text>
           </Pressable>
@@ -148,7 +148,7 @@ export default function MealPlan() {
             borderColor="primary.100"
             py={2}
             onPress={navigateToBlogs}>
-            <Text color="primary.100" fontSize="sm" fontWeight={700}>
+            <Text color="primary.100" fontSize="xs" fontWeight={700}>
               Blog / Articles
             </Text>
           </Pressable>

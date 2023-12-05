@@ -3,6 +3,8 @@ import {Box, Button, HStack} from 'native-base';
 import {IButtonComponentType} from 'native-base/lib/typescript/components/primitives/Button/types';
 import {IHStackProps} from 'native-base/lib/typescript/components/primitives/Stack/HStack';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
+import { scale } from 'react-native-size-matters';
+import { fontSizes } from '@theme/typography';
 
 interface TabProps {
   title: string;
@@ -57,6 +59,7 @@ export default function Tab({
             _text={{
               color: 'black',
               fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+              fontSize: fontSizes['2xs'],
             }}
             _pressed={{
               bg: 'secondary.100',

@@ -1,22 +1,25 @@
+import {scale} from 'react-native-size-matters';
+
 const increaseDecrease = 0;
 
 export const fontSizes = {
-  '3xs': 8 + increaseDecrease,
-  '2xs': 10 + increaseDecrease,
-  xs: 12 + increaseDecrease,
-  sm: 14 + increaseDecrease,
-  md: 16 + increaseDecrease,
-  lg: 18 + increaseDecrease,
-  xl: 20 + increaseDecrease,
-  '2xl': 24 + increaseDecrease,
-  '2xxl': 26 + increaseDecrease,
-  '3xl': 30 + increaseDecrease,
-  '4xl': 36 + increaseDecrease,
-  '5xl': 48 + increaseDecrease,
-  '6xl': 60 + increaseDecrease,
-  '7xl': 72 + increaseDecrease,
-  '8xl': 96 + increaseDecrease,
-  '9xl': 128 + increaseDecrease,
+  '4xs': scale(8) + increaseDecrease,
+  '3xs': scale(10) + increaseDecrease,
+  '2xs': scale(10) + increaseDecrease,
+  xs: scale(12) + increaseDecrease,
+  sm: scale(14) + increaseDecrease,
+  md: scale(16) + increaseDecrease,
+  lg: scale(18) + increaseDecrease,
+  xl: scale(20) + increaseDecrease,
+  '2xl': scale(24) + increaseDecrease,
+  '2xxl': scale(26) + increaseDecrease,
+  '3xl': scale(30) + increaseDecrease,
+  '4xl': scale(36) + increaseDecrease,
+  '5xl': scale(48) + increaseDecrease,
+  '6xl': scale(60) + increaseDecrease,
+  '7xl': scale(72) + increaseDecrease,
+  '8xl': scale(96) + increaseDecrease,
+  '9xl': scale(128) + increaseDecrease,
 };
 
 export const letterSpacings = {

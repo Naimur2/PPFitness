@@ -1,12 +1,15 @@
 import React from 'react';
 import {HStack, Input, Pressable, ScrollView, Text} from 'native-base';
-import VectorImage from 'react-native-vector-image';
 import ExerciseItem from 'src/components/exercise/ExerciseItem';
 import {useNavigation} from '@react-navigation/native';
 import {AddIcon, ArrowDownIcon, ArrowUpIcon, SearchIcon} from '@assets/icons';
+import NewExercise from 'src/actionSheets/NewExercise';
+import { fontSizes } from '@theme/typography';
 
 export default function Exercise() {
   const navigation = useNavigation();
+  const [isOpen, setIsOpen] = React.useState(false);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -19,12 +22,14 @@ export default function Exercise() {
       }}>
       <Input
         bg="white"
-        placeholder="Password"
+        placeholder="Search Exercise"
         rounded={8}
         placeholderTextColor={'gray.2'}
         color={'black'}
         _focus={{bg: 'white'}}
         leftElement={<SearchIcon style={{marginLeft: 10}} />}
+        backgroundColor={'white'}
+        fontSize={fontSizes.xs}
       />
 
       <HStack justifyContent={'space-between'} alignItems={'center'}>
@@ -65,10 +70,11 @@ export default function Exercise() {
         alignItems="center"
         gap={2}
         borderRadius={8}
-        borderWidth={2}
+        borderWidth={1}
         borderColor="primary.100"
         bg="white"
-        py={2}>
+        py={2}
+        onPress={() => setIsOpen(true)}>
         <AddIcon />
         <Text color="primary.100" fontSize="sm" fontWeight={700}>
           New Exercise
@@ -111,6 +117,12 @@ export default function Exercise() {
           },
         ]}
         onPress={id => navigation.navigate('ExerciseDetails', {id})}
+      />
+      <NewExercise
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
       />
     </ScrollView>
   );

@@ -1,5 +1,7 @@
+import { fontSizes } from '@theme/typography';
 import {Image, Text, VStack} from 'native-base';
 import React from 'react';
+import {scale} from 'react-native-size-matters';
 
 interface Props {
   value: string;
@@ -17,14 +19,17 @@ export default function DailyMacro({title, image, value}: Props) {
       style={{
         gap: 8,
       }}>
-      <Text fontWeight={600} fontSize="xs" color="black" textAlign="center">
+      <Text
+        fontWeight={600}
+        fontSize={fontSizes.xs}
+        color="black"
+        textAlign="center">
         {value}
       </Text>
       <Image source={image} alt={title} height={'22px'} width={'22px'} />
-      <Text fontSize="xs" color="black" textAlign="center">
+      <Text fontSize={fontSizes.xs} color="black" textAlign="center">
         {title}
       </Text>
-      
     </VStack>
   );
 }

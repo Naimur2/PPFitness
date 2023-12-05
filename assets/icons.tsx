@@ -167,10 +167,201 @@ export function ExerciseIcon({...rest}: TIconProps) {
     />
   );
 }
+
 export function ExerciseFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/bootom-tab/exercise-fill.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function CloseIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/close-icon.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function FileUploadIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/file-upload.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function ChartIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/chart.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function ChartFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/chart-fill.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function HistoryIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/history.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function HistoryFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/history-fill.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function PhoneIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/phone.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function PhoneFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/phone-fill.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function ProfileIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/profile.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function ProfileFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bootom-tab/profile-fill.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function ClockIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/clock.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function LbsIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/lbs.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function TrophyIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/trophy.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function NoteIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/note.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function ProfileRound({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/profile-round.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function LockV2({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/lock-v2.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function Bell({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/bell.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function Settings({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/settings.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function Sheild({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/sheild.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function Support({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/support.svg')}
       resizeMode="contain"
       {...rest}
     />
