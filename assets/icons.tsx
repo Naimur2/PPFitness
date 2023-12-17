@@ -358,10 +358,48 @@ export function Sheild({...rest}: TIconProps) {
     />
   );
 }
+
 export function Support({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/support.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function ChevronRight({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/chevron-right.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function Edit({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/edit.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function WeightLoss({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/weight-loss.svg')}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+export function TotalWorkouts({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/totalworkouts.svg')}
       resizeMode="contain"
       {...rest}
     />

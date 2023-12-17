@@ -73,6 +73,7 @@ const tabItems = [
 ];
 
 export default function SettingsScreen() {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

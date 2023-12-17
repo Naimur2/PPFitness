@@ -1,11 +1,9 @@
+import { AddIcon } from '@assets/icons';
+import { Button, Pressable, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
-import {Button, Pressable, ScrollView, Text, VStack} from 'native-base';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import dayjs from 'dayjs';
-import {fontSizes} from '@theme/typography';
-import {AddIcon} from '@assets/icons';
 
 export default function Warmup() {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}

@@ -1,11 +1,9 @@
+import { AddIcon } from '@assets/icons';
+import { Button, Pressable, ScrollView, Text, VStack } from 'native-base';
 import React from 'react';
-import {Button, Pressable, ScrollView, Text, VStack} from 'native-base';
-import {Calendar, LocaleConfig} from 'react-native-calendars';
-import dayjs from 'dayjs';
-import {fontSizes} from '@theme/typography';
-import {AddIcon} from '@assets/icons';
 
 export default function CirCuit() {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -42,7 +40,7 @@ export default function CirCuit() {
           py={3}
           _text={{color: 'white', fontWeight: 700}}
           _pressed={{bg: '#68696B90'}}>
-          Complete 
+          Complete
         </Button>
 
         <Pressable
