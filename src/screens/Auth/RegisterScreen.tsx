@@ -1,5 +1,6 @@
-import {ImageBackground} from 'react-native';
 import React from 'react';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 import {
   Box,
   Button,
@@ -12,9 +13,10 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import VectorImage from 'react-native-vector-image';
-import useToggle from '@hooks/useToggle';
+import {ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import useToggle from '@hooks/useToggle';
+import {useRegisterMutation} from '@store/apis/auth';
 import {
   AppleIcon,
   EmailIcon,
@@ -24,50 +26,75 @@ import {
   GoogleIcon,
   LockIcon,
 } from '@assets/icons';
-import {useRegisterMutation} from '@store/apis/auth';
-import {Formik, useFormik} from 'formik';
+import useShowModal from '@hooks/useShowModal';
 
 const FBgImage = Factory(ImageBackground);
+
+//  validation
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required('Name is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+    .required('Confirm Password is required'),
+});
 
 export default function RegisterScreen() {
   const [eyeOpen, toggleEyeOpen] = useToggle(false);
   const [eyeOpen1, toggleEyeOpen1] = useToggle(false);
   const navigation = useNavigation();
-
-  // APIS
-  const [register, {isLoading}] = useRegisterMutation();
+  // Hooks
+  const showModal = useShowModal();
 
   const navigateToLogin = () => {
-    // navigation.navigate('Login');
+    navigation.navigate('Login');
   };
+  const [register, {isLoading}] = useRegisterMutation();
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema,
+    onSubmit: async values => {
+      await handelRegister(values);
+    },
+  });
+
+  const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
+    formik;
+
   const handelRegister = async () => {
+    console.log('values', values);
+    showModal('success', {
+      title: 'Success',
+      message: 'Information updated successfully.',
+    });
+
+    // return;
     const body = {
-      email: 'user@example.com',
-      password: 'stringst',
+      email: values.email,
+      password: values.password,
       method: 'email',
-      fullName: 'string',
+      fullName: values.name,
     };
+
     try {
       const res = await register(body).unwrap();
       console.log('res-', res);
+
+      navigation.navigate('Login');
     } catch (error) {
       console.log('err', error);
     }
   };
-
-  //
-  // Hooks
-
-  // const formik = useFormik({
-  //   initialValues: {},
-  //   // validationSchema: {},
-  //   onSubmit: async values => {
-  //     await handelRegister(values);
-  //   },
-  // });
-
-  // const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
-  //   formik;
+  // console.log('errors', errors);
 
   return (
     <FBgImage
@@ -90,6 +117,23 @@ export default function RegisterScreen() {
         <Text color="gray.4">Please sign up to access your account</Text>
 
         <VStack mt={10} space="4">
+          <FormControl isRequired>
+            <Input
+              bg="white"
+              placeholder="Name"
+              rounded={8}
+              placeholderTextColor={'gray.2'}
+              color={'black'}
+              _focus={{bg: 'white'}}
+              onChangeText={handleChange('name')}
+              onBlur={handleBlur('name')}
+              value={values.name}
+            />
+
+            <FormControl.ErrorMessage color="white">
+              {touched.name && errors.name ? errors.name : ''}
+            </FormControl.ErrorMessage>
+          </FormControl>
           <FormControl>
             <Input
               bg="white"
@@ -98,10 +142,12 @@ export default function RegisterScreen() {
               placeholderTextColor={'gray.2'}
               color={'black'}
               _focus={{bg: 'white'}}
-              leftElement={<EmailIcon style={{marginLeft: 10}} />}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
             />
             <FormControl.ErrorMessage color="white">
-              This is an error
+              {touched.email && errors.email}
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl>
@@ -113,6 +159,9 @@ export default function RegisterScreen() {
               color={'black'}
               type={eyeOpen ? 'text' : 'password'}
               _focus={{bg: 'white'}}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
               leftElement={<LockIcon style={{marginLeft: 10}} />}
               rightElement={
                 <Pressable onPress={toggleEyeOpen} mr={'10px'}>
@@ -121,7 +170,7 @@ export default function RegisterScreen() {
               }
             />
             <FormControl.ErrorMessage color="white">
-              This is an error
+              {touched.password && errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl>
@@ -133,6 +182,9 @@ export default function RegisterScreen() {
               color={'black'}
               type={eyeOpen1 ? 'text' : 'password'}
               _focus={{bg: 'white'}}
+              onChangeText={handleChange('confirmPassword')}
+              onBlur={handleBlur('confirmPassword')}
+              value={values.confirmPassword}
               leftElement={<LockIcon style={{marginLeft: 10}} />}
               rightElement={
                 <Pressable onPress={toggleEyeOpen1} mr={'10px'}>
@@ -140,8 +192,8 @@ export default function RegisterScreen() {
                 </Pressable>
               }
             />
-            <FormControl.ErrorMessage color="white">
-              This is an error
+            <FormControl.ErrorMessage color="#e41e1e">
+              {touched.confirmPassword && errors.confirmPassword}
             </FormControl.ErrorMessage>
           </FormControl>
 
@@ -153,7 +205,8 @@ export default function RegisterScreen() {
             mt={10}
             _text={{color: 'black', fontWeight: 700}}
             _pressed={{bg: '#68696B90'}}
-            onPress={handelRegister}>
+            onPress={handleSubmit}
+            isLoading={isLoading}>
             Sign Up
           </Button>
 
@@ -189,7 +242,7 @@ export default function RegisterScreen() {
             flexDirection="row"
             justifyContent="center">
             <Text color="white" px={2}>
-              Already have an account?{'  '}
+              Already have an account?{' '}
               <Text
                 color="secondary.100"
                 px={2}
