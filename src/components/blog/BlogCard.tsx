@@ -29,8 +29,7 @@ export default function BlogCard({
       }}
       borderRadius={16}
       overflow="hidden"
-      bg="white"
-      >
+      bg="white">
       <Image
         source={{uri: image}}
         alt={title}
@@ -39,9 +38,7 @@ export default function BlogCard({
         resizeMode="cover"
       />
 
-      <VStack p="4" space={2}
-
-      >
+      <VStack p="4" space={2}>
         <Text color="black" fontSize="lg" fontWeight={700}>
           {title}
         </Text>

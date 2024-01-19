@@ -1,9 +1,8 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {FlatList} from 'native-base';
+import {FlatList, Stack} from 'native-base';
 import BlogCard from 'src/components/blog/BlogCard';
 import {useGetAllBlogsQuery} from '@store/apis/blogs';
-import {useNavigation} from '@react-navigation/native';
 
 const blogs = [
   {
@@ -60,35 +59,13 @@ const blogs = [
   },
 ];
 
-export default function Blogs() {
-  // Hooks
-  const navigation = useNavigation();
-
-  //  APIS
+export default function BlogDetails() {
   const {data} = useGetAllBlogsQuery(null);
-
   console.log('data?.data?.blogs', data?.data?.blogs);
 
   return (
-    <FlatList
-      data={blogs}
-      renderItem={({item}) => (
-        <BlogCard
-          onPress={() =>
-            navigation.navigate('BlogDetails', {
-              item: item,
-            })
-          }
-          {...item}
-        />
-      )}
-      keyExtractor={item => item._id}
-      _contentContainerStyle={{
-        px: 4,
-        py: 8,
-        gap: 8,
-        bg: '#F7F7F7',
-      }}
-    />
+    <Stack>
+      <Text>Hello</Text>
+    </Stack>
   );
 }

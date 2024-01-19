@@ -27,9 +27,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `blogs/get/${id}`,
       }),
     }),
-    getAllBlogs: builder.query<GetV1BlogsGetSuccessfulResponse, string>({
+    getAllBlogs: builder.query<GetV1BlogsGetSuccessfulResponse, any>({
       query: () => ({
-        url: `blogs/get/all`,
+        url: `blogs/get`,
       }),
     }),
     deleteBlog: builder.mutation<
