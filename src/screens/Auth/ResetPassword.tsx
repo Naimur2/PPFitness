@@ -1,4 +1,3 @@
-import {ImageBackground} from 'react-native';
 import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
@@ -14,9 +13,10 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import VectorImage from 'react-native-vector-image';
-import useToggle from '@hooks/useToggle';
+import {ImageBackground} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import useToggle from '@hooks/useToggle';
+import {usePasswordResetMutation, useRegisterMutation} from '@store/apis/auth';
 import {
   AppleIcon,
   EmailIcon,
@@ -26,61 +26,76 @@ import {
   GoogleIcon,
   LockIcon,
 } from '@assets/icons';
-import {useLoginMutation} from '@store/apis/auth';
+import useShowModal from '@hooks/useShowModal';
 
 const FBgImage = Factory(ImageBackground);
-//
+
 //  validation
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
+    .min(6, 'Password must be at least 6 characters')
     .required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
+    .required('Confirm Password is required'),
 });
 
-export default function LoginScreen() {
+export default function ResetPassword({route}) {
+  //
+  // console.log('route', route?.params?.data);
   const [eyeOpen, toggleEyeOpen] = useToggle(false);
+  const [eyeOpen1, toggleEyeOpen1] = useToggle(false);
   const navigation = useNavigation();
+  // Hooks
+  const showModal = useShowModal();
 
-  const navigateToSignUp = () => {
-    navigation.navigate('Register');
+  const navigateToLogin = () => {
+    navigation.navigate('Login');
   };
-  const [loginUser, {isLoading}] = useLoginMutation();
+  const [resetPassword, {isLoading}] = usePasswordResetMutation();
 
   const formik = useFormik({
     initialValues: {
-      email: '',
       password: '',
+      confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async v => {
-      await handelRegister();
+    onSubmit: async values => {
+      await handelResetPassword(values);
     },
   });
 
   const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
     formik;
 
-  const handelRegister = async () => {
+  const handelResetPassword = async () => {
+    console.log('values', values);
     // showModal('success', {
     //   title: 'Success',
     //   message: 'Information updated successfully.',
     // });
+    // Bang2$22
+    // return;
+    const body = {
+      email: route?.params?.data?.email,
+      otpToken: route?.params?.data?.otpToken,
+      password: values?.password,
+      confirmPassword: values?.confirmPassword,
+    };
+
+    console.log('body data -->>', body);
 
     try {
-      const res = await loginUser({
-        email: values.email,
-        password: values.password,
-        method: 'email',
-      }).unwrap();
+      const res = await resetPassword(body).unwrap();
       console.log('res-', res);
 
-      // navigation.navigate('Login');
+      navigation.navigate('Login');
     } catch (error) {
       console.log('err', error);
     }
   };
-  //
+  // console.log('errors', errors);
+
   return (
     <FBgImage
       source={require('@assets/images/screen2.png')}
@@ -97,26 +112,11 @@ export default function LoginScreen() {
 
       <VStack w="100%" px={4} mt={10}>
         <Text fontSize="2xl" color="white" fontWeight={700}>
-          Sign In
+          Reset Password
         </Text>
-        <Text color="gray.4">Please sign in to access your account</Text>
+        <Text color="gray.4">Please enter your new password</Text>
+
         <VStack mt={10} space="4">
-          <FormControl>
-            <Input
-              bg="white"
-              placeholder="Email"
-              rounded={8}
-              placeholderTextColor={'gray.2'}
-              color={'black'}
-              _focus={{bg: 'white'}}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-            />
-            <FormControl.ErrorMessage color="white">
-              {touched.email && errors.email}
-            </FormControl.ErrorMessage>
-          </FormControl>
           <FormControl>
             <Input
               bg="white"
@@ -140,14 +140,29 @@ export default function LoginScreen() {
               {touched.password && errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
-          <VStack space={2} alignItems="flex-end">
-            <Text
-              onPress={() => navigation.navigate('ForgetPassword')}
-              color="white"
-              fontSize="sm">
-              Forgot password?
-            </Text>
-          </VStack>
+          <FormControl>
+            <Input
+              bg="white"
+              placeholder="Confirm Password"
+              rounded={8}
+              placeholderTextColor={'gray.2'}
+              color={'black'}
+              type={eyeOpen1 ? 'text' : 'password'}
+              _focus={{bg: 'white'}}
+              onChangeText={handleChange('confirmPassword')}
+              onBlur={handleBlur('confirmPassword')}
+              value={values.confirmPassword}
+              leftElement={<LockIcon style={{marginLeft: 10}} />}
+              rightElement={
+                <Pressable onPress={toggleEyeOpen1} mr={'10px'}>
+                  {eyeOpen1 ? <EyeCloseIcon /> : <EyeOpenIcon />}
+                </Pressable>
+              }
+            />
+            <FormControl.ErrorMessage color="#e41e1e">
+              {touched.confirmPassword && errors.confirmPassword}
+            </FormControl.ErrorMessage>
+          </FormControl>
 
           <Button
             w="full"
@@ -157,9 +172,9 @@ export default function LoginScreen() {
             mt={10}
             _text={{color: 'black', fontWeight: 700}}
             _pressed={{bg: '#68696B90'}}
-            isLoading={isLoading}
-            onPress={handleSubmit}>
-            Sign In
+            onPress={handleSubmit}
+            isLoading={isLoading}>
+            Sign Up
           </Button>
 
           <Center
@@ -194,13 +209,13 @@ export default function LoginScreen() {
             flexDirection="row"
             justifyContent="center">
             <Text color="white" px={2}>
-              Don’t have and account?{'  '}
+              Already have an account?{' '}
               <Text
                 color="secondary.100"
                 px={2}
                 fontWeight={600}
-                onPress={navigateToSignUp}>
-                Sign Up
+                onPress={navigateToLogin}>
+                Sign In
               </Text>
             </Text>
           </Center>

@@ -67,8 +67,6 @@ export default function Blogs() {
   //  APIS
   const {data} = useGetAllBlogsQuery(null);
 
-  console.log('data?.data?.blogs', data?.data?.blogs);
-
   return (
     <FlatList
       data={blogs}

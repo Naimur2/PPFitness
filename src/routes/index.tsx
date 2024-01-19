@@ -5,7 +5,6 @@ import LayoutRoutes from '@routes/LayoutRoutes';
 import {selectAuth} from '@store/features/authSlice';
 import {useSelector} from 'react-redux';
 
-const Stack = createNativeStackNavigator();
 export default function Routes() {
   const {accessToken} = useSelector(selectAuth);
 
