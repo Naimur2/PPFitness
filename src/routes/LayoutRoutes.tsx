@@ -11,7 +11,7 @@ import ExerciseDetails from '@screens/User/ExerciseDetails';
 
 const Stack = createNativeStackNavigator();
 
-export default function LatoutRoutes() {
+export default function LayoutRoutes() {
   return (
     <Stack.Navigator screenOptions={{}}>
       <Stack.Screen

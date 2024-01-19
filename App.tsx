@@ -3,10 +3,9 @@ import {NativeBaseProvider} from 'native-base';
 import {NavigationContainer} from '@react-navigation/native';
 import {Provider} from 'react-redux';
 import theme from '@theme/index';
-import AuthRoutes from '@routes/AuthRoutes';
-import BottomTabs from '@routes/BottomTabs';
-import LatoutRoutes from '@routes/LatoutRoutes';
+
 import store from '@store/index';
+import Routes from '@routes/index';
 
 export default function App() {
   return (
@@ -14,7 +13,7 @@ export default function App() {
       <Provider store={store}>
         <NavigationContainer>
           <NativeBaseProvider theme={theme}>
-            <LatoutRoutes />
+            <Routes />
           </NativeBaseProvider>
         </NavigationContainer>
       </Provider>

@@ -24,6 +24,8 @@ import {
   GoogleIcon,
   LockIcon,
 } from '@assets/icons';
+import {useRegisterMutation} from '@store/apis/auth';
+import {Formik, useFormik} from 'formik';
 
 const FBgImage = Factory(ImageBackground);
 
@@ -32,9 +34,40 @@ export default function RegisterScreen() {
   const [eyeOpen1, toggleEyeOpen1] = useToggle(false);
   const navigation = useNavigation();
 
+  // APIS
+  const [register, {isLoading}] = useRegisterMutation();
+
   const navigateToLogin = () => {
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
   };
+  const handelRegister = async () => {
+    const body = {
+      email: 'user@example.com',
+      password: 'stringst',
+      method: 'email',
+      fullName: 'string',
+    };
+    try {
+      const res = await register(body).unwrap();
+      console.log('res-', res);
+    } catch (error) {
+      console.log('err', error);
+    }
+  };
+
+  //
+  // Hooks
+
+  // const formik = useFormik({
+  //   initialValues: {},
+  //   // validationSchema: {},
+  //   onSubmit: async values => {
+  //     await handelRegister(values);
+  //   },
+  // });
+
+  // const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
+  //   formik;
 
   return (
     <FBgImage
@@ -55,6 +88,7 @@ export default function RegisterScreen() {
           Create an account
         </Text>
         <Text color="gray.4">Please sign up to access your account</Text>
+
         <VStack mt={10} space="4">
           <FormControl>
             <Input
@@ -118,8 +152,9 @@ export default function RegisterScreen() {
             py={3}
             mt={10}
             _text={{color: 'black', fontWeight: 700}}
-            _pressed={{bg: '#68696B90'}}>
-            Sign In
+            _pressed={{bg: '#68696B90'}}
+            onPress={handelRegister}>
+            Sign Up
           </Button>
 
           <Center
