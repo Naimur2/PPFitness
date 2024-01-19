@@ -1,10 +1,11 @@
 import {API_URL} from '@env';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import {RootState} from '..';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers, api) => {
-    const {auth}: any = api.getState();
+    const {auth}: any = api.getState() as RootState;
     if (auth.accessToken) {
       headers.set('authorization', `Bearer ${auth.accessToken}`);
     }
