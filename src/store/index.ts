@@ -1,14 +1,12 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-
-import { persistReducer, persistStore } from 'redux-persist';
-import { authApiSlice } from './apis/auth';
-import authReducer from './features/auth';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {persistReducer, persistStore} from 'redux-persist';
+import {authApiSlice} from './apis/auth';
+import authReducer from './features/authSlice';
 
 const persistConfig = {
   key: 'root',
-  storage,
+  storage: AsyncStorage,
 };
 
 const persistadeAuthReducer = persistReducer(persistConfig, authReducer);
@@ -20,7 +18,7 @@ const rootReducer = combineReducers({
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(authApiSlice.middleware),
