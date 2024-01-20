@@ -3,6 +3,8 @@ import {
   DeleteV1MealPlanDeleteIdSuccessfulResponse,
   GetV1MealPlanGetParameterDay,
   GetV1MealPlanGetSuccessfulResponse,
+  PostV1MealPlanUpdateRequestBody,
+  PostV1MealPlanUpdateSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
 
@@ -27,10 +29,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
       }),
     }),
-    updateMealPlan: builder.mutation<any, any>({
+    updateMealPlan: builder.mutation<
+      PostV1MealPlanUpdateSuccessfulResponse,
+      PostV1MealPlanUpdateRequestBody
+    >({
       query: id => ({
         url: `meal-plan/update/${id}`,
-        method: 'PUT',
+        method: 'POST',
       }),
     }),
   }),

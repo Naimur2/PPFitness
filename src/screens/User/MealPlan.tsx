@@ -75,24 +75,6 @@ const dayTabs = [
   },
 ];
 
-const snacks = [
-  {
-    title: 'Pan Cake',
-    image:
-      'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-  },
-  {
-    title: 'Pasta',
-    image:
-      'https://images.unsplash.com/photo-1481931098730-318b6f776db0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1980&q=80',
-  },
-  {
-    title: 'Salad',
-    image:
-      'https://images.unsplash.com/photo-1501959915551-4e8d30928317?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-  },
-];
-
 export default function MealPlan() {
   const [activeTab, setActiveTab] = React.useState('Sunday');
   const navigate = useNavigation();
@@ -106,8 +88,12 @@ export default function MealPlan() {
   const navigateToCreateMealPlan = () => {
     navigate.navigate('CreateMealPlan');
   };
-  // data
-  // console.log('data', JSON.stringify(data?.data?.data));
+
+  // SnackData
+  const SnackData = data?.data?.data?.recipe?.filter(
+    it => it?.mealType === 'Snack',
+  );
+
   return (
     <ScrollView
       _contentContainerStyle={{
@@ -193,10 +179,11 @@ export default function MealPlan() {
           )}
         />
       </VStack>
-
-      <Text color="black" fontSize="lg" fontWeight={700} px="4">
-        Snacks
-      </Text>
+      {SnackData?.length > 0 && (
+        <Text color="black" fontSize="lg" fontWeight={700} px="4">
+          Snacks
+        </Text>
+      )}
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -204,7 +191,7 @@ export default function MealPlan() {
           mb: 4,
         }}>
         <HStack space="2" px="4" pb="4">
-          {snacks.map((item, index) => (
+          {SnackData?.map((item, index) => (
             <VStack
               key={index}
               justifyContent="center"
@@ -213,15 +200,15 @@ export default function MealPlan() {
                 gap: 8,
               }}>
               <Image
-                source={{uri: item.image}}
-                alt={item.title}
+                source={{uri: item?.photo}}
+                alt={item.name}
                 height={'120px'}
                 width={'150px'}
                 rounded="lg"
               />
 
               <Text fontSize="sm" fontWeight={600} color="black">
-                {item.title}
+                {item.name}
               </Text>
             </VStack>
           ))}

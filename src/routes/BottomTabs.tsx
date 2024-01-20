@@ -91,7 +91,15 @@ export default function BottomTabs() {
   const navigate = useNavigate();
   return (
     <Tab.Navigator screenOptions={tabbarOptions as any}>
-      <Tab.Screen name="MealPlan" component={MealPlan} />
+      <Tab.Screen
+        name="MealPlan"
+        options={{
+          header: (props: BottomTabHeaderProps) => {
+            return <Header title={'Meal Plan'} />;
+          },
+        }}
+        component={MealPlan}
+      />
       <Tab.Screen name="Exercise" component={Exercise} />
       <Tab.Screen name="Program" component={ProgramTab} />
       <Tab.Screen name="History" component={HistoryTab} />

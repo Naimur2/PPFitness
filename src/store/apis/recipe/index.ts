@@ -21,7 +21,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `recipe/get/${id}`,
       }),
     }),
-    getAllRecipe: builder.query<GetV1RecipeGetSuccessfulResponse, string>({
+    getAllRecipe: builder.query<GetV1RecipeGetSuccessfulResponse, void>({
       query: () => ({
         url: `recipe/get`,
       }),
