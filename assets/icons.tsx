@@ -3,6 +3,50 @@ import VectorImage from 'react-native-vector-image';
 
 type TIconProps = typeof VectorImage.defaultProps;
 
+export function PhoneHelpIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/help/call-phone-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function EmailHelpIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/help/message-email.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function TwitterHelpIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/help/twitter-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function WhatsAppHelpIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/help/whats-app-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
 export function FacebookIcon({...rest}: TIconProps) {
   return (
     <VectorImage

@@ -103,7 +103,7 @@ export default function LoginScreen() {
         </Text>
         <Text color="gray.4">Please sign in to access your account</Text>
         <VStack mt={10} space="4">
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.email)}>
             <Input
               bg="white"
               placeholder="Email"
@@ -116,10 +116,10 @@ export default function LoginScreen() {
               value={values.email}
             />
             <FormControl.ErrorMessage color="white">
-              {touched.email && errors.email}
+              {errors.email}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.password)}>
             <Input
               bg="white"
               placeholder="Password"
@@ -139,7 +139,7 @@ export default function LoginScreen() {
               }
             />
             <FormControl.ErrorMessage color="white">
-              {touched.password && errors.password}
+              {errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
           <VStack space={2} alignItems="flex-end">

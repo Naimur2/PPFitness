@@ -102,7 +102,7 @@ export default function ChangePassword() {
             {touched.password && errors.password}
           </FormControl.ErrorMessage>
         </FormControl> */}
-        <FormControl>
+        <FormControl isInvalid={Boolean(errors.password)}>
           <Input
             bg="white"
             placeholder="Password"
@@ -122,10 +122,10 @@ export default function ChangePassword() {
             }
           />
           <FormControl.ErrorMessage color="white">
-            {touched.password && errors.password}
+            {errors.password}
           </FormControl.ErrorMessage>
         </FormControl>
-        <FormControl>
+        <FormControl isInvalid={Boolean(errors.confirmPassword)}>
           <Input
             bg="white"
             placeholder="Confirm Password"
@@ -145,7 +145,7 @@ export default function ChangePassword() {
             }
           />
           <FormControl.ErrorMessage color="#e41e1e">
-            {touched.confirmPassword && errors.confirmPassword}
+            {errors.confirmPassword}
           </FormControl.ErrorMessage>
         </FormControl>
         <Center display="flex" flexDirection="row" justifyContent="center">

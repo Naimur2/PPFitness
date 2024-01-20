@@ -106,7 +106,7 @@ export default function ResetPassword() {
         <Text color="gray.4">Please enter your new password</Text>
 
         <VStack mt={10} space="4">
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.password)}>
             <Input
               bg="white"
               placeholder="Password"
@@ -126,10 +126,10 @@ export default function ResetPassword() {
               }
             />
             <FormControl.ErrorMessage color="white">
-              {touched.password && errors.password}
+              {errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.confirmPassword)}>
             <Input
               bg="white"
               placeholder="Confirm Password"
@@ -149,7 +149,7 @@ export default function ResetPassword() {
               }
             />
             <FormControl.ErrorMessage color="#e41e1e">
-              {touched.confirmPassword && errors.confirmPassword}
+              {errors.confirmPassword}
             </FormControl.ErrorMessage>
           </FormControl>
 
