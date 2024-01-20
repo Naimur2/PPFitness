@@ -6,6 +6,9 @@ import Tab from 'src/components/Tab';
 import PlanItem from 'src/components/meal-plan/PlanItem';
 import {useNavigation} from '@react-navigation/native';
 import {AddIcon} from '@assets/icons';
+import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
+import {useSelector} from 'react-redux';
+import {selectAccessToken} from '@store/features/authSlice';
 
 const dailyMicros = [
   {
@@ -43,31 +46,31 @@ const dailyMicros = [
 const dayTabs = [
   {
     title: 'Mon',
-    key: 'Mon',
+    key: 'Monday',
   },
   {
     title: 'Tue',
-    key: 'Tue',
+    key: 'Tuesday',
   },
   {
     title: 'Wed',
-    key: 'Wed',
+    key: 'Wednesday',
   },
   {
     title: 'Thu',
-    key: 'Thu',
+    key: 'Thursday',
   },
   {
     title: 'Fri',
-    key: 'Fri',
+    key: 'Friday',
   },
   {
     title: 'Sat',
-    key: 'Sat',
+    key: 'Saturday',
   },
   {
     title: 'Sun',
-    key: 'Sun',
+    key: 'Sunday',
   },
 ];
 
@@ -90,12 +93,19 @@ const snacks = [
 ];
 
 export default function MealPlan() {
-  const [activeTab, setActiveTab] = React.useState('Mon');
+  const [activeTab, setActiveTab] = React.useState('Monday');
   const navigate = useNavigation();
+  const token = useSelector(selectAccessToken);
+  // APIS
+  const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
 
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
   };
+  // data
+  console.log('data', JSON.stringify(data?.data));
+  console.log('error', error);
+  console.log('activeTab', activeTab);
 
   return (
     <ScrollView

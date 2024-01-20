@@ -1,5 +1,12 @@
 import React from 'react';
-import {HStack, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {
+  HStack,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+  useNativeBase,
+} from 'native-base';
 import {
   ArrowDownIcon,
   Bell,
@@ -10,35 +17,43 @@ import {
   Support,
 } from '@assets/icons';
 import {fontSizes} from '@theme/typography';
+import useNavigate from '@hooks/useNavigate';
 
 const tabItems = [
   {
     label: 'Edit Profile',
     icon: ProfileRound,
+    nav: 'EditProfile',
   },
   {
     label: 'Change Password',
     icon: LockV2,
+    nav: 'ChangePassword',
   },
   {
     label: 'Notification Preference',
     icon: Bell,
+    nav: 'NotificationPreference',
   },
   {
     label: 'Account Management',
     icon: Settings,
+    nav: 'SettingsScreen',
   },
   {
     label: 'Privacy & Security',
     icon: Sheild,
+    nav: 'PrivacySecurity',
   },
   {
     label: 'Help & Support',
     icon: Support,
+    nav: 'HelpSupport',
   },
 ];
 
 export default function SettingsScreen() {
+  const navigate = useNavigate();
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -62,7 +77,7 @@ export default function SettingsScreen() {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigate(item?.nav)}
           _pressed={{bg: 'gray.100'}}>
           <HStack space={4}>
             <item.icon />

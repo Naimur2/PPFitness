@@ -4,6 +4,7 @@ import MealPlan from '@screens/User/MealPlan';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
+  BottomTabHeaderProps,
 } from '@react-navigation/bottom-tabs';
 import VectorImage from 'react-native-vector-image';
 import Exercise from '@screens/User/Exercise';
@@ -25,6 +26,8 @@ import ProgramTab from '@screens/User/ProgramTab';
 import HistoryTab from '@screens/User/HistoryTab';
 import CallScreen from '@screens/User/CallScreen';
 import ProfileTab from '@screens/User/ProfileTab';
+import Header from 'src/components/headers/Header';
+import useNavigate from '@hooks/useNavigate';
 
 const Tab = createBottomTabNavigator();
 
@@ -85,6 +88,7 @@ const tabbarOptions: TBottomTabNavigationOptions = ({route}) => ({
 });
 
 export default function BottomTabs() {
+  const navigate = useNavigate();
   return (
     <Tab.Navigator screenOptions={tabbarOptions as any}>
       <Tab.Screen name="MealPlan" component={MealPlan} />
@@ -92,7 +96,20 @@ export default function BottomTabs() {
       <Tab.Screen name="Program" component={ProgramTab} />
       <Tab.Screen name="History" component={HistoryTab} />
       <Tab.Screen name="Call" component={CallScreen} />
-      <Tab.Screen name="Profile" component={ProfileTab} />
+      <Tab.Screen
+        name="Profile"
+        options={{
+          header: (props: BottomTabHeaderProps) => {
+            return (
+              <Header
+                title={'Settings'}
+                onPress={() => navigate('SettingsScreen')}
+              />
+            );
+          },
+        }}
+        component={ProfileTab}
+      />
     </Tab.Navigator>
   );
 }

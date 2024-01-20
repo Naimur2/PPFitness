@@ -1,15 +1,19 @@
 import {
   DeleteV1MealPlanDeleteIdParameterId,
   DeleteV1MealPlanDeleteIdSuccessfulResponse,
+  GetV1MealPlanGetParameterDay,
   GetV1MealPlanGetSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
-    getAllMealPlan: builder.query<GetV1MealPlanGetSuccessfulResponse, any>({
-      query: () => ({
-        url: `meal-plan/get`,
+    getAllMealPlan: builder.query<
+      GetV1MealPlanGetSuccessfulResponse,
+      GetV1MealPlanGetParameterDay
+    >({
+      query: day => ({
+        url: `meal-plan/get?day=${day}`,
       }),
     }),
     deleteMealPlan: builder.mutation<
