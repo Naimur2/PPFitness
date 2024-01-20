@@ -9,6 +9,7 @@ import {AddIcon} from '@assets/icons';
 import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
 import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@store/features/authSlice';
+import {FlatList} from 'react-native';
 
 const dailyMicros = [
   {
@@ -93,11 +94,11 @@ const snacks = [
 ];
 
 export default function MealPlan() {
-  const [activeTab, setActiveTab] = React.useState('Monday');
+  const [activeTab, setActiveTab] = React.useState('Sunday');
   const navigate = useNavigation();
   const token = useSelector(selectAccessToken);
   // APIS
-  const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
+  const {data} = useGetAllMealPlanQuery(activeTab);
 
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
@@ -106,10 +107,7 @@ export default function MealPlan() {
     navigate.navigate('CreateMealPlan');
   };
   // data
-  console.log('data', data?.data);
-  console.log('error', error);
-  console.log('activeTab', activeTab);
-
+  // console.log('data', JSON.stringify(data?.data?.data));
   return (
     <ScrollView
       _contentContainerStyle={{
@@ -128,8 +126,16 @@ export default function MealPlan() {
           bg="#FFFFFF"
           rounded="xl"
           shadow={1}>
-          {dailyMicros.map((micro, index) => (
-            <DailyMacro key={index} {...micro} />
+          {data?.data?.data?.dailyMacro.map((micro, index) => (
+            <DailyMacro
+              title={micro?.name}
+              image={
+                dailyMicros?.find(
+                  t => t?.title?.toLowerCase() === micro?.name?.toLowerCase(),
+                )?.image
+              }
+              value={`${micro?.quantity} ${micro?.unit}`}
+            />
           ))}
         </HStack>
         <HStack justifyContent={'space-between'}>
@@ -168,39 +174,23 @@ export default function MealPlan() {
           </Pressable>
         </HStack>
         <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
-
         <PlanItem
           title="Breakfast"
-          items={[
-            {
-              title: 'Oats with protein',
-              image:
-                'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-              description: '60g carbs . 25g protein . 0g fat . 300 Kcal ',
-            },
-          ]}
+          items={data?.data?.data?.recipe?.filter(
+            it => it?.mealType === 'Breakfast',
+          )}
         />
         <PlanItem
           title="Lunch"
-          items={[
-            {
-              title: 'Boiled rice with chicken',
-              image:
-                'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-              description: '60g carbs . 25g protein . 0g fat . 300 Kcal ',
-            },
-          ]}
+          items={data?.data?.data?.recipe?.filter(
+            it => it?.mealType === 'Lunch',
+          )}
         />
         <PlanItem
           title="Dinner"
-          items={[
-            {
-              title: 'Beef Steak with Vegetables',
-              image:
-                'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-              description: '60g carbs . 25g protein . 0g fat . 300 Kcal ',
-            },
-          ]}
+          items={data?.data?.data?.recipe?.filter(
+            it => it?.mealType === 'Dinner',
+          )}
         />
       </VStack>
 

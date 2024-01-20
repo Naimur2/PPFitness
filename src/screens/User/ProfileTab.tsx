@@ -49,8 +49,6 @@ export default function ProfileTab() {
       toast(error?.data?.error?.message, 'error');
     }
   };
-  //
-  console.log('data', JSON.stringify(data?.data?.data?.avatar));
 
   return (
     <ScrollView
@@ -90,7 +88,7 @@ export default function ProfileTab() {
             Welcome Back
           </Text>
           <Text color={'#1A1929'} fontSize={fontSizes.md} fontWeight={700}>
-            Esther Howard
+            {data?.data?.data?.fullName}
           </Text>
         </VStack>
       </HStack>
@@ -118,7 +116,7 @@ export default function ProfileTab() {
               color={'#58565E'}
               fontSize={fontSizes.xs}
               textAlign={'center'}>
-              Goal
+              {data?.data?.data?.goal || 'Goal'}
             </Text>
           </VStack>
         </HStack>

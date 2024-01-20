@@ -1,6 +1,7 @@
-import { fontSizes } from '@theme/typography';
-import {Image, Text, VStack} from 'native-base';
+import {fontSizes} from '@theme/typography';
+import {Text, VStack} from 'native-base';
 import React from 'react';
+import {Image} from 'react-native';
 import {scale} from 'react-native-size-matters';
 
 interface Props {
@@ -26,8 +27,19 @@ export default function DailyMacro({title, image, value}: Props) {
         textAlign="center">
         {value}
       </Text>
-      <Image source={image} alt={title} height={'22px'} width={'22px'} />
-      <Text fontSize={fontSizes.xs} color="black" textAlign="center">
+      <Image
+        source={image}
+        alt={title}
+        style={{
+          width: 22,
+          height: 22,
+        }}
+      />
+      <Text
+        fontSize={fontSizes.xs}
+        textTransform={'capitalize'}
+        color="black"
+        textAlign="center">
         {title}
       </Text>
     </VStack>
