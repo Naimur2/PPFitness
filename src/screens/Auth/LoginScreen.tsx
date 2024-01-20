@@ -1,5 +1,7 @@
 import {ImageBackground} from 'react-native';
 import React from 'react';
+import {useFormik} from 'formik';
+import * as Yup from 'yup';
 import {
   Box,
   Button,
@@ -24,17 +26,63 @@ import {
   GoogleIcon,
   LockIcon,
 } from '@assets/icons';
+import {useLoginMutation} from '@store/apis/auth';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 
 const FBgImage = Factory(ImageBackground);
+//
+//  validation
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string()
+    .min(8, 'Password must be at least 8 characters')
+    .required('Password is required'),
+});
 
 export default function LoginScreen() {
   const [eyeOpen, toggleEyeOpen] = useToggle(false);
   const navigation = useNavigation();
+  const toast = useShowToastMessage();
 
   const navigateToSignUp = () => {
     navigation.navigate('Register');
   };
+  const [loginUser, {isLoading}] = useLoginMutation();
 
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema,
+    onSubmit: async v => {
+      await handelRegister();
+    },
+  });
+
+  const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
+    formik;
+
+  const handelRegister = async () => {
+    // showModal('success', {
+    //   title: 'Success',
+    //   message: 'Information updated successfully.',
+    // });
+
+    try {
+      const res = await loginUser({
+        email: values.email,
+        password: values.password,
+        method: 'email',
+      }).unwrap();
+      console.log('res-', res);
+
+      toast(res?.data.message);
+    } catch (error) {
+      toast(error?.data.message, 'error');
+    }
+  };
+  //
   return (
     <FBgImage
       source={require('@assets/images/screen2.png')}
@@ -63,10 +111,12 @@ export default function LoginScreen() {
               placeholderTextColor={'gray.2'}
               color={'black'}
               _focus={{bg: 'white'}}
-              leftElement={<EmailIcon style={{marginLeft: 10}} />}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
             />
             <FormControl.ErrorMessage color="white">
-              This is an error
+              {touched.email && errors.email}
             </FormControl.ErrorMessage>
           </FormControl>
           <FormControl>
@@ -78,6 +128,9 @@ export default function LoginScreen() {
               color={'black'}
               type={eyeOpen ? 'text' : 'password'}
               _focus={{bg: 'white'}}
+              onChangeText={handleChange('password')}
+              onBlur={handleBlur('password')}
+              value={values.password}
               leftElement={<LockIcon style={{marginLeft: 10}} />}
               rightElement={
                 <Pressable onPress={toggleEyeOpen} mr={'10px'}>
@@ -86,11 +139,14 @@ export default function LoginScreen() {
               }
             />
             <FormControl.ErrorMessage color="white">
-              This is an error
+              {touched.password && errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
           <VStack space={2} alignItems="flex-end">
-            <Text color="white" fontSize="sm">
+            <Text
+              onPress={() => navigation.navigate('ForgetPassword')}
+              color="white"
+              fontSize="sm">
               Forgot password?
             </Text>
           </VStack>
@@ -102,7 +158,9 @@ export default function LoginScreen() {
             py={3}
             mt={10}
             _text={{color: 'black', fontWeight: 700}}
-            _pressed={{bg: '#68696B90'}}>
+            _pressed={{bg: '#68696B90'}}
+            isLoading={isLoading}
+            onPress={handleSubmit}>
             Sign In
           </Button>
 
