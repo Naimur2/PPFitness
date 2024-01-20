@@ -102,8 +102,11 @@ export default function MealPlan() {
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
   };
+  const navigateToCreateMealPlan = () => {
+    navigate.navigate('CreateMealPlan');
+  };
   // data
-  console.log('data', JSON.stringify(data?.data));
+  console.log('data', data?.data);
   console.log('error', error);
   console.log('activeTab', activeTab);
 
@@ -140,6 +143,7 @@ export default function MealPlan() {
             borderRadius={8}
             borderWidth={2}
             borderColor="primary.100"
+            onPress={navigateToCreateMealPlan}
             py={2}>
             <AddIcon />
             <Text color="primary.100" fontSize="xs" fontWeight={700}>

@@ -12,9 +12,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
       GetV1MealPlanGetSuccessfulResponse,
       GetV1MealPlanGetParameterDay
     >({
-      query: day => ({
-        url: `meal-plan/get?day=${day}`,
-      }),
+      query: day => {
+        return {
+          url: `meal-plan/get?day=${day}`,
+        };
+      },
     }),
     deleteMealPlan: builder.mutation<
       DeleteV1MealPlanDeleteIdSuccessfulResponse,

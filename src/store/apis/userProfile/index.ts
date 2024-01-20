@@ -5,6 +5,10 @@ import {
   GetV1ProfileGetSingleIdParameterId,
   GetV1ProfileGetSingleIdSuccessfulResponse,
   GetV1ProfileGetSingleSuccessfulResponse,
+  PostV1FileDeleteRequestBody,
+  PostV1FileDeleteSuccessfulResponse,
+  PostV1FileUploadRequestBody,
+  PostV1FileUploadSuccessfulResponse,
   PostV1ProfileUpdateRequestBody,
   PostV1ProfileUpdateSuccessfulResponse,
 } from '@store/schema';
@@ -14,11 +18,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getSingleProfile: builder.query<
       GetV1ProfileGetSingleSuccessfulResponse,
-      string
+      void
     >({
       query: () => ({
         url: `profile/get/single`,
       }),
+      providesTags: ['ProfileUpdate'],
     }),
     getSingleProfileById: builder.query<
       GetV1ProfileGetSingleIdSuccessfulResponse,
@@ -38,7 +43,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       PostV1ProfileUpdateRequestBody
     >({
       query: body => ({
-        url: 'auth/profile/update',
+        url: 'profile/update',
         method: 'POST',
         body,
       }),
@@ -59,6 +64,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           return error;
         }
       },
+      invalidatesTags: ['ProfileUpdate'],
     }),
     deleteProfile: builder.mutation<
       DeleteV1ProfileDeleteIdSuccessfulResponse,
@@ -67,6 +73,25 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: id => ({
         url: `auth/profile/delete/${id}`,
         method: 'DELETE',
+      }),
+    }),
+    updateFile: builder.mutation<
+      PostV1FileUploadSuccessfulResponse,
+      PostV1FileUploadRequestBody
+    >({
+      query: body => ({
+        url: 'file/upload',
+        method: 'POST',
+        body,
+      }),
+    }),
+    deleteFile: builder.mutation<
+      PostV1FileDeleteSuccessfulResponse,
+      PostV1FileDeleteRequestBody
+    >({
+      query: id => ({
+        url: `file/delete/${id}`,
+        method: 'POST',
       }),
     }),
   }),
@@ -79,4 +104,6 @@ export const {
   useGetSingleProfileByIdQuery,
   useGetSingleProfileQuery,
   useDeleteProfileMutation,
+  useUpdateFileMutation,
+  useDeleteFileMutation,
 } = authApiSlice;

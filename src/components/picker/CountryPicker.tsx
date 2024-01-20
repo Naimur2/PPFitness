@@ -21,7 +21,7 @@ const CountrySelectPicker: React.FC<CountryPickerProps> = ({
         onSelect={(country: Country) => {
           handleChange(country);
         }}
-        countryCode={values?.cca2}
+        // countryCode={'BD'}
         // withModal
         containerButtonStyle={{
           backgroundColor: '#ffffffa4',
@@ -30,9 +30,9 @@ const CountrySelectPicker: React.FC<CountryPickerProps> = ({
           paddingHorizontal: 10,
           borderRadius: 8,
         }}
-        filterPlaceholder="Search"
+        filterPlaceholder={'Search'}
         modalProps={{animationType: 'slide'}}
-        placeholder="select Cuntry"
+        placeholder={values || 'Select country'}
         textStyle={{fontSize: 10}}
       />
     </>

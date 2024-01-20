@@ -1,37 +1,70 @@
-import {StyleSheet} from 'react-native';
+import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {Button, FormControl, Input, VStack} from 'native-base';
+import {
+  Box,
+  Button,
+  FormControl,
+  HStack,
+  Image,
+  Input,
+  VStack,
+} from 'native-base';
 import useNavigate from '@hooks/useNavigate';
 import {PostV1ProfileUpdateErrorResponse} from '@store/schema';
 import CountryPicker from 'src/components/picker/CountryPicker';
-import {useUpdateProfileMutation} from '@store/apis/userProfile';
-//  validation
-const validationSchema = Yup.object().shape({
-  password: Yup.string()
-    .min(8, 'Password must be at least 8 characters')
-    .required('Password is required'),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password'), undefined], 'Passwords must match')
-    .required('Confirm Password is required'),
-});
+import {
+  useGetSingleProfileQuery,
+  useUpdateFileMutation,
+  useUpdateProfileMutation,
+} from '@store/apis/userProfile';
+import {useSelector} from 'react-redux';
+import {selectUser} from '@store/features/authSlice';
+import {Edit} from '@assets/icons';
+import useImageUploader from '@hooks/useImageUploader';
+import createFormFile from 'src/utils/fileDetails';
 // You2$Ppsw
 export default function EditProfile() {
-  // hooks
+  //
+  const authUser = useSelector(selectUser);
+  // Hooks
+  const {handleImagePicker} = useImageUploader();
   const toast = useShowToastMessage();
   const navigate = useNavigate();
+  // APIS
+  const [handelProfile, {isLoading}] = useUpdateProfileMutation();
+  const [handelFileUpload, {}] = useUpdateFileMutation();
+  const {data} = useGetSingleProfileQuery();
 
-  //  APIS
-  const [updateProfile, {isLoading}] = useUpdateProfileMutation();
-
+  //
+  const handelImage = async () => {
+    try {
+      const file = await handleImagePicker();
+      const formData = new FormData();
+      if (file?.fileName && file?.uri) {
+        formData.append(
+          'files',
+          createFormFile(file?.uri, 'image', file?.fileName),
+        );
+      }
+      const fileRes = await handelFileUpload(formData).unwrap();
+      const res = await handelProfile({
+        avatar: fileRes?.data?.data?.[0]?.url,
+      }).unwrap();
+      toast(res.data?.message);
+    } catch (error) {
+      toast(error?.data?.error?.message, 'error');
+    }
+  };
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      fullName: '',
-      email: '',
-      number: '',
-      country: {},
+      fullName: data?.data?.data?.fullName,
+      email: authUser?.email,
+      number: data?.data?.data?.phone,
+      country: data?.data?.data?.country,
     },
     // validationSchema,
     onSubmit: async values => {
@@ -54,26 +87,51 @@ export default function EditProfile() {
     const body = {
       fullName: values?.fullName,
       email: values?.email,
-      number: values?.number,
-      country: {},
+      phone: values?.number,
+      country: values?.country,
     };
 
     try {
-      const res = await updateProfile(body).unwrap();
+      const res = await handelProfile(body).unwrap();
       console.log('res-', res);
       toast(res?.data.message);
       navigate(undefined, undefined, 'goBack');
     } catch (err) {
       const error = err as PostV1ProfileUpdateErrorResponse;
+      console.log('error', error);
+
       toast(error?.error?.message, 'error');
     }
   };
-  console.log('values', values);
 
   // con
   return (
     <VStack w="100%" px={4} mt={10}>
       <VStack space="4">
+        <HStack alignSelf={'center'}>
+          <Box position={'relative'}>
+            <Image
+              source={{
+                uri:
+                  data?.data?.data?.avatar ??
+                  'https://www.postendekker.nl/wp-content/uploads/2021/10/dummy-profile.jpg',
+              }}
+              alt={data?.data?.data?.fullName ?? 'image base'}
+              size="86px"
+              rounded="full"
+              resizeMode="cover"
+            />
+
+            <Pressable
+              onPress={handelImage}
+              position={'absolute'}
+              bottom={0}
+              right={0}>
+              <Edit height={20} width={20} />
+            </Pressable>
+          </Box>
+        </HStack>
+
         <FormControl isInvalid={Boolean(errors.fullName)}>
           <FormControl.Label>Full Name</FormControl.Label>
           <Input
@@ -98,6 +156,7 @@ export default function EditProfile() {
             bg="white"
             placeholder="Email"
             rounded={8}
+            isDisabled={true}
             placeholderTextColor={'gray.2'}
             color={'black'}
             type={'text'}
@@ -133,14 +192,13 @@ export default function EditProfile() {
           <CountryPicker
             values={values.country}
             handleChange={value => {
-              setFieldValue('country', value);
+              setFieldValue('country', value?.name);
             }}
           />
           <FormControl.ErrorMessage color="white">
             {errors.country}
           </FormControl.ErrorMessage>
         </FormControl>
-
         <Button
           w="full"
           bg={'secondary.100'}
@@ -158,3 +216,6 @@ export default function EditProfile() {
 }
 
 const styles = StyleSheet.create({});
+function navigate(undefined: undefined, undefined1: undefined, arg2: string) {
+  throw new Error('Function not implemented.');
+}

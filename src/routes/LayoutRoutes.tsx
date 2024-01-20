@@ -28,8 +28,24 @@ export default function LayoutRoutes() {
           headerShown: false,
         }}
       />
-      <Stack.Screen name="CreateMealPlan" component={CreateMealPlan} />
-      <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen
+        name="CreateMealPlan"
+        options={{
+          header: props => {
+            return <Header title={'Create Meal Plan'} />;
+          },
+        }}
+        component={CreateMealPlan}
+      />
+      <Stack.Screen
+        name="SettingsScreen"
+        options={{
+          header: props => {
+            return <Header title={'Settings'} />;
+          },
+        }}
+        component={SettingsScreen}
+      />
       <Stack.Screen name="Calendar" component={Calendar} />
       <Stack.Screen
         name="Blogs"

@@ -91,7 +91,7 @@ export default function Blogs() {
         bg: '#F7F7F7',
       }}
       ListEmptyComponent={
-        !isLoading ? (
+        isLoading ? (
           <>
             <SkeletonsBlogCard />
             <SkeletonsBlogCard />
