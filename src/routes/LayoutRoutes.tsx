@@ -31,11 +31,21 @@ export default function LayoutRoutes() {
       <Stack.Screen name="CreateMealPlan" component={CreateMealPlan} />
       <Stack.Screen name="SettingsScreen" component={SettingsScreen} />
       <Stack.Screen name="Calendar" component={Calendar} />
-      <Stack.Screen name="Blogs" component={Blogs} />
+      <Stack.Screen
+        name="Blogs"
+        options={{
+          header: props => {
+            return <Header title={'Blogs'} />;
+          },
+        }}
+        component={Blogs}
+      />
       <Stack.Screen
         name="BlogDetails"
         options={{
-          headerTitle: 'Blog Details',
+          header: props => {
+            return <Header title={'Blog Details'} />;
+          },
         }}
         component={BlogDetails}
       />

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  HStack,
-  Pressable,
-  ScrollView,
-  Text,
-  VStack,
-  useNativeBase,
-} from 'native-base';
+import {HStack, Pressable, ScrollView, Text, VStack} from 'native-base';
 import {
   ArrowDownIcon,
   Bell,
@@ -18,6 +11,8 @@ import {
 } from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import useNavigate from '@hooks/useNavigate';
+import {logout} from '@store/features/authSlice';
+import {useDispatch} from 'react-redux';
 
 const tabItems = [
   {
@@ -50,10 +45,17 @@ const tabItems = [
     icon: Support,
     nav: 'HelpSupport',
   },
+  {
+    label: 'Logout',
+    icon: Support,
+    nav: 'logout',
+  },
 ];
 
 export default function SettingsScreen() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // admin@ppfitness.com
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -77,7 +79,9 @@ export default function SettingsScreen() {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
-          onPress={() => navigate(item?.nav)}
+          onPress={() =>
+            item?.nav !== 'logout' ? navigate(item?.nav) : dispatch(logout())
+          }
           _pressed={{bg: 'gray.100'}}>
           <HStack space={4}>
             <item.icon />

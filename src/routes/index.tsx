@@ -6,5 +6,7 @@ import LayoutRoutes from './LayoutRoutes';
 
 export default function Routes() {
   const {accessToken} = useSelector(selectAuth);
+  console.log('accessToken', accessToken);
+
   return accessToken ? <LayoutRoutes /> : <AuthRoutes />;
 }

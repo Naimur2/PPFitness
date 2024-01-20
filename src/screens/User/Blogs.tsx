@@ -4,6 +4,7 @@ import {FlatList} from 'native-base';
 import BlogCard from 'src/components/blog/BlogCard';
 import {useGetAllBlogsQuery} from '@store/apis/blogs';
 import {useNavigation} from '@react-navigation/native';
+import {SkeletonsBlogCard} from 'src/components/skeletons';
 
 const blogs = [
   {
@@ -65,28 +66,42 @@ export default function Blogs() {
   const navigation = useNavigation();
 
   //  APIS
-  const {data} = useGetAllBlogsQuery(null);
-
+  const {data, isLoading} = useGetAllBlogsQuery(null);
+  //
   return (
     <FlatList
-      data={blogs}
-      renderItem={({item}) => (
-        <BlogCard
-          onPress={() =>
-            navigation.navigate('BlogDetails', {
-              item: item,
-            })
-          }
-          {...item}
-        />
-      )}
-      keyExtractor={item => item._id}
+      data={data?.data?.blogs || []}
+      renderItem={({item}) => {
+        return (
+          <BlogCard
+            onPress={() =>
+              navigation.navigate('BlogDetails', {
+                item: item,
+              })
+            }
+            {...item}
+          />
+        );
+      }}
+      keyExtractor={item => item?._id}
       _contentContainerStyle={{
         px: 4,
         py: 8,
         gap: 8,
         bg: '#F7F7F7',
       }}
+      ListEmptyComponent={
+        !isLoading ? (
+          <>
+            <SkeletonsBlogCard />
+            <SkeletonsBlogCard />
+            <SkeletonsBlogCard />
+            <SkeletonsBlogCard />
+          </>
+        ) : (
+          <></>
+        )
+      }
     />
   );
 }

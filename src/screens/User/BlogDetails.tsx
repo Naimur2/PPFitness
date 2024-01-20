@@ -1,71 +1,41 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import {FlatList, Stack} from 'native-base';
-import BlogCard from 'src/components/blog/BlogCard';
-import {useGetAllBlogsQuery} from '@store/apis/blogs';
-
-const blogs = [
-  {
-    _id: '10',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '11',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '12',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '13',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-];
+import {HStack, Image, Stack, Text, VStack} from 'native-base';
+import {useRoute} from '@react-navigation/native';
 
 export default function BlogDetails() {
-  const {data} = useGetAllBlogsQuery(null);
-  console.log('data?.data?.blogs', data?.data?.blogs);
+  const {thumbnail, title, description} = useRoute()?.params?.item;
+  // Hooks
 
   return (
-    <Stack>
-      <Text>Hello</Text>
-    </Stack>
+    <VStack h={'100%'} p={4}>
+      {/* <HStack alignItems="center">
+        <Image
+          source={{uri: thumbnail}}
+          height={8}
+          width={8}
+          rounded="full"
+          mr={2}
+        />
+        <Text color="#353340" fontSize="sm" fontWeight={500}>
+          {author.name}
+        </Text>
+      </HStack> */}
+      <Image
+        source={{uri: thumbnail}}
+        alt={title}
+        height={'200'}
+        width={'full'}
+        resizeMode="cover"
+      />
+
+      <VStack p="4" space={2}>
+        <Text color="black" fontSize="lg" fontWeight={700}>
+          {title}
+        </Text>
+        <Text color="gray.2" fontSize="sm" fontWeight={400}>
+          {description}
+        </Text>
+      </VStack>
+    </VStack>
   );
 }
