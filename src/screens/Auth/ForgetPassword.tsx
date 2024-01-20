@@ -93,7 +93,7 @@ export default function ForgetPassword() {
         </Text>
         <Text color="gray.4">Please enter your email to reset password</Text>
         <VStack mt={10} space="4">
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.email)}>
             <Input
               bg="white"
               placeholder="Email"
@@ -106,7 +106,7 @@ export default function ForgetPassword() {
               value={values.email}
             />
             <FormControl.ErrorMessage color="white">
-              {touched.email && errors.email}
+              {errors.email}
             </FormControl.ErrorMessage>
           </FormControl>
 

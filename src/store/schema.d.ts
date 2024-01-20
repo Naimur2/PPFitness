@@ -11,7 +11,7 @@
 
 export interface PostV1AuthLoginSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Login Successfull","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"id","email":"example@xyz.abc"}}} */
+  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"id","email":"example@xyz.abc","emailVerified":false,"role":"user"}}} */
   data: {
     message: string;
     data?: {
@@ -20,6 +20,8 @@ export interface PostV1AuthLoginSuccessfulResponse {
       user: {
         _id: string;
         email: string;
+        emailVerified?: boolean;
+        role?: 'admin' | 'user';
       };
     };
   };
@@ -182,6 +184,7 @@ export interface GetV1ProfileGetSingleSuccessfulResponse {
     message: string;
     data: {
       fullName?: string;
+      /** @format url */
       avatar?: string;
       phone?: string;
       country?: string;
@@ -229,6 +232,7 @@ export interface GetV1ProfileGetSingleIdSuccessfulResponse {
     message: string;
     data: {
       fullName?: string;
+      /** @format url */
       avatar?: string;
       phone?: string;
       country?: string;
@@ -287,6 +291,7 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
     message: string;
     data: {
       fullName?: string;
+      /** @format url */
       avatar?: string;
       phone?: string;
       country?: string;
@@ -342,6 +347,7 @@ export interface PostV1ProfileUpdateErrorResponse {
 
 export type PostV1ProfileUpdateRequestBody = (object & object) & {
   fullName?: string;
+  /** @format url */
   avatar?: string;
   phone?: string;
   country?: string;
@@ -539,7 +545,10 @@ export type PostV1BlogsAddRequestBody = ((object & object) & object) & {
   /** Content Of the Blog */
   content: string;
   tags: string[];
-  /** Thumbnail Of the Blog */
+  /**
+   * Thumbnail Of the Blog
+   * @format url
+   */
   thumbnail: string;
 };
 
@@ -587,13 +596,16 @@ export type PutV1BlogsUpdateIdRequestBody = ((object & object) & object) & {
   /** Content Of the Blog */
   content?: string;
   tags?: string[];
-  /** Thumbnail Of the Blog */
+  /**
+   * Thumbnail Of the Blog
+   * @format url
+   */
   thumbnail?: string;
 };
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aacebf125fd24d8fb6f5c7","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717aec","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -738,7 +750,7 @@ export type PostV1IngredientsAddRequestBody = (object & object) & {
 
 export interface PostV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aacebf125fd24d8fb6f5c9","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ab922e88c5d1ee53717aee","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -885,7 +897,7 @@ export type GetV1IngredientsGetIdParameterId = any;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aacebf125fd24d8fb6f5cb","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af0","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1113,7 +1125,10 @@ export type PostV1RecipeAddRequestBody = ((object & object) & object) & {
   dietType: string;
   /** Allergy Type of the Recipe */
   allergyType: string;
-  /** Photo of the Recipe */
+  /**
+   * Photo url of the Recipe
+   * @format url
+   */
   photo: string;
   /** Tags of the Recipe */
   tags: string[];
@@ -1138,7 +1153,7 @@ export type GetV1RecipeGetParameterTags = string[];
 
 export interface GetV1RecipeGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aacebf125fd24d8fb6f5d0","name":"abc","ingredients":[{"_id":"65aacebf125fd24d8fb6f5d1","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ab922e88c5d1ee53717af5","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717af6","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}]} */
   data: {
     message: string;
     meta: {
@@ -1348,7 +1363,7 @@ export type GetV1RecipeGetIdParameterId = any;
 
 export interface GetV1RecipeGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aacebf125fd24d8fb6f5ce","name":"abc","ingredients":[{"_id":"65aacebf125fd24d8fb6f5cf","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af3","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717af4","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
   data: {
     message: string;
     data: {
@@ -1611,7 +1626,7 @@ export enum GetV1MealPlanGetParameterDay {
 
 export interface GetV1MealPlanGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aacec0125fd24d8fb6f5d3","userId":"65aacec0125fd24d8fb6f5d4","recipe":[{"_id":"65aacec0125fd24d8fb6f5d5","name":"abc","ingredients":[{"_id":"65aacec0125fd24d8fb6f5d6","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast"}],"day":"Sunday","createdAt":"2024-01-19T19:34:24.021Z","updatedAt":"2024-01-19T19:34:24.021Z","dailyMacro":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af8","userId":"65ab922e88c5d1ee53717af9","recipe":[{"_id":"65ab922e88c5d1ee53717afa","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717afb","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast"}],"day":"Sunday","createdAt":"2024-01-20T09:28:14.473Z","updatedAt":"2024-01-20T09:28:14.473Z","dailyMacro":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
   data: {
     message: string;
     data: {
@@ -1807,6 +1822,50 @@ export interface DeleteV1MealPlanDeleteIdErrorResponse {
     message: string;
   };
 }
+
+export interface PostV1FileUploadSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"File Added Successfully","data":[{"etag":"\"a6bbcf1227fde3695d10c402d980d496\"","requestId":"M2JY8HW59S1PET5P","url":"https://ppfitness.s3.amazonaws.com/Screenshot%202024-01-13%20185527.png"}]} */
+  data: {
+    message: string;
+    data: {
+      etag?: string;
+      requestId?: string;
+      url?: string;
+    }[];
+  };
+}
+
+export interface PostV1FileUploadErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1FileUploadRequestBody = object & {
+  files: File | File[];
+};
+
+export interface PostV1FileDeleteSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"File Added Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1FileDeleteErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1FileDeleteRequestBody = object & {
+  /** File Urls */
+  files: string[];
+};
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
@@ -2057,7 +2116,7 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title Example API
+ * @title PP Fitness API
  * @version 1.1.1
  * @baseUrl http://localhost:8000
  */
@@ -2829,6 +2888,54 @@ export class Api<
         path: `/v1/meal-plan/delete/${id}`,
         method: 'DELETE',
         secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags File
+     * @name PostV1FileUpload
+     * @summary Upload File to S3
+     * @request POST:/v1/file/upload
+     */
+    postV1FileUpload: (
+      data: PostV1FileUploadRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1FileUploadSuccessfulResponse,
+        PostV1FileUploadErrorResponse
+      >({
+        path: `/v1/file/upload`,
+        method: 'POST',
+        body: data,
+        type: ContentType.FormData,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags File
+     * @name PostV1FileDelete
+     * @summary Upload File to S3
+     * @request POST:/v1/file/delete
+     */
+    postV1FileDelete: (
+      data: PostV1FileDeleteRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1FileDeleteSuccessfulResponse,
+        PostV1FileDeleteErrorResponse
+      >({
+        path: `/v1/file/delete`,
+        method: 'POST',
+        body: data,
+        type: ContentType.Json,
         format: 'json',
         ...params,
       }),

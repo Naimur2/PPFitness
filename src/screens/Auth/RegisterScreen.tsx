@@ -113,7 +113,7 @@ export default function RegisterScreen() {
         <Text color="gray.4">Please sign up to access your account</Text>
 
         <VStack mt={10} space="4">
-          <FormControl isRequired>
+          <FormControl isInvalid={Boolean(errors.name)}>
             <Input
               bg="white"
               placeholder="Name"
@@ -127,10 +127,10 @@ export default function RegisterScreen() {
             />
 
             <FormControl.ErrorMessage color="white">
-              {touched.name && errors.name ? errors.name : ''}
+              {errors.name}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.email)}>
             <Input
               bg="white"
               placeholder="Email"
@@ -143,10 +143,10 @@ export default function RegisterScreen() {
               value={values.email}
             />
             <FormControl.ErrorMessage color="white">
-              {touched.email && errors.email}
+              {errors.email}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.password)}>
             <Input
               bg="white"
               placeholder="Password"
@@ -169,7 +169,7 @@ export default function RegisterScreen() {
               {touched.password && errors.password}
             </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={Boolean(errors.confirmPassword)}>
             <Input
               bg="white"
               placeholder="Confirm Password"
@@ -189,7 +189,7 @@ export default function RegisterScreen() {
               }
             />
             <FormControl.ErrorMessage color="#e41e1e">
-              {touched.confirmPassword && errors.confirmPassword}
+              {errors.confirmPassword}
             </FormControl.ErrorMessage>
           </FormControl>
 
