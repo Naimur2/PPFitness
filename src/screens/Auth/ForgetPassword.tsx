@@ -18,6 +18,7 @@ import VectorImage from 'react-native-vector-image';
 import useToggle from '@hooks/useToggle';
 import {useNavigation} from '@react-navigation/native';
 import {useForgetPasswordMutation} from '@store/apis/auth';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -28,7 +29,7 @@ const validationSchema = Yup.object().shape({
 
 export default function ForgetPassword() {
   const navigation = useNavigation();
-
+  const toast = useShowToastMessage();
   //  API
   const [resetPassword, {isLoading}] = useForgetPasswordMutation();
 
@@ -65,8 +66,10 @@ export default function ForgetPassword() {
           ...res.data.data,
         },
       });
+
+      toast(res?.data.message);
     } catch (error) {
-      console.log('err', error);
+      toast(error?.data.message, 'error');
     }
   };
   //

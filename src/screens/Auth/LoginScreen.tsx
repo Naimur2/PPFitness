@@ -27,6 +27,7 @@ import {
   LockIcon,
 } from '@assets/icons';
 import {useLoginMutation} from '@store/apis/auth';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -41,6 +42,7 @@ const validationSchema = Yup.object().shape({
 export default function LoginScreen() {
   const [eyeOpen, toggleEyeOpen] = useToggle(false);
   const navigation = useNavigation();
+  const toast = useShowToastMessage();
 
   const navigateToSignUp = () => {
     navigation.navigate('Register');
@@ -75,9 +77,9 @@ export default function LoginScreen() {
       }).unwrap();
       console.log('res-', res);
 
-      // navigation.navigate('Login');
+      toast(res?.data.message);
     } catch (error) {
-      console.log('err', error);
+      toast(error?.data.message, 'error');
     }
   };
   //

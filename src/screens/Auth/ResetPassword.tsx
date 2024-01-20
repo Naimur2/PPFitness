@@ -14,7 +14,7 @@ import {
   VStack,
 } from 'native-base';
 import {ImageBackground} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import useToggle from '@hooks/useToggle';
 import {usePasswordResetMutation, useRegisterMutation} from '@store/apis/auth';
 import {
@@ -27,6 +27,8 @@ import {
   LockIcon,
 } from '@assets/icons';
 import useShowModal from '@hooks/useShowModal';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import useNavigate from '@hooks/useNavigate';
 
 const FBgImage = Factory(ImageBackground);
 
@@ -40,17 +42,16 @@ const validationSchema = Yup.object().shape({
     .required('Confirm Password is required'),
 });
 
-export default function ResetPassword({route}) {
-  //
-  // console.log('route', route?.params?.data);
+export default function ResetPassword() {
   const [eyeOpen, toggleEyeOpen] = useToggle(false);
   const [eyeOpen1, toggleEyeOpen1] = useToggle(false);
-  const navigation = useNavigation();
   // Hooks
-  const showModal = useShowModal();
+  const route = useRoute();
+  const toast = useShowToastMessage();
+  const navigate = useNavigate();
 
   const navigateToLogin = () => {
-    navigation.navigate('Login');
+    navigate('Login');
   };
   const [resetPassword, {isLoading}] = usePasswordResetMutation();
 
@@ -69,32 +70,20 @@ export default function ResetPassword({route}) {
     formik;
 
   const handelResetPassword = async () => {
-    console.log('values', values);
-    // showModal('success', {
-    //   title: 'Success',
-    //   message: 'Information updated successfully.',
-    // });
-    // Bang2$22
-    // return;
     const body = {
       email: route?.params?.data?.email,
       otpToken: route?.params?.data?.otpToken,
       password: values?.password,
       confirmPassword: values?.confirmPassword,
     };
-
-    console.log('body data -->>', body);
-
     try {
       const res = await resetPassword(body).unwrap();
-      console.log('res-', res);
-
-      navigation.navigate('Login');
+      navigate('Login');
+      toast(res?.data.message);
     } catch (error) {
-      console.log('err', error);
+      toast(error?.data.message, 'error');
     }
   };
-  // console.log('errors', errors);
 
   return (
     <FBgImage

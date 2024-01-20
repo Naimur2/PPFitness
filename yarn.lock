@@ -2157,6 +2157,11 @@
     prompts "^2.4.0"
     semver "^7.5.2"
 
+"@react-native-community/slider@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.5.0.tgz#5c55488ee30060cd87100fb746b9d8655dbab04e"
+  integrity sha512-pyUvNTvu5IfCI5abzqRfO/dd3A009RC66RXZE6t0gyOwI/j0QDlq9VZRv3rjkpuIvNTnsYj+m5BHlh0DkSYUyA==
+
 "@react-native/assets-registry@^0.72.0":
   version "0.72.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.72.0.tgz#c82a76a1d86ec0c3907be76f7faf97a32bbed05d"
@@ -7567,6 +7572,11 @@ react-native-otp-inputs@^7.4.0:
   resolved "https://registry.yarnpkg.com/react-native-otp-inputs/-/react-native-otp-inputs-7.4.0.tgz#ea1badabdf231faee5bcb5231034911bbba49aed"
   integrity sha512-+phHrlcQQ63VuOrHaOZze7LP9WmzUGxGMlQx2A/jhPhYkCi/5hXDjxNcWyPXCy/RFRoLX+70HNpGqTgo0mDg7Q==
 
+react-native-ruler-picker@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-ruler-picker/-/react-native-ruler-picker-0.2.1.tgz#225dcad7e8800d80ec3fad87be2a697da92c88c7"
+  integrity sha512-VbX+E1Pzv9eKnI8YEsdndwiIO9qR8Z9ZUa74D+QY0373H1k/hdF4zZYovKyY6E3ClkUEqotL7odiOq+Bnon6Lw==
+
 react-native-safe-area-context@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"
@@ -7641,6 +7651,11 @@ react-native-video@^5.2.1:
     keymirror "^0.1.1"
     prop-types "^15.7.2"
     shaka-player "^2.5.9"
+
+react-native-wheel-scrollview-picker@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-wheel-scrollview-picker/-/react-native-wheel-scrollview-picker-2.0.4.tgz#24f387c3a00f477d62d88c00d4189262c51fb328"
+  integrity sha512-AL/8jp13duXF3piHpFJ6isqVeGAf9dfWWcmjhHiJc6WkdK/UdI+kNhoCeBLb2yx1gDrki5nHxnR0L22sMfAblw==
 
 react-native@0.72.4:
   version "0.72.4"

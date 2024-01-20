@@ -27,6 +27,7 @@ import {
   LockIcon,
 } from '@assets/icons';
 import useShowModal from '@hooks/useShowModal';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 
 const FBgImage = Factory(ImageBackground);
 
@@ -47,7 +48,7 @@ export default function RegisterScreen() {
   const [eyeOpen1, toggleEyeOpen1] = useToggle(false);
   const navigation = useNavigation();
   // Hooks
-  const showModal = useShowModal();
+  const toast = useShowToastMessage();
 
   const navigateToLogin = () => {
     navigation.navigate('Login');
@@ -71,12 +72,6 @@ export default function RegisterScreen() {
     formik;
 
   const handelRegister = async () => {
-    console.log('values', values);
-    showModal('success', {
-      title: 'Success',
-      message: 'Information updated successfully.',
-    });
-
     // return;
     const body = {
       email: values.email,
@@ -90,8 +85,9 @@ export default function RegisterScreen() {
       console.log('res-', res);
 
       navigation.navigate('Login');
+      toast(res?.data.message);
     } catch (error) {
-      console.log('err', error);
+      toast(error?.data.message, 'error');
     }
   };
   // console.log('errors', errors);

@@ -1,12 +1,20 @@
 import {Dimensions, ImageBackground, StyleSheet} from 'react-native';
 import React from 'react';
-import {useFormik} from 'formik';
-import * as Yup from 'yup';
-import {Button, Factory, HStack, Image, Text, VStack, View} from 'native-base';
-import useToggle from '@hooks/useToggle';
+import {
+  Button,
+  Factory,
+  HStack,
+  Image,
+  Text,
+  VStack,
+  useToast,
+} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
-import {useLoginMutation, useVerifyOtpMutation} from '@store/apis/auth';
+import {useVerifyOtpMutation} from '@store/apis/auth';
 import OtpInputs from 'react-native-otp-inputs';
+import useShowModal from '@hooks/useShowModal';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import {PostV1AuthVerifyOtpErrorResponse} from '@store/schema';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -16,6 +24,7 @@ const INPUT_BOX_WIDTH = Math.floor(WIDTH / 6);
 // func
 export default function EmailOtpVerify({route}) {
   const navigation = useNavigation();
+  const toast = useShowToastMessage();
 
   // Otp
   const otpValue = React.useRef('');
@@ -26,11 +35,7 @@ export default function EmailOtpVerify({route}) {
   const [verifyOtp, {isLoading}] = useVerifyOtpMutation();
 
   const handelVerifyOtp = async () => {
-    // showModal('success', {
-    //   title: 'Success',
-    //   message: 'Information updated successfully.',
-    // });
-    const body = {
+    const body: {email: string; otp: string; otpToken: string} = {
       email: route?.params?.data?.email,
       otp: otpValue?.current,
       otpToken: route?.params?.data?.otpToken,
@@ -39,12 +44,14 @@ export default function EmailOtpVerify({route}) {
     try {
       const res = await verifyOtp({...body}).unwrap();
       console.log('res-', res);
-      // email
+      // @ts-ignore
       navigation.navigate('ResetPassword', {
-        data: {...body},
+        data: body,
       });
-    } catch (error) {
-      console.log('err', error);
+      toast(res?.data.message);
+    } catch (err: any) {
+      const error = err as PostV1AuthVerifyOtpErrorResponse;
+      toast(error.error.message, 'error');
     }
   };
 
