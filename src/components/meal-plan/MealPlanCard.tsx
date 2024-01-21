@@ -3,12 +3,20 @@ import React from 'react';
 import {Text, VStack} from 'native-base';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import {GetV1RecipeGetSuccessfulResponse} from '@store/schema';
-// export interface MealPlanInt {
-//   item: GetV1RecipeGetSuccessfulResponse['data']['data'];
-//   index: number;
-// }
+//  GetV1RecipeGetSuccessfulResponse['data']['data']
+export interface MealPlanInt {
+  item: any;
+  index: number;
+  onPress: () => void;
+  checked: boolean;
+}
 
-export default function MealPlanCard({index, item}: any) {
+export default function MealPlanCard({
+  index,
+  item,
+  onPress,
+  checked,
+}: MealPlanInt) {
   return (
     <VStack
       key={index}
@@ -34,8 +42,8 @@ export default function MealPlanCard({index, item}: any) {
         fillColor="#3CDB7F"
         unfillColor="#E1E0E6"
         iconStyle={{borderColor: '#FFFFFF'}}
-        // onPress={() => setChecked(prev => !prev)}
-        isChecked={true}
+        onPress={onPress}
+        isChecked={checked}
         size={20}
         style={{position: 'absolute', top: 0, right: -10}}
       />

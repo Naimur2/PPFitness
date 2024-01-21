@@ -33,9 +33,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
       PostV1MealPlanUpdateSuccessfulResponse,
       PostV1MealPlanUpdateRequestBody
     >({
-      query: id => ({
-        url: `meal-plan/update/${id}`,
+      query: props => ({
+        url: 'meal-plan/update',
         method: 'POST',
+        body: props,
       }),
     }),
   }),

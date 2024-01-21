@@ -1,11 +1,20 @@
 import React from 'react';
-import {Button, HStack, Image, ScrollView, Text, VStack} from 'native-base';
+import {
+  Button,
+  Center,
+  HStack,
+  Image,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import {useUpdateMealPlanMutation} from '@store/apis/mealPlan';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import {PostV1MealPlanUpdateErrorResponse} from '@store/schema';
 import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
 import {useGetAllRecipeQuery} from '@store/apis/recipe';
+import Tab from 'src/components/Tab';
 
 const dailyMicros = [
   {
@@ -43,31 +52,31 @@ const dailyMicros = [
 const dayTabs = [
   {
     title: 'Mon',
-    key: 'Mon',
+    key: 'Monday',
   },
   {
     title: 'Tue',
-    key: 'Tue',
+    key: 'Tuesday',
   },
   {
     title: 'Wed',
-    key: 'Wed',
+    key: 'Wednesday',
   },
   {
     title: 'Thu',
-    key: 'Thu',
+    key: 'Thursday',
   },
   {
     title: 'Fri',
-    key: 'Fri',
+    key: 'Friday',
   },
   {
     title: 'Sat',
-    key: 'Sat',
+    key: 'Saturday',
   },
   {
     title: 'Sun',
-    key: 'Sun',
+    key: 'Sunday',
   },
 ];
 
@@ -92,7 +101,7 @@ const snacks = [
 export default function CreateMealPlan() {
   const [activeTab, setActiveTab] = React.useState('Mon');
   const navigate = useNavigation();
-  const [mealPlanData, setMealPlanData] = React.useState([]);
+  const [mealPlanData, setMealPlanData] = React.useState<string[]>([]);
   // Hooks
   const toast = useShowToastMessage();
   // APIS
@@ -100,8 +109,13 @@ export default function CreateMealPlan() {
   const [handelCreate, {isLoading}] = useUpdateMealPlanMutation();
   const {data} = useGetAllRecipeQuery();
   const handleSubmit = async () => {
-    const body = {};
+    const body = {
+      day: activeTab,
+      recipe: mealPlanData,
+    };
     try {
+      console.log('body', body);
+
       const res = await handelCreate(body).unwrap();
       console.log('res', res);
       toast(res?.data?.message);
@@ -113,7 +127,7 @@ export default function CreateMealPlan() {
   };
   // data
 
-  console.log('data', JSON.stringify(data));
+  console.log('mealPlanData', JSON.stringify(mealPlanData));
 
   return (
     <ScrollView
@@ -125,6 +139,9 @@ export default function CreateMealPlan() {
         paddingVertical: 16,
       }}>
       <VStack space={4}>
+        <VStack px={2}>
+          <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
+        </VStack>
         <Text color="black" fontSize="lg" fontWeight={700} px="4">
           Breakfast
         </Text>
@@ -138,7 +155,14 @@ export default function CreateMealPlan() {
             {data?.data?.data
               ?.filter(it => it?.mealType === 'Breakfast')
               .map((item, index) => (
-                <MealPlanCard index={index} item={item} />
+                <MealPlanCard
+                  index={index}
+                  item={item}
+                  onPress={() => {
+                    setMealPlanData(prv => [...prv, item?._id]);
+                  }}
+                  checked={true}
+                />
               ))}
           </HStack>
         </ScrollView>
@@ -181,17 +205,19 @@ export default function CreateMealPlan() {
           </HStack>
         </ScrollView>
       </VStack>
-      <Button
-        w="full"
-        bg={'secondary.100'}
-        rounded={8}
-        py={3}
-        _text={{color: 'black', fontWeight: 700}}
-        _pressed={{bg: '#68696B90'}}
-        onPress={handleSubmit}
-        isLoading={isLoading}>
-        Save
-      </Button>
+      <Center px={4}>
+        <Button
+          w="full"
+          bg={'secondary.100'}
+          rounded={8}
+          py={3}
+          _text={{color: 'black', fontWeight: 700}}
+          _pressed={{bg: '#68696B90'}}
+          onPress={handleSubmit}
+          isLoading={isLoading}>
+          Save
+        </Button>
+      </Center>
     </ScrollView>
   );
 }
