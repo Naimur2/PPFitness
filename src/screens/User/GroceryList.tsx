@@ -49,7 +49,7 @@ export default function GroceryList() {
                 {gro?.unit}
               </Text>
               <Text fontWeight={'600'} color={'#58565E'} fontSize={'md'}>
-                Category
+                {gro?.category}
               </Text>
             </HStack>
           );
