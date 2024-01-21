@@ -20,13 +20,8 @@ export default function MealPlanCard({
 }: MealPlanInt) {
   const navigate = useNavigate();
   const handelNavigate = () => {
-    navigate(
-      'RecipeDetails',
-      {
-        item,
-      },
-      undefined,
-    );
+    const recipeId = item?._id;
+    navigate('RecipeDetails', recipeId, undefined);
   };
   const onLongPress = () => {
     onPress();
