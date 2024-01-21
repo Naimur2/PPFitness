@@ -223,8 +223,7 @@ export interface GetV1ProfileGetSingleErrorResponse {
   };
 }
 
-/** @format any */
-export type GetV1ProfileGetSingleIdParameterId = any;
+export type GetV1ProfileGetSingleIdParameterId = string;
 
 export interface GetV1ProfileGetSingleIdSuccessfulResponse {
   status: 'success';
@@ -357,8 +356,7 @@ export type PostV1ProfileUpdateRequestBody = (object & object) & {
   weight?: string;
 };
 
-/** @format any */
-export type DeleteV1ProfileDeleteIdParameterId = any;
+export type DeleteV1ProfileDeleteIdParameterId = string;
 
 export interface DeleteV1ProfileDeleteIdSuccessfulResponse {
   status: 'success';
@@ -389,13 +387,7 @@ export type GetV1BlogsGetParameterLimit = string;
 
 export type GetV1BlogsGetParameterSearch = string;
 
-export type GetV1BlogsGetParameterTags = string[];
-
-/** @default "blog" */
-export enum GetV1BlogsGetParameterType {
-  Blog = 'blog',
-  Study = 'study',
-}
+export type GetV1BlogsGetParameterTags = string[] | null;
 
 export interface GetV1BlogsGetSuccessfulResponse {
   status: 'success';
@@ -605,7 +597,7 @@ export type PutV1BlogsUpdateIdRequestBody = ((object & object) & object) & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717aec","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ac05f4639caa17c512a7fc","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -748,9 +740,25 @@ export type PostV1IngredientsAddRequestBody = (object & object) & {
   }[];
 };
 
-export interface PostV1IngredientsGetSuccessfulResponse {
+/**
+ * Page Number
+ * @minLength 1
+ */
+export type GetV1IngredientsGetParameterPage = string;
+
+/**
+ * Limit
+ * @minLength 1
+ */
+export type GetV1IngredientsGetParameterLimit = string;
+
+export type GetV1IngredientsGetParameterSearch = string;
+
+export type GetV1IngredientsGetParameterCategory = string;
+
+export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ab922e88c5d1ee53717aee","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ac05f4639caa17c512a7fe","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -870,34 +878,18 @@ export interface PostV1IngredientsGetSuccessfulResponse {
   };
 }
 
-export interface PostV1IngredientsGetErrorResponse {
+export interface GetV1IngredientsGetErrorResponse {
   status: 'error';
   error: {
     message: string;
   };
 }
 
-export type PostV1IngredientsGetRequestBody = (object & object) & {
-  /**
-   * Page Number
-   * @minLength 1
-   */
-  page?: string;
-  /**
-   * Limit
-   * @minLength 1
-   */
-  limit?: string;
-  search?: string;
-  category?: string;
-};
-
-/** @format any */
-export type GetV1IngredientsGetIdParameterId = any;
+export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af0","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ac05f4639caa17c512a800","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1082,8 +1074,7 @@ export type PutV1IngredientsUpdateRequestBody = ((object & object) & object) & {
   id: string;
 };
 
-/** @format any */
-export type DeleteV1IngredientsDeleteIdParameterId = any;
+export type DeleteV1IngredientsDeleteIdParameterId = string;
 
 export interface DeleteV1IngredientsDeleteIdSuccessfulResponse {
   status: 'success';
@@ -1153,7 +1144,6 @@ export type GetV1RecipeGetParameterTags = string[];
 
 export interface GetV1RecipeGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ab922e88c5d1ee53717af5","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717af6","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}]} */
   data: {
     message: string;
     meta: {
@@ -1281,7 +1271,10 @@ export interface GetV1RecipeGetSuccessfulResponse {
       dietType: string;
       /** Allergy Type of the Recipe */
       allergyType: string;
-      /** Photo of the Recipe */
+      /**
+       * Photo of the Recipe
+       * @format url
+       */
       photo: string;
       /** Tags of the Recipe */
       tags: string[];
@@ -1290,63 +1283,6 @@ export interface GetV1RecipeGetSuccessfulResponse {
       /** YYYY-MM-DDTHH:mm:ss.sssZ */
       updatedAt: string;
       mealType: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
-      totalQuantity: {
-        /**
-         * @format double
-         * @min 5e-324
-         * @exclusiveMin false
-         * @max 1.7976931348623157e+308
-         * @exclusiveMax false
-         */
-        quantity: number;
-        unit: string;
-      };
-      quantityByMicroNutrient: {
-        /**
-         * @format double
-         * @min 5e-324
-         * @exclusiveMin false
-         * @max 1.7976931348623157e+308
-         * @exclusiveMax false
-         */
-        quantity: number;
-        unit:
-          | 'g'
-          | 'ml'
-          | 'kg'
-          | 'l'
-          | 'lb'
-          | 'cal'
-          | 'kcal'
-          | 'oz'
-          | 'tsp'
-          | 'tbsp'
-          | 'cup'
-          | 'pnt'
-          | 'qt'
-          | 'gal';
-        name:
-          | 'calories'
-          | 'protein'
-          | 'fat'
-          | 'carbohydrate'
-          | 'fiber'
-          | 'sugar'
-          | 'sodium'
-          | 'potassium'
-          | 'calcium'
-          | 'iron'
-          | 'magnesium'
-          | 'zinc'
-          | 'vitaminA'
-          | 'vitaminB6'
-          | 'vitaminB12'
-          | 'vitaminC'
-          | 'vitaminD'
-          | 'vitaminE'
-          | 'vitaminK'
-          | 'water';
-      }[];
     }[];
   };
 }
@@ -1358,12 +1294,10 @@ export interface GetV1RecipeGetErrorResponse {
   };
 }
 
-/** @format any */
-export type GetV1RecipeGetIdParameterId = any;
+export type GetV1RecipeGetIdParameterId = string;
 
 export interface GetV1RecipeGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af3","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717af4","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast","totalQuantity":{"quantity":1,"unit":"cal"},"quantityByMicroNutrient":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
   data: {
     message: string;
     data: {
@@ -1457,7 +1391,10 @@ export interface GetV1RecipeGetIdSuccessfulResponse {
       dietType: string;
       /** Allergy Type of the Recipe */
       allergyType: string;
-      /** Photo of the Recipe */
+      /**
+       * Photo of the Recipe
+       * @format url
+       */
       photo: string;
       /** Tags of the Recipe */
       tags: string[];
@@ -1534,7 +1471,9 @@ export interface GetV1RecipeGetIdErrorResponse {
   };
 }
 
-export interface PutV1RecipeUpdateSuccessfulResponse {
+export type PutV1RecipeUpdateIdParameterId = string;
+
+export interface PutV1RecipeUpdateIdSuccessfulResponse {
   status: 'success';
   /** @example {"message":"Ingredient Added Successfully"} */
   data: {
@@ -1542,14 +1481,14 @@ export interface PutV1RecipeUpdateSuccessfulResponse {
   };
 }
 
-export interface PutV1RecipeUpdateErrorResponse {
+export interface PutV1RecipeUpdateIdErrorResponse {
   status: 'error';
   error: {
     message: string;
   };
 }
 
-export type PutV1RecipeUpdateRequestBody = ((object & object) & object) & {
+export type PutV1RecipeUpdateIdRequestBody = ((object & object) & object) & {
   /** Name of the Recipe */
   name?: string;
   /** Allergy Type of the Recipe */
@@ -1560,16 +1499,17 @@ export type PutV1RecipeUpdateRequestBody = ((object & object) & object) & {
   dietType?: string;
   /** Method of the Recipe */
   method?: string;
-  /** Photo of the Recipe */
+  /**
+   * Photo of the Recipe
+   * @format url
+   */
   photo?: string;
   /** Tags of the Recipe */
   tags?: string[];
   mealType?: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
-  id: string;
 };
 
-/** @format any */
-export type DeleteV1RecipeDeleteIdParameterId = any;
+export type DeleteV1RecipeDeleteIdParameterId = string;
 
 export interface DeleteV1RecipeDeleteIdSuccessfulResponse {
   status: 'success';
@@ -1602,8 +1542,7 @@ export interface PostV1MealPlanUpdateErrorResponse {
 }
 
 export type PostV1MealPlanUpdateRequestBody = (object & object) & {
-  /** Id of the Recipe */
-  recipe: any[];
+  recipe: string[];
   day:
     | 'Monday'
     | 'Tuesday'
@@ -1626,15 +1565,14 @@ export enum GetV1MealPlanGetParameterDay {
 
 export interface GetV1MealPlanGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ab922e88c5d1ee53717af8","userId":"65ab922e88c5d1ee53717af9","recipe":[{"_id":"65ab922e88c5d1ee53717afa","name":"abc","ingredients":[{"_id":"65ab922e88c5d1ee53717afb","name":"abc","category":"abc","unit":{"quantity":1,"unit":"cal"},"micronutrient":[{"quantity":1,"unit":"cal","name":"calcium"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}],"method":"abc","dietType":"abc","allergyType":"abc","photo":"abc","tags":["abc"],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z","mealType":"Breakfast"}],"day":"Sunday","createdAt":"2024-01-20T09:28:14.473Z","updatedAt":"2024-01-20T09:28:14.473Z","dailyMacro":[{"quantity":1,"unit":"cal","name":"calcium"}]}} */
   data: {
     message: string;
     data: {
       /** @format any */
-      _id: any;
+      _id?: any;
       /** @format any */
-      userId: any;
-      recipe: {
+      userId?: any;
+      recipe?: {
         /** @format any */
         _id: any;
         /** Name of the Recipe */
@@ -1726,7 +1664,10 @@ export interface GetV1MealPlanGetSuccessfulResponse {
         dietType: string;
         /** Allergy Type of the Recipe */
         allergyType: string;
-        /** Photo of the Recipe */
+        /**
+         * Photo of the Recipe
+         * @format url
+         */
         photo: string;
         /** Tags of the Recipe */
         tags: string[];
@@ -1736,7 +1677,7 @@ export interface GetV1MealPlanGetSuccessfulResponse {
         updatedAt: string;
         mealType: 'Breakfast' | 'Lunch' | 'Dinner' | 'Snack';
       }[];
-      day:
+      day?:
         | 'Monday'
         | 'Tuesday'
         | 'Wednesday'
@@ -1745,10 +1686,10 @@ export interface GetV1MealPlanGetSuccessfulResponse {
         | 'Saturday'
         | 'Sunday';
       /** YYYY-MM-DDTHH:mm:ss.sssZ */
-      createdAt: string;
+      createdAt?: string;
       /** YYYY-MM-DDTHH:mm:ss.sssZ */
-      updatedAt: string;
-      dailyMacro: {
+      updatedAt?: string;
+      dailyMacro?: {
         /**
          * @format double
          * @min 5e-324
@@ -1794,6 +1735,7 @@ export interface GetV1MealPlanGetSuccessfulResponse {
           | 'vitaminK'
           | 'water';
       }[];
+      sumOfAllMicroNutrient?: Record<string, number>;
     };
   };
 }
@@ -1805,8 +1747,7 @@ export interface GetV1MealPlanGetErrorResponse {
   };
 }
 
-/** @format any */
-export type DeleteV1MealPlanDeleteIdParameterId = any;
+export type DeleteV1MealPlanDeleteIdParameterId = string;
 
 export interface DeleteV1MealPlanDeleteIdSuccessfulResponse {
   status: 'success';
@@ -1817,6 +1758,243 @@ export interface DeleteV1MealPlanDeleteIdSuccessfulResponse {
 }
 
 export interface DeleteV1MealPlanDeleteIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export interface PostV1ExerciseAddSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Exercise Added Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1ExerciseAddErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1ExerciseAddRequestBody = ((object & object) & object) & {
+  /** Name of the Exercise */
+  name: string;
+  /** Tags of the Exercise */
+  tags: string[];
+  /** Body Part Name of the Exercise */
+  bodyPart?: string;
+  /** Equipment of the Exercise */
+  equipment?: string;
+  /** Instruction of the Exercise */
+  instruction: string;
+  /**
+   * Video of the Exercise
+   * @format url
+   */
+  video: string;
+};
+
+/**
+ * Page Number
+ * @minLength 1
+ */
+export type GetV1ExerciseGetParameterPage = string;
+
+/**
+ * Limit
+ * @minLength 1
+ */
+export type GetV1ExerciseGetParameterLimit = string;
+
+export type GetV1ExerciseGetParameterSearch = string;
+
+export type GetV1ExerciseGetParameterTags = string[];
+
+export type GetV1ExerciseGetParameterBodyPart = string;
+
+export type GetV1ExerciseGetParameterEquipment = string;
+
+export interface GetV1ExerciseGetSuccessfulResponse {
+  status: 'success';
+  data: {
+    message: string;
+    meta: {
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      total: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      page: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      limit: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      totalPages: number;
+    };
+    data: {
+      /** @format any */
+      _id: any;
+      /** Name of the Exercise */
+      name: string;
+      /**
+       * Video of the Exercise
+       * @format url
+       */
+      video: string;
+      /** Instruction of the Exercise */
+      instruction: string;
+      /** Tags of the Exercise */
+      tags: string[];
+      /** Body Part Name of the Exercise */
+      bodyPart?: string;
+      /** Equipment of the Exercise */
+      equipment?: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      createdAt: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      updatedAt: string;
+    }[];
+  };
+}
+
+export interface GetV1ExerciseGetErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type GetV1ExerciseGetIdParameterId = string;
+
+export interface GetV1ExerciseGetIdSuccessfulResponse {
+  status: 'success';
+  data: {
+    message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      /** Name of the Exercise */
+      name: string;
+      /**
+       * Video of the Exercise
+       * @format url
+       */
+      video: string;
+      /** Instruction of the Exercise */
+      instruction: string;
+      /** Tags of the Exercise */
+      tags: string[];
+      /** Body Part Name of the Exercise */
+      bodyPart?: string;
+      /** Equipment of the Exercise */
+      equipment?: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      createdAt: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      updatedAt: string;
+    };
+  };
+}
+
+export interface GetV1ExerciseGetIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PutV1ExerciseUpdateIdParameterId = string;
+
+export interface PutV1ExerciseUpdateIdSuccessfulResponse {
+  status: 'success';
+  data: {
+    message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      /** Name of the Exercise */
+      name: string;
+      /**
+       * Video of the Exercise
+       * @format url
+       */
+      video: string;
+      /** Instruction of the Exercise */
+      instruction: string;
+      /** Tags of the Exercise */
+      tags: string[];
+      /** Body Part Name of the Exercise */
+      bodyPart?: string;
+      /** Equipment of the Exercise */
+      equipment?: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      createdAt: string;
+      /** YYYY-MM-DDTHH:mm:ss.sssZ */
+      updatedAt: string;
+    };
+  };
+}
+
+export interface PutV1ExerciseUpdateIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PutV1ExerciseUpdateIdRequestBody = ((object & object) & object) & {
+  /** Name of the Exercise */
+  name: string;
+  /** Tags of the Exercise */
+  tags: string[];
+  /** Body Part Name of the Exercise */
+  bodyPart?: string;
+  /** Equipment of the Exercise */
+  equipment?: string;
+  /** Instruction of the Exercise */
+  instruction: string;
+  /**
+   * Video of the Exercise
+   * @format url
+   */
+  video: string;
+};
+
+export type DeleteV1ExerciseDeleteIdParameterId = string;
+
+export interface DeleteV1ExerciseDeleteIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Exercise Removed Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface DeleteV1ExerciseDeleteIdErrorResponse {
   status: 'error';
   error: {
     message: string;
@@ -2416,8 +2594,6 @@ export class Api<
         search?: GetV1BlogsGetParameterSearch;
         /** GET /v1/blogs/get parameter */
         tags?: GetV1BlogsGetParameterTags;
-        /** GET /v1/blogs/get parameter */
-        type?: GetV1BlogsGetParameterType;
       },
       params: RequestParams = {},
     ) =>
@@ -2584,24 +2760,32 @@ export class Api<
      * No description
      *
      * @tags Ingredients
-     * @name PostV1IngredientsGet
+     * @name GetV1IngredientsGet
      * @summary Get all ingredient endpoint
-     * @request POST:/v1/ingredients/get
+     * @request GET:/v1/ingredients/get
      * @secure
      */
-    postV1IngredientsGet: (
-      data: PostV1IngredientsGetRequestBody,
+    getV1IngredientsGet: (
+      query?: {
+        /** Page Number */
+        page?: GetV1IngredientsGetParameterPage;
+        /** Limit */
+        limit?: GetV1IngredientsGetParameterLimit;
+        /** GET /v1/ingredients/get parameter */
+        search?: GetV1IngredientsGetParameterSearch;
+        /** GET /v1/ingredients/get parameter */
+        category?: GetV1IngredientsGetParameterCategory;
+      },
       params: RequestParams = {},
     ) =>
       this.request<
-        PostV1IngredientsGetSuccessfulResponse,
-        PostV1IngredientsGetErrorResponse
+        GetV1IngredientsGetSuccessfulResponse,
+        GetV1IngredientsGetErrorResponse
       >({
         path: `/v1/ingredients/get`,
-        method: 'POST',
-        body: data,
+        method: 'GET',
+        query: query,
         secure: true,
-        type: ContentType.Json,
         format: 'json',
         ...params,
       }),
@@ -2768,20 +2952,21 @@ export class Api<
      * No description
      *
      * @tags Recipe
-     * @name PutV1RecipeUpdate
+     * @name PutV1RecipeUpdateId
      * @summary Update Ingredient endpoint
-     * @request PUT:/v1/recipe/update
+     * @request PUT:/v1/recipe/update/{id}
      * @secure
      */
-    putV1RecipeUpdate: (
-      data: PutV1RecipeUpdateRequestBody,
+    putV1RecipeUpdateId: (
+      id: PutV1RecipeUpdateIdParameterId,
+      data: PutV1RecipeUpdateIdRequestBody,
       params: RequestParams = {},
     ) =>
       this.request<
-        PutV1RecipeUpdateSuccessfulResponse,
-        PutV1RecipeUpdateErrorResponse
+        PutV1RecipeUpdateIdSuccessfulResponse,
+        PutV1RecipeUpdateIdErrorResponse
       >({
-        path: `/v1/recipe/update`,
+        path: `/v1/recipe/update/${id}`,
         method: 'PUT',
         body: data,
         secure: true,
@@ -2895,6 +3080,145 @@ export class Api<
     /**
      * No description
      *
+     * @tags Exercise
+     * @name PostV1ExerciseAdd
+     * @summary Add Exercise endpoint
+     * @request POST:/v1/exercise/add
+     * @secure
+     */
+    postV1ExerciseAdd: (
+      data: PostV1ExerciseAddRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1ExerciseAddSuccessfulResponse,
+        PostV1ExerciseAddErrorResponse
+      >({
+        path: `/v1/exercise/add`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Exercise
+     * @name GetV1ExerciseGet
+     * @summary Get all Exercise endpoint
+     * @request GET:/v1/exercise/get
+     * @secure
+     */
+    getV1ExerciseGet: (
+      query?: {
+        /** Page Number */
+        page?: GetV1ExerciseGetParameterPage;
+        /** Limit */
+        limit?: GetV1ExerciseGetParameterLimit;
+        /** GET /v1/exercise/get parameter */
+        search?: GetV1ExerciseGetParameterSearch;
+        /** GET /v1/exercise/get parameter */
+        tags?: GetV1ExerciseGetParameterTags;
+        /** GET /v1/exercise/get parameter */
+        bodyPart?: GetV1ExerciseGetParameterBodyPart;
+        /** GET /v1/exercise/get parameter */
+        equipment?: GetV1ExerciseGetParameterEquipment;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ExerciseGetSuccessfulResponse,
+        GetV1ExerciseGetErrorResponse
+      >({
+        path: `/v1/exercise/get`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Exercise
+     * @name GetV1ExerciseGetId
+     * @summary Get all Exercise endpoint
+     * @request GET:/v1/exercise/get/{id}
+     * @secure
+     */
+    getV1ExerciseGetId: (
+      id: GetV1ExerciseGetIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ExerciseGetIdSuccessfulResponse,
+        GetV1ExerciseGetIdErrorResponse
+      >({
+        path: `/v1/exercise/get/${id}`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Exercise
+     * @name PutV1ExerciseUpdateId
+     * @summary Add Exercise endpoint
+     * @request PUT:/v1/exercise/update/{id}
+     * @secure
+     */
+    putV1ExerciseUpdateId: (
+      id: PutV1ExerciseUpdateIdParameterId,
+      data: PutV1ExerciseUpdateIdRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PutV1ExerciseUpdateIdSuccessfulResponse,
+        PutV1ExerciseUpdateIdErrorResponse
+      >({
+        path: `/v1/exercise/update/${id}`,
+        method: 'PUT',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Exercise
+     * @name DeleteV1ExerciseDeleteId
+     * @summary Remove Exercise endpoint
+     * @request DELETE:/v1/exercise/delete/{id}
+     * @secure
+     */
+    deleteV1ExerciseDeleteId: (
+      id: DeleteV1ExerciseDeleteIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        DeleteV1ExerciseDeleteIdSuccessfulResponse,
+        DeleteV1ExerciseDeleteIdErrorResponse
+      >({
+        path: `/v1/exercise/delete/${id}`,
+        method: 'DELETE',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags File
      * @name PostV1FileUpload
      * @summary Upload File to S3
@@ -2921,7 +3245,7 @@ export class Api<
      *
      * @tags File
      * @name PostV1FileDelete
-     * @summary Upload File to S3
+     * @summary Delete File
      * @request POST:/v1/file/delete
      */
     postV1FileDelete: (
