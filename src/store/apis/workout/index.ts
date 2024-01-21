@@ -1,35 +1,36 @@
 import {
-  DeleteV1BlogsDeleteIdParameterId,
-  DeleteV1BlogsDeleteIdSuccessfulResponse,
-  GetV1BlogsGetIdParameterId,
-  GetV1BlogsGetIdSuccessfulResponse,
-  GetV1BlogsGetSuccessfulResponse,
-  GetV1BlogsTagsSuccessfulResponse,
-  PostV1BlogsAddRequestBody,
-  PostV1BlogsAddSuccessfulResponse,
-  PutV1BlogsUpdateIdParameterId,
-  PutV1BlogsUpdateIdSuccessfulResponse,
+  DeleteV1WorkoutDeleteIdParameterId,
+  DeleteV1WorkoutDeleteIdSuccessfulResponse,
+  GetV1WorkoutGetIdParameterId,
+  GetV1WorkoutGetIdSuccessfulResponse,
+  GetV1WorkoutGetSuccessfulResponse,
+  PostV1WorkoutAddByProgramRequestBody,
+  PostV1WorkoutAddByProgramSuccessfulResponse,
+  PostV1WorkoutAddRequestBody,
+  PostV1WorkoutAddSuccessfulResponse,
+  PutV1WorkoutUpdateIdParameterId,
+  PutV1WorkoutUpdateIdSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getSingleWorkoutById: builder.query<
-      GetV1BlogsGetIdSuccessfulResponse,
-      GetV1BlogsGetIdParameterId
+      GetV1WorkoutGetIdSuccessfulResponse,
+      GetV1WorkoutGetIdParameterId
     >({
       query: id => ({
         url: `workout/get/${id}`,
       }),
     }),
-    getAllWorkout: builder.query<GetV1BlogsGetSuccessfulResponse, any>({
+    getAllWorkout: builder.query<GetV1WorkoutGetSuccessfulResponse, void>({
       query: () => ({
         url: `workout/get`,
       }),
     }),
     deleteWorkout: builder.mutation<
-      DeleteV1BlogsDeleteIdSuccessfulResponse,
-      DeleteV1BlogsDeleteIdParameterId
+      DeleteV1WorkoutDeleteIdSuccessfulResponse,
+      DeleteV1WorkoutDeleteIdParameterId
     >({
       query: id => ({
         url: `workout/delete/${id}`,
@@ -37,17 +38,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updateWorkout: builder.mutation<
-      PutV1BlogsUpdateIdSuccessfulResponse,
-      PutV1BlogsUpdateIdParameterId
+      PutV1WorkoutUpdateIdSuccessfulResponse,
+      PutV1WorkoutUpdateIdParameterId
     >({
-      query: id => ({
-        url: `workout/update/${id}`,
+      query: props => ({
+        url: `workout/update/${props?.id}`,
         method: 'PUT',
+        body: props?.body,
       }),
     }),
     addWorkout: builder.mutation<
-      PostV1BlogsAddSuccessfulResponse,
-      PostV1BlogsAddRequestBody
+      PostV1WorkoutAddSuccessfulResponse,
+      PostV1WorkoutAddRequestBody
     >({
       query: () => ({
         url: `workout/add`,
@@ -55,8 +57,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     addWorkoutAddByProgram: builder.mutation<
-      PostV1BlogsAddSuccessfulResponse,
-      PostV1BlogsAddRequestBody
+      PostV1WorkoutAddByProgramSuccessfulResponse,
+      PostV1WorkoutAddByProgramRequestBody
     >({
       query: () => ({
         url: `workout/add/by-program`,
