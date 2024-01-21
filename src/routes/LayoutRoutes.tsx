@@ -15,6 +15,7 @@ import NotificationPreference from '@screens/User/NotificationPreference';
 import PrivacySecurity from '@screens/User/PrivacySecurity';
 import HelpSupport from '@screens/User/HelpSupport';
 import Header from 'src/components/headers/Header';
+import RecipeDetails from '@screens/User/RecipeDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -36,6 +37,13 @@ export default function LayoutRoutes() {
           },
         }}
         component={CreateMealPlan}
+      />
+      <Stack.Screen
+        name="RecipeDetails"
+        options={{
+          headerShown: false,
+        }}
+        component={RecipeDetails}
       />
       <Stack.Screen
         name="SettingsScreen"

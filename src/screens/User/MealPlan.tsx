@@ -86,7 +86,9 @@ export default function MealPlan() {
     navigate.navigate('Blogs');
   };
   const navigateToCreateMealPlan = () => {
-    navigate.navigate('CreateMealPlan');
+    navigate.navigate('CreateMealPlan', {
+      dailyMicro: activeTab,
+    });
   };
 
   // SnackData

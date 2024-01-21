@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useUpdateMealPlanMutation} from '@store/apis/mealPlan';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import {PostV1MealPlanUpdateErrorResponse} from '@store/schema';
@@ -80,26 +80,10 @@ const dayTabs = [
   },
 ];
 
-const snacks = [
-  {
-    title: 'Pan Cake',
-    image:
-      'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-  },
-  {
-    title: 'Pasta',
-    image:
-      'https://images.unsplash.com/photo-1481931098730-318b6f776db0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1980&q=80',
-  },
-  {
-    title: 'Salad',
-    image:
-      'https://images.unsplash.com/photo-1501959915551-4e8d30928317?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
-  },
-];
-
 export default function CreateMealPlan() {
-  const [activeTab, setActiveTab] = React.useState('Mon');
+  const day = useRoute()?.params?.dailyMicro;
+
+  const [activeTab, setActiveTab] = React.useState(day);
   const navigate = useNavigation();
   const [mealPlanData, setMealPlanData] = React.useState<string[]>([]);
   // Hooks
@@ -127,7 +111,7 @@ export default function CreateMealPlan() {
   };
   // data
 
-  console.log('mealPlanData', JSON.stringify(mealPlanData));
+  console.log('mealPlanData', mealPlanData);
 
   return (
     <ScrollView
@@ -159,9 +143,24 @@ export default function CreateMealPlan() {
                   index={index}
                   item={item}
                   onPress={() => {
-                    setMealPlanData(prv => [...prv, item?._id]);
+                    setMealPlanData(prv => {
+                      const itemId = item?._id;
+
+                      // Check if the item is already in the array
+                      const itemIndex = prv.indexOf(itemId);
+
+                      if (itemIndex !== -1) {
+                        // If the item is found, remove it from the array
+                        const updatedArray = [...prv];
+                        updatedArray.splice(itemIndex, 1);
+                        return updatedArray;
+                      }
+
+                      // If the item is not found, add it to the array
+                      return [...prv, itemId];
+                    });
                   }}
-                  checked={true}
+                  checked={mealPlanData?.indexOf(item?._id) == 0 ? true : false}
                 />
               ))}
           </HStack>
@@ -181,7 +180,14 @@ export default function CreateMealPlan() {
             {data?.data?.data
               ?.filter(it => it?.mealType === 'Lunch')
               .map((item, index) => (
-                <MealPlanCard index={index} item={item} />
+                <MealPlanCard
+                  index={index}
+                  item={item}
+                  onPress={() => {
+                    setMealPlanData(prv => [...prv, item?._id]);
+                  }}
+                  checked={true}
+                />
               ))}
           </HStack>
         </ScrollView>
@@ -200,7 +206,14 @@ export default function CreateMealPlan() {
             {data?.data?.data
               ?.filter(it => it?.mealType === 'Dinner')
               ?.map((item, index) => (
-                <MealPlanCard index={index} item={item} />
+                <MealPlanCard
+                  index={index}
+                  item={item}
+                  onPress={() => {
+                    setMealPlanData(prv => [...prv, item?._id]);
+                  }}
+                  checked={true}
+                />
               ))}
           </HStack>
         </ScrollView>
