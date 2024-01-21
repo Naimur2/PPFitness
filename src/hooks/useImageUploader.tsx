@@ -8,7 +8,11 @@ import {
 
 type TOnImageUpload = (fileName?: string, uri?: string) => void;
 
-export default function useImageUploader() {
+export default function useImageUploader({
+  mediaType = 'image',
+}: {
+  mediaType?: string | undefined;
+}) {
   const [fileData, setFileData] = React.useState<
     | {
         fileName?: string;
@@ -18,7 +22,7 @@ export default function useImageUploader() {
   >();
 
   const options = {
-    mediaType: 'photo' as MediaType,
+    mediaType: mediaType as MediaType,
     cameraType: 'back',
   };
 

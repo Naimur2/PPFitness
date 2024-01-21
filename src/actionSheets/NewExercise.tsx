@@ -1,12 +1,16 @@
 import React from 'react';
 import {
+  Box,
   Button,
+  Center,
+  CheckIcon,
   Checkbox,
   FormControl,
   HStack,
   Input,
   Modal,
   Pressable,
+  Select,
   Stack,
   Text,
   VStack,
@@ -16,6 +20,11 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {CloseIcon, FileUploadIcon} from '@assets/icons';
+import useImageUploader from '@hooks/useImageUploader';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import {useUpdateFileMutation} from '@store/apis/userProfile';
+import createFormFile from 'src/utils/fileDetails';
+import {useAddExerciseMutation} from '@store/apis/exercise';
 
 const colors = [
   '#4FCF8C',
@@ -25,25 +34,6 @@ const colors = [
   '#FFC542',
   '#FF5959',
   '##2A9BCE',
-];
-
-const checkBoxValues = [
-  {
-    label: 'Reps',
-    value: 'reps',
-  },
-  {
-    label: 'Time',
-    value: 'time',
-  },
-  {
-    label: 'Dist',
-    value: 'dist',
-  },
-  {
-    label: 'Body weight',
-    value: 'bodyWeight',
-  },
 ];
 
 const randomColor = (i: number) => {
@@ -56,11 +46,12 @@ const randomColor = (i: number) => {
 };
 
 const validationSchema = Yup.object().shape({
-  exerciseName: Yup.string().required('Required'),
-  tags: Yup.array().of(Yup.string().required('Required')),
-  video: Yup.string().required('Required'),
-  instructions: Yup.string().required('Required'),
-  options: Yup.array().of(Yup.string().optional()),
+  name: Yup.string().required('Name is required'),
+  tags: Yup.array().of(Yup.string()).min(1, 'At least one tag is required'),
+  bodyPart: Yup.string().required('Body part is required'),
+  equipment: Yup.string().required('Equipment is required'),
+  instruction: Yup.string().required('Instruction is required'),
+  video: Yup.object().required('Invalid video is required'),
 });
 
 interface IProps {
@@ -69,23 +60,61 @@ interface IProps {
 }
 
 export default function NewExercise({isOpen, onClose}: IProps) {
+  // state
   const [tagsVlue, setTagsValue] = React.useState<string>('');
+
+  // Hooks
+  const {handleImagePicker} = useImageUploader({
+    mediaType: 'video',
+  });
+  const toast = useShowToastMessage();
+
+  // APIS
+  const [fileUpload, {isLoading: isLoadingFile}] = useUpdateFileMutation();
+  const [addExercise, {isLoading}] = useAddExerciseMutation();
+  //  formik
   const formik = useFormik({
     initialValues: {
-      exerciseName: '',
+      name: '',
       tags: [],
+      bodyPart: '',
+      equipment: '',
+      instruction: '',
       video: '',
-      instructions: '',
-      options: [],
-    },
-    onSubmit: values => {
-      console.log(values);
     },
     validationSchema,
+    onSubmit: async values => {
+      try {
+        const fileRes = await fileUpload(values?.video).unwrap();
+        const res = await addExercise({
+          video: fileRes?.data?.data?.[0]?.url,
+          name: values?.name,
+          tags: values?.tags,
+          bodyPart: values?.bodyPart,
+          equipment: values?.equipment,
+          instruction: values?.instruction,
+        }).unwrap();
+        onClose();
+        toast(res.data?.message);
+      } catch (error) {
+        toast(error?.data?.error?.message, 'error');
+      }
+    },
   });
 
-  console.log(formik.values.tags);
-
+  const handelFileUpload = async () => {
+    try {
+      const file = await handleImagePicker();
+      const formData = new FormData();
+      if (file?.fileName && file?.uri) {
+        formData.append(
+          'files',
+          createFormFile(file?.uri, 'image', file?.fileName),
+        );
+      }
+      formik?.setFieldValue('video', formData);
+    } catch (error) {}
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Modal.Content w="100%" h="100%" flex={1}>
@@ -107,9 +136,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
               {/* Exercise Name */}
               <FormControl
                 isRequired
-                isInvalid={Boolean(
-                  formik.errors.exerciseName && formik.touched.exerciseName,
-                )}>
+                isInvalid={Boolean(formik.errors.name && formik.touched.name)}>
                 <Stack space={1}>
                   <FormControl.Label
                     color={'#1A1929'}
@@ -123,16 +150,105 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                   <Input
                     placeholder="Exercise Name"
                     fontSize={fontSizes.xs}
-                    onChangeText={formik.handleChange('exerciseName')}
-                    value={formik.values.exerciseName}
-                    onBlur={formik.handleBlur('exerciseName')}
+                    onChangeText={formik.handleChange('name')}
+                    value={formik.values.name}
+                    onBlur={formik.handleBlur('name')}
                   />
                   <FormControl.ErrorMessage>
-                    {formik.errors.exerciseName}
+                    {formik.errors.name}
                   </FormControl.ErrorMessage>
                 </Stack>
               </FormControl>
-
+              {/* Body Part*/}
+              <FormControl
+                isRequired
+                isInvalid={Boolean(
+                  formik.errors.bodyPart && formik.touched.bodyPart,
+                )}>
+                <Stack space={1}>
+                  <FormControl.Label
+                    color={'#1A1929'}
+                    _text={{
+                      color: 'black',
+                      fontSize: fontSizes.sm,
+                      fontWeight: 600,
+                    }}>
+                    Body Part
+                  </FormControl.Label>
+                  <Center>
+                    <Box w={'full'}>
+                      <Select
+                        selectedValue={formik?.values?.bodyPart}
+                        minWidth="200"
+                        accessibilityLabel="Body Part"
+                        placeholder="Select Body Part"
+                        _selectedItem={{
+                          bg: 'teal.600',
+                          endIcon: <CheckIcon size="5" />,
+                        }}
+                        mt={1}
+                        onValueChange={itemValue => {
+                          console.log('itemValue', itemValue);
+                          formik?.setFieldValue('bodyPart', itemValue);
+                        }}>
+                        {bodyPartData?.map(v => {
+                          return (
+                            <Select.Item label={v?.name} value={v?.name} />
+                          );
+                        })}
+                      </Select>
+                    </Box>
+                  </Center>
+                  <FormControl.ErrorMessage>
+                    {formik.errors.bodyPart}
+                  </FormControl.ErrorMessage>
+                </Stack>
+              </FormControl>
+              {/* Equipment */}
+              <FormControl
+                isRequired
+                isInvalid={Boolean(
+                  formik.errors.equipment && formik.touched.equipment,
+                )}>
+                <Stack space={1}>
+                  <FormControl.Label
+                    color={'#1A1929'}
+                    _text={{
+                      color: 'black',
+                      fontSize: fontSizes.sm,
+                      fontWeight: 600,
+                    }}>
+                    Equipment
+                  </FormControl.Label>
+                  <Center>
+                    <Box w={'full'}>
+                      <Select
+                        selectedValue={formik?.values?.equipment}
+                        minWidth="200"
+                        accessibilityLabel="Equipment"
+                        placeholder="Select Equipment"
+                        _selectedItem={{
+                          bg: 'teal.600',
+                          endIcon: <CheckIcon size="5" />,
+                        }}
+                        mt={1}
+                        onValueChange={itemValue => {
+                          console.log('itemValue', itemValue);
+                          formik?.setFieldValue('equipment', itemValue);
+                        }}>
+                        {equipmentData?.map(v => {
+                          return (
+                            <Select.Item label={v?.name} value={v?.name} />
+                          );
+                        })}
+                      </Select>
+                    </Box>
+                  </Center>
+                  <FormControl.ErrorMessage>
+                    {formik.errors.equipment}
+                  </FormControl.ErrorMessage>
+                </Stack>
+              </FormControl>
               {/* Tags */}
               <FormControl
                 isRequired
@@ -148,7 +264,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                     Add Tags
                   </FormControl.Label>
                   <Input
-                    placeholder="Exercise Name"
+                    placeholder="Tags"
                     fontSize={fontSizes.xs}
                     onChangeText={(text: string) => {
                       setTagsValue(text);
@@ -210,7 +326,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                 </Stack>
               </FormControl>
 
-              <HStack
+              {/* <HStack
                 style={{
                   gap: 10,
                 }}>
@@ -231,7 +347,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                     </Checkbox>
                   );
                 })}
-              </HStack>
+              </HStack> */}
 
               <FormControl mt={4}>
                 <Stack space={2}>
@@ -242,10 +358,11 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                       fontSize: fontSizes.sm,
                       fontWeight: 600,
                     }}>
-                    Add Video
+                    {formik?.values?.video ? 'Uploaded' : ' Add Video'}
                   </FormControl.Label>
 
                   <Pressable
+                    onPress={handelFileUpload}
                     display={'flex'}
                     flexDirection={'column'}
                     justifyContent={'center'}
@@ -277,7 +394,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
               <FormControl
                 isRequired
                 isInvalid={Boolean(
-                  formik.errors.instructions && formik.touched.instructions,
+                  formik.errors.instruction && formik.touched.instruction,
                 )}>
                 <Stack space={1}>
                   <FormControl.Label
@@ -287,20 +404,20 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                       fontSize: fontSizes.sm,
                       fontWeight: 600,
                     }}>
-                    Instructions
+                    Instruction
                   </FormControl.Label>
                   <Input
-                    placeholder="Exercise Name"
+                    placeholder="Instruction"
                     fontSize={fontSizes.xs}
-                    onChangeText={formik.handleChange('exerciseName')}
-                    value={formik.values.exerciseName}
-                    onBlur={formik.handleBlur('exerciseName')}
+                    onChangeText={formik.handleChange('instruction')}
+                    value={formik.values.instruction}
+                    onBlur={formik.handleBlur('instruction')}
                     numberOfLines={5}
                     multiline={true}
                     textAlignVertical="top"
                   />
                   <FormControl.ErrorMessage>
-                    {formik.errors.exerciseName}
+                    {formik.errors.instruction}
                   </FormControl.ErrorMessage>
                 </Stack>
               </FormControl>
@@ -309,6 +426,10 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                 w="full"
                 bg={'primary.100'}
                 rounded={8}
+                onPress={() => {
+                  formik?.handleSubmit();
+                }}
+                isLoading={isLoading || isLoadingFile}
                 py={3}
                 mt={4}
                 _text={{color: 'white', fontWeight: 700}}
@@ -322,3 +443,39 @@ export default function NewExercise({isOpen, onClose}: IProps) {
     </Modal>
   );
 }
+
+const bodyPartData = [
+  {id: 1, name: 'Arms'},
+  {id: 2, name: 'Legs'},
+  {id: 3, name: 'Chest'},
+  {id: 4, name: 'Back'},
+  {id: 5, name: 'Abs'},
+  {id: 6, name: 'Shoulders'},
+  {id: 7, name: 'Glutes'},
+  {id: 8, name: 'Quads'},
+  {id: 9, name: 'Hamstrings'},
+  {id: 10, name: 'Calves'},
+  {id: 11, name: 'Core'},
+  {id: 12, name: 'Triceps'},
+  {id: 13, name: 'Biceps'},
+  {id: 14, name: 'Obliques'},
+  {id: 15, name: 'Forearms'},
+];
+
+const equipmentData = [
+  {id: 1, name: 'Dumbbells'},
+  {id: 2, name: 'Barbell'},
+  {id: 3, name: 'Resistance Bands'},
+  {id: 4, name: 'Kettlebell'},
+  {id: 5, name: 'Medicine Ball'},
+  {id: 6, name: 'Smith Machine'},
+  {id: 7, name: 'Pull-up Bar'},
+  {id: 8, name: 'Rowing Machine'},
+  {id: 9, name: 'TRX Suspension Trainer'},
+  {id: 10, name: 'Elliptical Trainer'},
+  {id: 11, name: 'Stationary Bike'},
+  {id: 12, name: 'Battle Ropes'},
+  {id: 13, name: 'Pilates Ball'},
+  {id: 14, name: 'Step Platform'},
+  {id: 15, name: 'Gymnastic Rings'},
+];

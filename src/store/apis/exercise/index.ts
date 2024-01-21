@@ -25,6 +25,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `exercise/get`,
       }),
+      providesTags: ['ExerciseAdd'],
     }),
     deleteExercise: builder.mutation<
       DeleteV1ExerciseDeleteIdSuccessfulResponse,
@@ -49,10 +50,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
       PostV1ExerciseAddSuccessfulResponse,
       PostV1ExerciseAddRequestBody
     >({
-      query: () => ({
+      query: props => ({
         url: `exercise/add`,
         method: 'POST',
+        body: props,
       }),
+      invalidatesTags: ['ExerciseAdd'],
     }),
   }),
   overrideExisting: true,
