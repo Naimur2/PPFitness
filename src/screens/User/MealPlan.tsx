@@ -1,5 +1,13 @@
 import React from 'react';
-import {HStack, Image, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {
+  Box,
+  HStack,
+  Image,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import DailyMacro from 'src/components/meal-plan/DailyMacro';
 
 import Tab from 'src/components/Tab';
@@ -10,6 +18,7 @@ import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
 import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@store/features/authSlice';
 import {FlatList} from 'react-native';
+import Header from 'src/components/headers/Header';
 
 const dailyMicros = [
   {
@@ -95,127 +104,139 @@ export default function MealPlan() {
   const SnackData = data?.data?.data?.recipe?.filter(
     it => it?.mealType === 'Snack',
   );
+  console.log(' data?.data?.data', JSON.stringify(data?.data?.data));
 
   return (
-    <ScrollView
-      _contentContainerStyle={{
-        flexGrow: 1,
-        bg: '#F8F8F8',
-        gap: 4,
-      }}>
-      <VStack px="4" space={4}>
-        <Text color="black" fontSize="lg" fontWeight={700}>
-          Meal Plan
-        </Text>
-        <HStack
-          justifyContent={'space-between'}
-          px={2}
-          py={2}
-          bg="#FFFFFF"
-          rounded="xl"
-          shadow={1}>
-          {data?.data?.data?.dailyMacro.map((micro, index) => (
-            <DailyMacro
-              title={micro?.name}
-              image={
-                dailyMicros?.find(
-                  t => t?.title?.toLowerCase() === micro?.name?.toLowerCase(),
-                )?.image
-              }
-              value={`${micro?.quantity} ${micro?.unit}`}
-            />
-          ))}
-        </HStack>
-        <HStack justifyContent={'space-between'}>
-          <Pressable
-            w="48%"
-            display="flex"
-            flexDirection="row"
-            justifyContent="center"
-            alignItems="center"
-            gap={2}
-            borderRadius={8}
-            borderWidth={2}
-            borderColor="primary.100"
-            onPress={navigateToCreateMealPlan}
-            py={2}>
-            <AddIcon />
-            <Text color="primary.100" fontSize="xs" fontWeight={700}>
-              Create Meal Plan
-            </Text>
-          </Pressable>
-          <Pressable
-            w="48%"
-            display="flex"
-            flexDirection="row"
-            justifyContent="center"
-            alignItems="center"
-            gap={2}
-            borderRadius={8}
-            borderWidth={2}
-            borderColor="primary.100"
-            py={2}
-            onPress={navigateToBlogs}>
-            <Text color="primary.100" fontSize="xs" fontWeight={700}>
-              Blog / Articles
-            </Text>
-          </Pressable>
-        </HStack>
-        <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
-        <PlanItem
-          title="Breakfast"
-          items={data?.data?.data?.recipe?.filter(
-            it => it?.mealType === 'Breakfast',
-          )}
-        />
-        <PlanItem
-          title="Lunch"
-          items={data?.data?.data?.recipe?.filter(
-            it => it?.mealType === 'Lunch',
-          )}
-        />
-        <PlanItem
-          title="Dinner"
-          items={data?.data?.data?.recipe?.filter(
-            it => it?.mealType === 'Dinner',
-          )}
-        />
-      </VStack>
-      {SnackData?.length > 0 && (
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
-          Snacks
-        </Text>
-      )}
+    <Box>
+      <Header
+        title={'Meal Plan'}
+        onPress={() =>
+          navigate?.navigate('GroceryList', {
+            groceryList: data?.data?.data?.groceryList,
+          })
+        }
+        iconRightType="listBucket"
+      />
       <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
         _contentContainerStyle={{
-          mb: 4,
+          flexGrow: 1,
+          bg: '#F8F8F8',
+          gap: 4,
         }}>
-        <HStack space="2" px="4" pb="4">
-          {SnackData?.map((item, index) => (
-            <VStack
-              key={index}
-              justifyContent="center"
-              px={2}
-              style={{
-                gap: 8,
-              }}>
-              <Image
-                source={{uri: item?.photo}}
-                alt={item.name}
-                height={'120px'}
-                width={'150px'}
-                rounded="lg"
+        <VStack px="4" space={4}>
+          <Text color="black" fontSize="lg" fontWeight={700}>
+            Meal Plan
+          </Text>
+          <HStack
+            justifyContent={'space-between'}
+            px={2}
+            py={2}
+            bg="#FFFFFF"
+            rounded="xl"
+            shadow={1}>
+            {data?.data?.data?.dailyMacro.map((micro, index) => (
+              <DailyMacro
+                title={micro?.name}
+                image={
+                  dailyMicros?.find(
+                    t => t?.title?.toLowerCase() === micro?.name?.toLowerCase(),
+                  )?.image
+                }
+                value={`${micro?.quantity} ${micro?.unit}`}
               />
-
-              <Text fontSize="sm" fontWeight={600} color="black">
-                {item.name}
+            ))}
+          </HStack>
+          <HStack justifyContent={'space-between'}>
+            <Pressable
+              w="48%"
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+              gap={2}
+              borderRadius={8}
+              borderWidth={2}
+              borderColor="primary.100"
+              onPress={navigateToCreateMealPlan}
+              py={2}>
+              <AddIcon />
+              <Text color="primary.100" fontSize="xs" fontWeight={700}>
+                Create Meal Plan
               </Text>
-            </VStack>
-          ))}
-        </HStack>
+            </Pressable>
+            <Pressable
+              w="48%"
+              display="flex"
+              flexDirection="row"
+              justifyContent="center"
+              alignItems="center"
+              gap={2}
+              borderRadius={8}
+              borderWidth={2}
+              borderColor="primary.100"
+              py={2}
+              onPress={navigateToBlogs}>
+              <Text color="primary.100" fontSize="xs" fontWeight={700}>
+                Blog / Articles
+              </Text>
+            </Pressable>
+          </HStack>
+          <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
+          <PlanItem
+            title="Breakfast"
+            items={data?.data?.data?.recipe?.filter(
+              it => it?.mealType === 'Breakfast',
+            )}
+          />
+          <PlanItem
+            title="Lunch"
+            items={data?.data?.data?.recipe?.filter(
+              it => it?.mealType === 'Lunch',
+            )}
+          />
+          <PlanItem
+            title="Dinner"
+            items={data?.data?.data?.recipe?.filter(
+              it => it?.mealType === 'Dinner',
+            )}
+          />
+        </VStack>
+        {SnackData?.length > 0 && (
+          <Text color="black" fontSize="lg" fontWeight={700} px="4">
+            Snacks
+          </Text>
+        )}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          _contentContainerStyle={{
+            mb: 4,
+          }}>
+          <HStack space="2" px="4" pb="4">
+            {SnackData?.map((item, index) => (
+              <VStack
+                key={index}
+                justifyContent="center"
+                px={2}
+                style={{
+                  gap: 8,
+                }}>
+                <Image
+                  source={{uri: item?.photo}}
+                  alt={item.name}
+                  height={'120px'}
+                  width={'150px'}
+                  rounded="lg"
+                />
+
+                <Text fontSize="sm" fontWeight={600} color="black">
+                  {item.name}
+                </Text>
+              </VStack>
+            ))}
+          </HStack>
+        </ScrollView>
       </ScrollView>
-    </ScrollView>
+    </Box>
   );
 }

@@ -3,6 +3,17 @@ import VectorImage from 'react-native-vector-image';
 
 type TIconProps = typeof VectorImage.defaultProps;
 
+export function ListBucketIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/list-bucket.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
 export function PhoneHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage

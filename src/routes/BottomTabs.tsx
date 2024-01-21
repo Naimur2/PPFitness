@@ -94,9 +94,7 @@ export default function BottomTabs() {
       <Tab.Screen
         name="MealPlan"
         options={{
-          header: (props: BottomTabHeaderProps) => {
-            return <Header title={'Meal Plan'} />;
-          },
+          headerShown: false,
         }}
         component={MealPlan}
       />
