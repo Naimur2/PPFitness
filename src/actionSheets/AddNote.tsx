@@ -26,32 +26,8 @@ import {useUpdateFileMutation} from '@store/apis/userProfile';
 import createFormFile from 'src/utils/fileDetails';
 import {useAddExerciseMutation} from '@store/apis/exercise';
 
-const colors = [
-  '#4FCF8C',
-  '#FFC542',
-  '#FF5959',
-  '##2A9BCE',
-  '#FFC542',
-  '#FF5959',
-  '##2A9BCE',
-];
-
-const randomColor = (i: number) => {
-  if (i < colors.length) {
-    return colors[i];
-  }
-  const index = i % colors.length;
-
-  return colors[index];
-};
-
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  tags: Yup.array().of(Yup.string()).min(1, 'At least one tag is required'),
-  bodyPart: Yup.string().required('Body part is required'),
-  equipment: Yup.string().required('Equipment is required'),
-  instruction: Yup.string().required('Instruction is required'),
-  video: Yup.object().required('Invalid video is required'),
+  note: Yup.string().required('Note is required'),
 });
 
 interface IProps {
@@ -61,38 +37,23 @@ interface IProps {
 
 export default function AddNote({isOpen, onClose}: IProps) {
   // state
-  const [tagsVlue, setTagsValue] = React.useState<string>('');
 
   // Hooks
-  const {handleImagePicker} = useImageUploader({
-    mediaType: 'video',
-  });
+
   const toast = useShowToastMessage();
 
   // APIS
-  const [fileUpload, {isLoading: isLoadingFile}] = useUpdateFileMutation();
   const [addExercise, {isLoading}] = useAddExerciseMutation();
   //  formik
   const formik = useFormik({
     initialValues: {
-      name: '',
-      tags: [],
-      bodyPart: '',
-      equipment: '',
-      instruction: '',
-      video: '',
+      note: '',
     },
     validationSchema,
     onSubmit: async values => {
       try {
-        const fileRes = await fileUpload(values?.video).unwrap();
         const res = await addExercise({
-          video: fileRes?.data?.data?.[0]?.url,
           name: values?.name,
-          tags: values?.tags,
-          bodyPart: values?.bodyPart,
-          equipment: values?.equipment,
-          instruction: values?.instruction,
         }).unwrap();
         onClose();
         toast(res.data?.message);
@@ -102,19 +63,6 @@ export default function AddNote({isOpen, onClose}: IProps) {
     },
   });
 
-  const handelFileUpload = async () => {
-    try {
-      const file = await handleImagePicker();
-      const formData = new FormData();
-      if (file?.fileName && file?.uri) {
-        formData.append(
-          'files',
-          createFormFile(file?.uri, 'image', file?.fileName),
-        );
-      }
-      formik?.setFieldValue('video', formData);
-    } catch (error) {}
-  };
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <Modal.Content w="100%" h="100%" flex={1}>
@@ -133,10 +81,10 @@ export default function AddNote({isOpen, onClose}: IProps) {
             </Text>
 
             <VStack px={4} py={2} bg="white" space={4}>
-              {/* Exercise Name */}
+              {/*  Note */}
               <FormControl
                 isRequired
-                isInvalid={Boolean(formik.errors.name && formik.touched.name)}>
+                isInvalid={Boolean(formik.errors.note && formik.touched.note)}>
                 <Stack space={1}>
                   <FormControl.Label
                     color={'#1A1929'}
@@ -145,279 +93,17 @@ export default function AddNote({isOpen, onClose}: IProps) {
                       fontSize: fontSizes.sm,
                       fontWeight: 600,
                     }}>
-                    Exercise Name
+                    Note
                   </FormControl.Label>
                   <Input
-                    placeholder="Exercise Name"
+                    placeholder="Note"
                     fontSize={fontSizes.xs}
-                    onChangeText={formik.handleChange('name')}
-                    value={formik.values.name}
-                    onBlur={formik.handleBlur('name')}
+                    onChangeText={formik.handleChange('note')}
+                    value={formik.values.note}
+                    onBlur={formik.handleBlur('note')}
                   />
                   <FormControl.ErrorMessage>
-                    {formik.errors.name}
-                  </FormControl.ErrorMessage>
-                </Stack>
-              </FormControl>
-              {/* Body Part*/}
-              <FormControl
-                isRequired
-                isInvalid={Boolean(
-                  formik.errors.bodyPart && formik.touched.bodyPart,
-                )}>
-                <Stack space={1}>
-                  <FormControl.Label
-                    color={'#1A1929'}
-                    _text={{
-                      color: 'black',
-                      fontSize: fontSizes.sm,
-                      fontWeight: 600,
-                    }}>
-                    Body Part
-                  </FormControl.Label>
-                  <Center>
-                    <Box w={'full'}>
-                      <Select
-                        selectedValue={formik?.values?.bodyPart}
-                        minWidth="200"
-                        accessibilityLabel="Body Part"
-                        placeholder="Select Body Part"
-                        _selectedItem={{
-                          bg: 'teal.600',
-                          endIcon: <CheckIcon size="5" />,
-                        }}
-                        mt={1}
-                        onValueChange={itemValue => {
-                          console.log('itemValue', itemValue);
-                          formik?.setFieldValue('bodyPart', itemValue);
-                        }}>
-                        {bodyPartData?.map(v => {
-                          return (
-                            <Select.Item label={v?.name} value={v?.name} />
-                          );
-                        })}
-                      </Select>
-                    </Box>
-                  </Center>
-                  <FormControl.ErrorMessage>
-                    {formik.errors.bodyPart}
-                  </FormControl.ErrorMessage>
-                </Stack>
-              </FormControl>
-              {/* Equipment */}
-              <FormControl
-                isRequired
-                isInvalid={Boolean(
-                  formik.errors.equipment && formik.touched.equipment,
-                )}>
-                <Stack space={1}>
-                  <FormControl.Label
-                    color={'#1A1929'}
-                    _text={{
-                      color: 'black',
-                      fontSize: fontSizes.sm,
-                      fontWeight: 600,
-                    }}>
-                    Equipment
-                  </FormControl.Label>
-                  <Center>
-                    <Box w={'full'}>
-                      <Select
-                        selectedValue={formik?.values?.equipment}
-                        minWidth="200"
-                        accessibilityLabel="Equipment"
-                        placeholder="Select Equipment"
-                        _selectedItem={{
-                          bg: 'teal.600',
-                          endIcon: <CheckIcon size="5" />,
-                        }}
-                        mt={1}
-                        onValueChange={itemValue => {
-                          console.log('itemValue', itemValue);
-                          formik?.setFieldValue('equipment', itemValue);
-                        }}>
-                        {equipmentData?.map(v => {
-                          return (
-                            <Select.Item label={v?.name} value={v?.name} />
-                          );
-                        })}
-                      </Select>
-                    </Box>
-                  </Center>
-                  <FormControl.ErrorMessage>
-                    {formik.errors.equipment}
-                  </FormControl.ErrorMessage>
-                </Stack>
-              </FormControl>
-              {/* Tags */}
-              <FormControl
-                isRequired
-                isInvalid={Boolean(formik.errors.tags && formik.touched.tags)}>
-                <Stack space={1}>
-                  <FormControl.Label
-                    color={'#1A1929'}
-                    _text={{
-                      color: 'black',
-                      fontSize: fontSizes.sm,
-                      fontWeight: 600,
-                    }}>
-                    Add Tags
-                  </FormControl.Label>
-                  <Input
-                    placeholder="Tags"
-                    fontSize={fontSizes.xs}
-                    onChangeText={(text: string) => {
-                      setTagsValue(text);
-                    }}
-                    value={tagsVlue}
-                    onBlur={formik.handleBlur('tags')}
-                    onSubmitEditing={e => {
-                      if (formik.values.tags.includes(tagsVlue)) {
-                        return;
-                      }
-                      formik.setFieldValue('tags', [
-                        ...formik.values.tags,
-                        tagsVlue,
-                      ]);
-                      setTagsValue('');
-                    }}
-                  />
-
-                  <HStack flexWrap="wrap" style={{gap: 5}}>
-                    {formik.values.tags.map((tag: string, index: number) => {
-                      const color = randomColor(index);
-                      return (
-                        <HStack
-                          key={index}
-                          bg={color + '20'}
-                          px={3}
-                          py={1}
-                          borderRadius={5}
-                          alignItems="center"
-                          justifyContent="center"
-                          space={2}>
-                          <Pressable
-                            onPress={() => {
-                              formik.setFieldValue(
-                                'tags',
-                                formik.values.tags.filter(
-                                  (item: string) => item !== tag,
-                                ),
-                              );
-                            }}>
-                            <CloseIcon
-                              style={{tintColor: color}}
-                              height={10}
-                              width={10}
-                              resizeMode="contain"
-                            />
-                          </Pressable>
-                          <Text fontSize={fontSizes.xs} color={color}>
-                            {tag}
-                          </Text>
-                        </HStack>
-                      );
-                    })}
-                  </HStack>
-
-                  <FormControl.ErrorMessage>
-                    {formik.errors.tags}
-                  </FormControl.ErrorMessage>
-                </Stack>
-              </FormControl>
-
-              {/* <HStack
-                style={{
-                  gap: 10,
-                }}>
-                {checkBoxValues.map((item, index) => {
-                  return (
-                    <Checkbox
-                      key={index}
-                      size="sm"
-                      rounded={6}
-                      borderColor={'#7D7C81'}
-                      _checked={{
-                        bg: '##7D7C81',
-                        borderColor: '#7D7C81',
-                      }}>
-                      <Text fontSize={fontSizes.xs} color={'#7D7C81'}>
-                        {item.label}
-                      </Text>
-                    </Checkbox>
-                  );
-                })}
-              </HStack> */}
-
-              <FormControl mt={4}>
-                <Stack space={2}>
-                  <FormControl.Label
-                    color={'#1A1929'}
-                    _text={{
-                      color: 'black',
-                      fontSize: fontSizes.sm,
-                      fontWeight: 600,
-                    }}>
-                    {formik?.values?.video ? 'Uploaded' : ' Add Video'}
-                  </FormControl.Label>
-
-                  <Pressable
-                    onPress={handelFileUpload}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                    py={4}
-                    px={2}
-                    minHeight={150}
-                    borderRadius={5}
-                    borderWidth={1}
-                    borderColor={'#7D7C81'}
-                    style={{
-                      borderStyle: 'dashed',
-                    }}>
-                    <FileUploadIcon
-                      height={50}
-                      width={50}
-                      resizeMode="contain"
-                    />
-                    <Text
-                      fontSize={fontSizes.xs}
-                      color={'#7D7C81'}
-                      textAlign="center">
-                      Add Video
-                    </Text>
-                  </Pressable>
-                </Stack>
-              </FormControl>
-
-              <FormControl
-                isRequired
-                isInvalid={Boolean(
-                  formik.errors.instruction && formik.touched.instruction,
-                )}>
-                <Stack space={1}>
-                  <FormControl.Label
-                    color={'#1A1929'}
-                    _text={{
-                      color: 'black',
-                      fontSize: fontSizes.sm,
-                      fontWeight: 600,
-                    }}>
-                    Instruction
-                  </FormControl.Label>
-                  <Input
-                    placeholder="Instruction"
-                    fontSize={fontSizes.xs}
-                    onChangeText={formik.handleChange('instruction')}
-                    value={formik.values.instruction}
-                    onBlur={formik.handleBlur('instruction')}
-                    numberOfLines={5}
-                    multiline={true}
-                    textAlignVertical="top"
-                  />
-                  <FormControl.ErrorMessage>
-                    {formik.errors.instruction}
+                    {formik.errors.note}
                   </FormControl.ErrorMessage>
                 </Stack>
               </FormControl>
