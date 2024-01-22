@@ -4,6 +4,8 @@ import {
   GetV1ExerciseGetIdParameterId,
   GetV1ExerciseGetIdSuccessfulResponse,
   GetV1ExerciseGetSuccessfulResponse,
+  GetV1ExerciseHistoryIdParameterId,
+  GetV1ExerciseHistoryIdSuccessfulResponse,
   PostV1ExerciseAddRequestBody,
   PostV1ExerciseAddSuccessfulResponse,
   PutV1ExerciseUpdateIdRequestBody,
@@ -13,6 +15,21 @@ import {apiSlice} from '../index';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
+    getExerciseHistory: builder.query<GetV1ExerciseGetSuccessfulResponse, void>(
+      {
+        query: id => ({
+          url: `exercise/history/${id}`,
+        }),
+      },
+    ),
+    getExerciseHistoryBuyId: builder.query<
+      GetV1ExerciseHistoryIdSuccessfulResponse,
+      GetV1ExerciseHistoryIdParameterId
+    >({
+      query: id => ({
+        url: `exercise/history/${id}`,
+      }),
+    }),
     getSingleExerciseById: builder.query<
       GetV1ExerciseGetIdSuccessfulResponse,
       GetV1ExerciseGetIdParameterId
@@ -67,4 +84,6 @@ export const {
   useGetAllExerciseQuery,
   useGetSingleExerciseByIdQuery,
   useUpdateExerciseMutation,
+  useGetExerciseHistoryBuyIdQuery,
+  useGetExerciseHistoryQuery,
 } = authApiSlice;

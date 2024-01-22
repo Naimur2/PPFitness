@@ -14,7 +14,7 @@ export interface PostV1AuthLoginSuccessfulResponse {
   /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"id","email":"example@xyz.abc","emailVerified":false,"role":"user"}}} */
   data: {
     message: string;
-    data?: {
+    data: {
       accessToken: string;
       refreshToken: string;
       user: {
@@ -643,6 +643,206 @@ export interface DeleteV1ExerciseDeleteIdErrorResponse {
   };
 }
 
+export interface GetV1ExerciseHistorySuccessfulResponse {
+  status: 'success';
+  data: {
+    message: string;
+    data: {
+      date: string;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      week: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      day: number;
+      exercises: {
+        sets: {
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          reps: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          weight: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          rest: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          time: number;
+        }[];
+        notes: string[];
+        circuit: string;
+        warmup: string;
+        type: string;
+        createdBy: string;
+        exerciseId: {
+          /** @format any */
+          _id: any;
+          /** Name of the Exercise */
+          name: string;
+          /**
+           * Video of the Exercise
+           * @format url
+           */
+          video: string;
+          /** Instruction of the Exercise */
+          instruction: string;
+          /** Tags of the Exercise */
+          tags: string[];
+          /** Body Part Name of the Exercise */
+          bodyPart?: string;
+          /** Equipment of the Exercise */
+          equipment?: string;
+          /** @format any */
+          createdBy: any;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          createdAt: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          updatedAt: string;
+        };
+      }[];
+    }[];
+  };
+}
+
+export interface GetV1ExerciseHistoryErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type GetV1ExerciseHistoryIdParameterId = string;
+
+export interface GetV1ExerciseHistoryIdSuccessfulResponse {
+  status: 'success';
+  data: {
+    message: string;
+    data: {
+      date: string;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      week: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      day: number;
+      exercises: {
+        sets: {
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          reps: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          weight: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          rest: number;
+          /**
+           * @format double
+           * @min 5e-324
+           * @exclusiveMin false
+           * @max 1.7976931348623157e+308
+           * @exclusiveMax false
+           */
+          time: number;
+        }[];
+        notes: string[];
+        circuit: string;
+        warmup: string;
+        type: string;
+        createdBy: string;
+        exerciseId: {
+          /** @format any */
+          _id: any;
+          /** Name of the Exercise */
+          name: string;
+          /**
+           * Video of the Exercise
+           * @format url
+           */
+          video: string;
+          /** Instruction of the Exercise */
+          instruction: string;
+          /** Tags of the Exercise */
+          tags: string[];
+          /** Body Part Name of the Exercise */
+          bodyPart?: string;
+          /** Equipment of the Exercise */
+          equipment?: string;
+          /** @format any */
+          createdBy: any;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          createdAt: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          updatedAt: string;
+        };
+      }[];
+    }[];
+  };
+}
+
+export interface GetV1ExerciseHistoryIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
 export interface PostV1FileUploadSuccessfulResponse {
   status: 'success';
   /** @example {"message":"File Added Successfully","data":[{"etag":"\"a6bbcf1227fde3695d10c402d980d496\"","requestId":"M2JY8HW59S1PET5P","url":"https://ppfitness.s3.amazonaws.com/Screenshot%202024-01-13%20185527.png"}]} */
@@ -689,7 +889,7 @@ export type PostV1FileDeleteRequestBody = object & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ad5cdc72051b15c1d340b1","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ae8539132397aa6fee6af2","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -850,7 +1050,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ad5cdc72051b15c1d340b3","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae8539132397aa6fee6af4","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -981,7 +1181,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ad5cdc72051b15c1d340b5","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ae8539132397aa6fee6af6","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1665,8 +1865,6 @@ export type PostV1ProgramAddRequestBody = ((object & object) & object) & {
   startingDate: string;
   /** YYYY-MM-DDTHH:mm:ss.sssZ */
   endingDate: string;
-  /** List of assigned users */
-  assignedUsers?: any[];
 };
 
 /**
@@ -1889,6 +2087,106 @@ export interface GetV1ProgramGetIdErrorResponse {
   };
 }
 
+export type GetV1ProgramScheduleParameterDay = number | string;
+
+export type GetV1ProgramScheduleParameterWeek = number | string;
+
+/**
+ * YYYY-MM-DDTHH:mm:ss.sssZ
+ * @format date-time
+ * @pattern ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+ */
+export type GetV1ProgramScheduleParameterDate = string;
+
+export interface GetV1ProgramScheduleSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65ae853a132397aa6fee6b07","program":{"_id":"65ae853a132397aa6fee6b09","name":"abc","startingDate":"2024-01-22T15:09:46.018Z","endingDate":"2024-01-22T15:09:46.018Z","assignedUsers":[],"createdAt":"2024-01-22T15:09:46.018Z","updatedAt":"2024-01-22T15:09:46.018Z"},"assignedTo":"65ae853a132397aa6fee6b08","schedules":[{"_id":"65ae853a132397aa6fee6b0a","day":"1","week":"1","date":"2024-01-22T15:09:46.018Z","assignedTo":"65ae853a132397aa6fee6b0b","isCompleted":false,"workouts":[{"sets":[{"reps":"1","weight":"1","rest":"1","time":"1"}],"notes":["notes"],"circuit":"circuit","warmup":"warmup","type":"circuit","isCompleted":false,"parentWorkout":"65ae853a132397aa6fee6b0c"}],"programId":"65ae853a132397aa6fee6b0d","createdAt":"2024-01-22T15:09:46.018Z","updatedAt":"2024-01-22T15:09:46.018Z"}]}]} */
+  data: {
+    message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      program: {
+        /** @format any */
+        _id: any;
+        /** Name of the Program */
+        name: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        startingDate: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        endingDate: string;
+        /** List of assigned users */
+        assignedUsers?: any[];
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        createdAt: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        updatedAt: string;
+      };
+      /** @format any */
+      assignedTo: any;
+      schedules: {
+        /** @format any */
+        _id: any;
+        day: number | string;
+        week: number | string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        date: string;
+        /** @format any */
+        assignedTo: any;
+        isCompleted: boolean;
+        workouts: {
+          sets: {
+            reps: string;
+            weight: string;
+            rest: string;
+            time: string;
+          }[];
+          notes: string[];
+          circuit: string;
+          warmup: string;
+          type: 'warmup' | 'circuit' | 'workout';
+          isCompleted: boolean;
+          /** @format any */
+          parentWorkout?: any;
+        }[];
+        programId: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        createdAt: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        updatedAt: string;
+      }[];
+    }[];
+  };
+}
+
+export interface GetV1ProgramScheduleErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
 export type GetV1ProgramUserParameterDay = number | string;
 
 export type GetV1ProgramUserParameterWeek = number | string;
@@ -1902,7 +2200,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-21T18:05:16.600Z","assignedTo":"abc","programId":{"_id":"65ad5cdc72051b15c1d340c1","name":"abc","startingDate":"2024-01-21T18:05:16.600Z","endingDate":"2024-01-21T18:05:16.600Z","assignedUsers":[],"createdAt":"2024-01-21T18:05:16.600Z","updatedAt":"2024-01-21T18:05:16.600Z"},"isCompleted":false,"workouts":[{"_id":"65ad5cdc72051b15c1d340c2","exerciseId":"65ad5cdc72051b15c1d340c3","programId":"65ad5cdc72051b15c1d340c4","createdAt":"2024-01-21T18:05:16.600Z","updatedAt":"2024-01-21T18:05:16.600Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65ad5cdc72051b15c1d340c5","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-21T18:05:16.600Z","updatedAt":"2024-01-21T18:05:16.600Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-22T15:09:46.010Z","assignedTo":"abc","programId":{"_id":"65ae853a132397aa6fee6b02","name":"abc","startingDate":"2024-01-22T15:09:46.010Z","endingDate":"2024-01-22T15:09:46.010Z","assignedUsers":[],"createdAt":"2024-01-22T15:09:46.010Z","updatedAt":"2024-01-22T15:09:46.010Z"},"isCompleted":false,"workouts":[{"_id":"65ae853a132397aa6fee6b03","exerciseId":"65ae853a132397aa6fee6b04","programId":"65ae853a132397aa6fee6b05","createdAt":"2024-01-22T15:09:46.011Z","updatedAt":"2024-01-22T15:09:46.011Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65ae853a132397aa6fee6b06","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-22T15:09:46.011Z","updatedAt":"2024-01-22T15:09:46.011Z"}]} */
   data: {
     message: string;
     data: {
@@ -2032,9 +2330,46 @@ export type PutV1ProgramUpdateIdRequestBody = ((object & object) & object) & {
   startingDate: string;
   /** YYYY-MM-DDTHH:mm:ss.sssZ */
   endingDate: string;
-  /** List of assigned users */
-  assignedUsers?: any[];
 };
+
+export interface PutV1ProgramAssignSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Program Updated Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PutV1ProgramAssignErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PutV1ProgramAssignRequestBody = ((object & object) & object) & {
+  id: string;
+  userId: string;
+};
+
+export type DeleteV1ProgramRemoveParameterId = string;
+
+export type DeleteV1ProgramRemoveParameterUserId = string;
+
+export interface DeleteV1ProgramRemoveSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"User Removed Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface DeleteV1ProgramRemoveErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
 
 export type DeleteV1ProgramDeleteIdParameterId = string;
 
@@ -2136,89 +2471,6 @@ export type PostV1WorkoutAddRequestBody = (object & object) & {
   assignedTo: string;
 };
 
-export interface PostV1WorkoutAddByProgramSuccessfulResponse {
-  status: 'success';
-  /** @example {"message":"Workout Added Successfully"} */
-  data: {
-    message: string;
-  };
-}
-
-export interface PostV1WorkoutAddByProgramErrorResponse {
-  status: 'error';
-  error: {
-    message: string;
-  };
-}
-
-export type PostV1WorkoutAddByProgramRequestBody = ((object & object) &
-  object) & {
-  exerciseId: string;
-  programId: string;
-  notes?: string[];
-  sets: {
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    reps?: number;
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    weight?: number;
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    rest?: number;
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    time?: number;
-  }[];
-  circuit?: string;
-  warmup?: string;
-  type?: 'warmup' | 'circuit' | 'workout';
-  dateTime: {
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    day?: number;
-    /**
-     * @format double
-     * @min 5e-324
-     * @exclusiveMin false
-     * @max 1.7976931348623157e+308
-     * @exclusiveMax false
-     */
-    week?: number;
-    /**
-     * YYYY-MM-DDTHH:mm:ss.sssZ
-     * @format date-time
-     * @pattern ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
-     */
-    date: string;
-  };
-};
-
 /**
  * Page Number
  * @minLength 1
@@ -2233,7 +2485,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ad5cdc72051b15c1d340d7","createdBy":"65ad5cdc72051b15c1d340d8","exerciseId":"65ad5cdc72051b15c1d340d9","programId":"65ad5cdc72051b15c1d340da","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ad5cdc72051b15c1d340db","createdAt":"2024-01-21T18:05:16.834Z","updatedAt":"2024-01-21T18:05:16.834Z"}],"createdAt":"2024-01-21T18:05:16.834Z","updatedAt":"2024-01-21T18:05:16.834Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-21T18:05:16.834Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b1e","createdBy":"65ae853a132397aa6fee6b1f","exerciseId":"65ae853a132397aa6fee6b20","programId":"65ae853a132397aa6fee6b21","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b22","createdAt":"2024-01-22T15:09:46.259Z","updatedAt":"2024-01-22T15:09:46.259Z"}],"createdAt":"2024-01-22T15:09:46.259Z","updatedAt":"2024-01-22T15:09:46.259Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.259Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -2375,7 +2627,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65ad5cdc72051b15c1d340dd","createdBy":"65ad5cdc72051b15c1d340de","exerciseId":"65ad5cdc72051b15c1d340df","programId":"65ad5cdc72051b15c1d340e0","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ad5cdc72051b15c1d340e1","createdAt":"2024-01-21T18:05:16.838Z","updatedAt":"2024-01-21T18:05:16.838Z"}],"createdAt":"2024-01-21T18:05:16.838Z","updatedAt":"2024-01-21T18:05:16.838Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-21T18:05:16.838Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65ae853a132397aa6fee6b24","createdBy":"65ae853a132397aa6fee6b25","exerciseId":"65ae853a132397aa6fee6b26","programId":"65ae853a132397aa6fee6b27","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b28","createdAt":"2024-01-22T15:09:46.264Z","updatedAt":"2024-01-22T15:09:46.264Z"}],"createdAt":"2024-01-22T15:09:46.264Z","updatedAt":"2024-01-22T15:09:46.264Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.264Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -2479,25 +2731,145 @@ export interface GetV1WorkoutGetIdErrorResponse {
   };
 }
 
-export type PutV1WorkoutUpdateIdParameterId = string;
+export type GetV1WorkoutFilterParameterProgramId = string;
 
-export interface PutV1WorkoutUpdateIdSuccessfulResponse {
+/**
+ * YYYY-MM-DDTHH:mm:ss.sssZ
+ * @format date-time
+ * @pattern ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+ */
+export type GetV1WorkoutFilterParameterDate = string;
+
+export type GetV1WorkoutFilterParameterWeek = number | string;
+
+export type GetV1WorkoutFilterParameterDay = number | string;
+
+export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Workout Updated Successfully"} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65ae853a132397aa6fee6b2b","createdBy":"65ae853a132397aa6fee6b2c","exerciseId":"65ae853a132397aa6fee6b2d","programId":"65ae853a132397aa6fee6b2e","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b2f","createdAt":"2024-01-22T15:09:46.281Z","updatedAt":"2024-01-22T15:09:46.281Z"}],"createdAt":"2024-01-22T15:09:46.281Z","updatedAt":"2024-01-22T15:09:46.281Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.281Z"},"isCompleted":false}]} */
   data: {
     message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      /** @format any */
+      createdBy: any;
+      /** @format any */
+      exerciseId: any;
+      /** @format any */
+      programId: any;
+      notes?: string[];
+      sets: {
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        reps: number;
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        weight: number;
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        rest: number;
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        time: number;
+        /** @format any */
+        _id: any;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        createdAt: string;
+        /**
+         * YYYY-MM-DDTHH:mm:ss.sssZ
+         * @format date-time
+         */
+        updatedAt: string;
+      }[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt: string;
+      circuit?: string;
+      warmup?: string;
+      type?: 'warmup' | 'circuit' | 'workout';
+      dateTime: {
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        day?: number;
+        /**
+         * @format double
+         * @min 5e-324
+         * @exclusiveMin false
+         * @max 1.7976931348623157e+308
+         * @exclusiveMax false
+         */
+        week?: number;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date: string;
+      };
+      isCompleted?: boolean;
+    }[];
   };
 }
 
-export interface PutV1WorkoutUpdateIdErrorResponse {
+export interface GetV1WorkoutFilterErrorResponse {
   status: 'error';
   error: {
     message: string;
   };
 }
 
-export type PutV1WorkoutUpdateIdRequestBody = ((object & object) & object) & {
-  sets?: {
+export type PostV1WorkoutUpdateIdParameterId = string;
+
+export interface PostV1WorkoutUpdateIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Workout Added Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1WorkoutUpdateIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1WorkoutUpdateIdRequestBody = (object & object) & {
+  notes?: string[];
+  sets: {
     /**
      * @format double
      * @min 5e-324
@@ -2531,7 +2903,81 @@ export type PutV1WorkoutUpdateIdRequestBody = ((object & object) & object) & {
      */
     time?: number;
   }[];
+  circuit?: string;
+  warmup?: string;
+  type?: 'warmup' | 'circuit' | 'workout';
+};
+
+export type DeleteV1WorkoutDeleteIdParameterId = string;
+
+export interface DeleteV1WorkoutDeleteIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Workout Removed Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface DeleteV1WorkoutDeleteIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export interface PostV1WorkoutAdminAddSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Workout Added Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1WorkoutAdminAddErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1WorkoutAdminAddRequestBody = ((object & object) & object) & {
+  exerciseId: string;
+  programId: string;
   notes?: string[];
+  sets: {
+    /**
+     * @format double
+     * @min 5e-324
+     * @exclusiveMin false
+     * @max 1.7976931348623157e+308
+     * @exclusiveMax false
+     */
+    reps?: number;
+    /**
+     * @format double
+     * @min 5e-324
+     * @exclusiveMin false
+     * @max 1.7976931348623157e+308
+     * @exclusiveMax false
+     */
+    weight?: number;
+    /**
+     * @format double
+     * @min 5e-324
+     * @exclusiveMin false
+     * @max 1.7976931348623157e+308
+     * @exclusiveMax false
+     */
+    rest?: number;
+    /**
+     * @format double
+     * @min 5e-324
+     * @exclusiveMin false
+     * @max 1.7976931348623157e+308
+     * @exclusiveMax false
+     */
+    time?: number;
+  }[];
   circuit?: string;
   warmup?: string;
   type?: 'warmup' | 'circuit' | 'workout';
@@ -2552,28 +2998,14 @@ export type PutV1WorkoutUpdateIdRequestBody = ((object & object) & object) & {
      * @exclusiveMax false
      */
     week?: number;
-    /** YYYY-MM-DDTHH:mm:ss.sssZ */
+    /**
+     * YYYY-MM-DDTHH:mm:ss.sssZ
+     * @format date-time
+     * @pattern ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+     */
     date: string;
   };
-  isCompleted?: boolean;
 };
-
-export type DeleteV1WorkoutDeleteIdParameterId = string;
-
-export interface DeleteV1WorkoutDeleteIdSuccessfulResponse {
-  status: 'success';
-  /** @example {"message":"Workout Removed Successfully"} */
-  data: {
-    message: string;
-  };
-}
-
-export interface DeleteV1WorkoutDeleteIdErrorResponse {
-  status: 'error';
-  error: {
-    message: string;
-  };
-}
 
 export interface PostV1RecipeAddSuccessfulResponse {
   status: 'success';
@@ -3004,6 +3436,187 @@ export interface DeleteV1RecipeDeleteIdSuccessfulResponse {
 }
 
 export interface DeleteV1RecipeDeleteIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export interface PostV1ChatSendMessagesSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Message Sent Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1ChatSendMessagesErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1ChatSendMessagesRequestBody = (object & object) & {
+  to?: string;
+  message?: string;
+  files?: string[];
+};
+
+/**
+ * Page Number
+ * @minLength 1
+ */
+export type GetV1ChatChatParameterPage = string;
+
+/**
+ * Limit
+ * @minLength 1
+ */
+export type GetV1ChatChatParameterLimit = string;
+
+export interface GetV1ChatChatSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b35","text":"text","files":["files"],"createdAt":"2024-01-22T15:09:46.350Z","updatedAt":"2024-01-22T15:09:46.350Z","sender":"65ae853a132397aa6fee6b36"}]} */
+  data: {
+    message: string;
+    meta: {
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      total: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      page: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      limit: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      totalPages: number;
+    };
+    data: {
+      /** @format any */
+      _id?: any;
+      text?: string;
+      files?: string[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt?: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt?: string;
+      /** @format any */
+      sender: any;
+    }[];
+  };
+}
+
+export interface GetV1ChatChatErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+/**
+ * Page Number
+ * @minLength 1
+ */
+export type GetV1ChatGetIdParameterPage = string;
+
+/**
+ * Limit
+ * @minLength 1
+ */
+export type GetV1ChatGetIdParameterLimit = string;
+
+export type GetV1ChatGetIdParameterId = string;
+
+export interface GetV1ChatGetIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b37","text":"text","files":["files"],"createdAt":"2024-01-22T15:09:46.354Z","updatedAt":"2024-01-22T15:09:46.354Z","sender":"65ae853a132397aa6fee6b38"}]} */
+  data: {
+    message: string;
+    meta: {
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      total: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      page: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      limit: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      totalPages: number;
+    };
+    data: {
+      /** @format any */
+      _id?: any;
+      text?: string;
+      files?: string[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt?: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt?: string;
+      /** @format any */
+      sender: any;
+    }[];
+  };
+}
+
+export interface GetV1ChatGetIdErrorResponse {
   status: 'error';
   error: {
     message: string;
@@ -3710,6 +4323,51 @@ export class Api<
     /**
      * No description
      *
+     * @tags Exercise
+     * @name GetV1ExerciseHistory
+     * @summary Get all Exercise endpoint
+     * @request GET:/v1/exercise/history
+     * @secure
+     */
+    getV1ExerciseHistory: (params: RequestParams = {}) =>
+      this.request<
+        GetV1ExerciseHistorySuccessfulResponse,
+        GetV1ExerciseHistoryErrorResponse
+      >({
+        path: `/v1/exercise/history`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Exercise
+     * @name GetV1ExerciseHistoryId
+     * @summary Get all Exercise endpoint
+     * @request GET:/v1/exercise/history/{id}
+     * @secure
+     */
+    getV1ExerciseHistoryId: (
+      id: GetV1ExerciseHistoryIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ExerciseHistoryIdSuccessfulResponse,
+        GetV1ExerciseHistoryIdErrorResponse
+      >({
+        path: `/v1/exercise/history/${id}`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags File
      * @name PostV1FileUpload
      * @summary Upload File to S3
@@ -4180,6 +4838,38 @@ export class Api<
      * No description
      *
      * @tags Program
+     * @name GetV1ProgramSchedule
+     * @summary Get Program With Schedule by User endpoint
+     * @request GET:/v1/program/schedule
+     * @secure
+     */
+    getV1ProgramSchedule: (
+      query?: {
+        /** GET /v1/program/schedule parameter */
+        day?: GetV1ProgramScheduleParameterDay;
+        /** GET /v1/program/schedule parameter */
+        week?: GetV1ProgramScheduleParameterWeek;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date?: GetV1ProgramScheduleParameterDate;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ProgramScheduleSuccessfulResponse,
+        GetV1ProgramScheduleErrorResponse
+      >({
+        path: `/v1/program/schedule`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Program
      * @name GetV1ProgramUser
      * @summary Get Single Program by User endpoint
      * @request GET:/v1/program/user
@@ -4239,6 +4929,62 @@ export class Api<
      * No description
      *
      * @tags Program
+     * @name PutV1ProgramAssign
+     * @summary Assign program to user endpoint
+     * @request PUT:/v1/program/assign
+     * @secure
+     */
+    putV1ProgramAssign: (
+      data: PutV1ProgramAssignRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PutV1ProgramAssignSuccessfulResponse,
+        PutV1ProgramAssignErrorResponse
+      >({
+        path: `/v1/program/assign`,
+        method: 'PUT',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Program
+     * @name DeleteV1ProgramRemove
+     * @summary Remove Program endpoint
+     * @request DELETE:/v1/program/remove
+     * @secure
+     */
+    deleteV1ProgramRemove: (
+      query: {
+        /** DELETE /v1/program/remove parameter */
+        id: DeleteV1ProgramRemoveParameterId;
+        /** DELETE /v1/program/remove parameter */
+        userId: DeleteV1ProgramRemoveParameterUserId;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        DeleteV1ProgramRemoveSuccessfulResponse,
+        DeleteV1ProgramRemoveErrorResponse
+      >({
+        path: `/v1/program/remove`,
+        method: 'DELETE',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Program
      * @name DeleteV1ProgramDeleteId
      * @summary Remove Program endpoint
      * @request DELETE:/v1/program/delete/{id}
@@ -4277,32 +5023,6 @@ export class Api<
         PostV1WorkoutAddErrorResponse
       >({
         path: `/v1/workout/add`,
-        method: 'POST',
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Workout
-     * @name PostV1WorkoutAddByProgram
-     * @summary Add Workout Exercise endpoint
-     * @request POST:/v1/workout/add/by-program
-     * @secure
-     */
-    postV1WorkoutAddByProgram: (
-      data: PostV1WorkoutAddByProgramRequestBody,
-      params: RequestParams = {},
-    ) =>
-      this.request<
-        PostV1WorkoutAddByProgramSuccessfulResponse,
-        PostV1WorkoutAddByProgramErrorResponse
-      >({
-        path: `/v1/workout/add/by-program`,
         method: 'POST',
         body: data,
         secure: true,
@@ -4369,22 +5089,56 @@ export class Api<
      * No description
      *
      * @tags Workout
-     * @name PutV1WorkoutUpdateId
-     * @summary Update Workout endpoint
-     * @request PUT:/v1/workout/update/{id}
+     * @name GetV1WorkoutFilter
+     * @summary Get Single Workout by filter endpoint
+     * @request GET:/v1/workout/filter
      * @secure
      */
-    putV1WorkoutUpdateId: (
-      data: PutV1WorkoutUpdateIdRequestBody,
-      id?: PutV1WorkoutUpdateIdParameterId,
+    getV1WorkoutFilter: (
+      query?: {
+        /** GET /v1/workout/filter parameter */
+        programId?: GetV1WorkoutFilterParameterProgramId;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date?: GetV1WorkoutFilterParameterDate;
+        /** GET /v1/workout/filter parameter */
+        week?: GetV1WorkoutFilterParameterWeek;
+        /** GET /v1/workout/filter parameter */
+        day?: GetV1WorkoutFilterParameterDay;
+      },
       params: RequestParams = {},
     ) =>
       this.request<
-        PutV1WorkoutUpdateIdSuccessfulResponse,
-        PutV1WorkoutUpdateIdErrorResponse
+        GetV1WorkoutFilterSuccessfulResponse,
+        GetV1WorkoutFilterErrorResponse
+      >({
+        path: `/v1/workout/filter`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Workout
+     * @name PostV1WorkoutUpdateId
+     * @summary Updated Workout endpoint
+     * @request POST:/v1/workout/update/{id}
+     * @secure
+     */
+    postV1WorkoutUpdateId: (
+      id: PostV1WorkoutUpdateIdParameterId,
+      data: PostV1WorkoutUpdateIdRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1WorkoutUpdateIdSuccessfulResponse,
+        PostV1WorkoutUpdateIdErrorResponse
       >({
         path: `/v1/workout/update/${id}`,
-        method: 'PUT',
+        method: 'POST',
         body: data,
         secure: true,
         type: ContentType.Json,
@@ -4412,6 +5166,32 @@ export class Api<
         path: `/v1/workout/delete/${id}`,
         method: 'DELETE',
         secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Workout
+     * @name PostV1WorkoutAdminAdd
+     * @summary Add Workout Exercise endpoint
+     * @request POST:/v1/workout/admin/add
+     * @secure
+     */
+    postV1WorkoutAdminAdd: (
+      data: PostV1WorkoutAdminAddRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1WorkoutAdminAddSuccessfulResponse,
+        PostV1WorkoutAdminAddErrorResponse
+      >({
+        path: `/v1/workout/admin/add`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: 'json',
         ...params,
       }),
@@ -4546,6 +5326,92 @@ export class Api<
       >({
         path: `/v1/recipe/delete/${id}`,
         method: 'DELETE',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Chat
+     * @name PostV1ChatSendMessages
+     * @summary Send Message endpoint
+     * @request POST:/v1/chat/send-messages
+     * @secure
+     */
+    postV1ChatSendMessages: (
+      data: PostV1ChatSendMessagesRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1ChatSendMessagesSuccessfulResponse,
+        PostV1ChatSendMessagesErrorResponse
+      >({
+        path: `/v1/chat/send-messages`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Get Chats endpoint
+     *
+     * @tags Chat
+     * @name GetV1ChatChat
+     * @summary Get Chats endpoint
+     * @request GET:/v1/chat/chat
+     * @secure
+     */
+    getV1ChatChat: (
+      query?: {
+        /** Page Number */
+        page?: GetV1ChatChatParameterPage;
+        /** Limit */
+        limit?: GetV1ChatChatParameterLimit;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<GetV1ChatChatSuccessfulResponse, GetV1ChatChatErrorResponse>(
+        {
+          path: `/v1/chat/chat`,
+          method: 'GET',
+          query: query,
+          secure: true,
+          format: 'json',
+          ...params,
+        },
+      ),
+
+    /**
+     * No description
+     *
+     * @tags Chat
+     * @name GetV1ChatGetId
+     * @summary Chat endpoint
+     * @request GET:/v1/chat/get/{id}
+     * @secure
+     */
+    getV1ChatGetId: (
+      id?: GetV1ChatGetIdParameterId,
+      query?: {
+        /** Page Number */
+        page?: GetV1ChatGetIdParameterPage;
+        /** Limit */
+        limit?: GetV1ChatGetIdParameterLimit;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ChatGetIdSuccessfulResponse,
+        GetV1ChatGetIdErrorResponse
+      >({
+        path: `/v1/chat/get/${id}`,
+        method: 'GET',
+        query: query,
         secure: true,
         format: 'json',
         ...params,

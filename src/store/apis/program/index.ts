@@ -1,11 +1,17 @@
 import {
   DeleteV1ProgramDeleteIdParameterId,
   DeleteV1ProgramDeleteIdSuccessfulResponse,
+  DeleteV1ProgramRemoveParameterId,
+  DeleteV1ProgramRemoveSuccessfulResponse,
   GetV1ProgramGetIdParameterId,
   GetV1ProgramGetIdSuccessfulResponse,
   GetV1ProgramGetSuccessfulResponse,
+  GetV1ProgramScheduleSuccessfulResponse,
+  GetV1ProgramUserSuccessfulResponse,
   PostV1ProgramAddRequestBody,
   PostV1ProgramAddSuccessfulResponse,
+  PutV1ProgramAssignRequestBody,
+  PutV1ProgramAssignSuccessfulResponse,
   PutV1ProgramUpdateIdRequestBody,
   PutV1ProgramUpdateIdSuccessfulResponse,
 } from '@store/schema';
@@ -26,12 +32,34 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `program/get`,
       }),
     }),
+    getProgramSchedule: builder.query<
+      GetV1ProgramScheduleSuccessfulResponse,
+      void
+    >({
+      query: () => ({
+        url: `program/schedule`,
+      }),
+    }),
+    getProgramUser: builder.query<GetV1ProgramUserSuccessfulResponse, void>({
+      query: () => ({
+        url: `program/user`,
+      }),
+    }),
     deleteProgram: builder.mutation<
       DeleteV1ProgramDeleteIdSuccessfulResponse,
       DeleteV1ProgramDeleteIdParameterId
     >({
       query: id => ({
         url: `program/delete/${id}`,
+        method: 'DELETE',
+      }),
+    }),
+    removeProgram: builder.mutation<
+      DeleteV1ProgramRemoveSuccessfulResponse,
+      DeleteV1ProgramRemoveParameterId
+    >({
+      query: id => ({
+        url: `program/remove/${id}`,
         method: 'DELETE',
       }),
     }),
@@ -42,6 +70,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: id => ({
         url: `program/update/${id}`,
         method: 'PUT',
+      }),
+    }),
+    assignProgram: builder.mutation<
+      PutV1ProgramAssignSuccessfulResponse,
+      PutV1ProgramAssignRequestBody
+    >({
+      query: props => ({
+        url: `program/assign`,
+        method: 'PUT',
+        body: props,
       }),
     }),
     addProgram: builder.mutation<
@@ -62,4 +100,8 @@ export const {
   useDeleteProgramMutation,
   useGetAllProgramQuery,
   useGetSingleProgramByIdQuery,
+  useGetProgramScheduleQuery,
+  useGetProgramUserQuery,
+  useAssignProgramMutation,
+  useRemoveProgramMutation,
 } = authApiSlice;
