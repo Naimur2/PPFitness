@@ -1,4 +1,5 @@
 import {GetV1ExerciseGetIdSuccessfulResponse} from '@store/schema';
+import dayjs from 'dayjs';
 import {Text, VStack} from 'native-base';
 import React from 'react';
 import TableRow from 'src/components/TableRow';
@@ -6,296 +7,68 @@ interface Props {
   data: GetV1ExerciseGetIdSuccessfulResponse['data']['data'];
 }
 export default function PersonalBest({data}: Props) {
-  // data
-  console.log('data', data);
-
   return (
-    <VStack space={4}>
-      <VStack space="3" mt={5}>
-        <Text fontWeight={700} fontSize="lg" color="black">
-          February 28, 2023
-        </Text>
-        <VStack space="4">
-          <TableRow
-            _containerStyle={{
-              bg: '#EFEEF4',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#58565E',
-              fontSize: 'sm',
-              fontWeight: 700,
-            }}
-            cols={[
-              {
-                title: 'Sets',
-                key: 'Sets',
-              },
-              {
-                title: 'Reps',
-                key: 'Reps',
-              },
-              {
-                title: 'Weight',
-                key: 'Weight',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-        </VStack>
-      </VStack>
-      <VStack space="3" mt={5}>
-        <Text fontWeight={700} fontSize="lg" color="black">
-          February 27, 2023
-        </Text>
-        <VStack space="4">
-          <TableRow
-            _containerStyle={{
-              bg: '#EFEEF4',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#58565E',
-              fontSize: 'sm',
-              fontWeight: 700,
-            }}
-            cols={[
-              {
-                title: 'Sets',
-                key: 'Sets',
-              },
-              {
-                title: 'Reps',
-                key: 'Reps',
-              },
-              {
-                title: 'Weight',
-                key: 'Weight',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-        </VStack>
-      </VStack>
-      <VStack space="3" mt={5}>
-        <Text fontWeight={700} fontSize="lg" color="black">
-          February 26, 2023
-        </Text>
-        <VStack space="4">
-          <TableRow
-            _containerStyle={{
-              bg: '#EFEEF4',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#58565E',
-              fontSize: 'sm',
-              fontWeight: 700,
-            }}
-            cols={[
-              {
-                title: 'Sets',
-                key: 'Sets',
-              },
-              {
-                title: 'Reps',
-                key: 'Reps',
-              },
-              {
-                title: 'Weight',
-                key: 'Weight',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-          <TableRow
-            _containerStyle={{
-              bg: 'white',
-              py: 2,
-            }}
-            _textStyle={{
-              color: '#7D7C81',
-              fontSize: 'sm',
-            }}
-            cols={[
-              {
-                title: '3',
-              },
-              {
-                title: '12',
-              },
-              {
-                title: '15kg',
-              },
-            ]}
-          />
-        </VStack>
-      </VStack>
+    <VStack space={4} mt={5}>
+      <TableRow
+        _containerStyle={{
+          bg: '#EFEEF4',
+          py: 2,
+        }}
+        _textStyle={{
+          color: '#58565E',
+          fontSize: 'sm',
+          fontWeight: 700,
+        }}
+        cols={[
+          {
+            title: 'Reps',
+            key: 'Reps',
+          },
+          {
+            title: 'Date',
+            key: 'Date',
+          },
+          {
+            title: 'Max Weight',
+            key: 'Max Weight',
+          },
+        ]}
+      />
+      {data?.map(item => {
+        return (
+          <VStack space="3">
+            {item?.exercises?.map(ex => {
+              return (
+                <VStack space="4">
+                  <TableRow
+                    _containerStyle={{
+                      bg: 'white',
+                      py: 2,
+                    }}
+                    _textStyle={{
+                      color: '#7D7C81',
+                      fontSize: 'sm',
+                    }}
+                    cols={ex?.sets?.map(set => {
+                      return [
+                        {
+                          title: set?.reps,
+                        },
+                        {
+                          title: dayjs(item?.date).format('MMMM DD,YYYY'),
+                        },
+                        {
+                          title: `${set?.weight}kg`,
+                        },
+                      ];
+                    })}
+                  />
+                </VStack>
+              );
+            })}
+          </VStack>
+        );
+      })}
     </VStack>
   );
 }
