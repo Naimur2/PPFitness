@@ -2,11 +2,10 @@ import {GetV1ExerciseGetIdSuccessfulResponse} from '@store/schema';
 import {Text, VStack} from 'native-base';
 import React from 'react';
 import TableRow from 'src/components/TableRow';
-
 interface Props {
   data: GetV1ExerciseGetIdSuccessfulResponse['data']['data'];
 }
-export default function ExerciseHistory({data}: Props) {
+export default function PersonalBest({data}: Props) {
   // data
   console.log('data', data);
 

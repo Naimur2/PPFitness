@@ -11,7 +11,10 @@ import {
 } from 'native-base';
 import {AddIcon, ArrowDownIcon, Support} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
-import {useGetAllProgramQuery} from '@store/apis/program';
+import {
+  useGetAllProgramQuery,
+  useGetProgramScheduleQuery,
+} from '@store/apis/program';
 import AddExercise from 'src/actionSheets/AddExercise';
 
 const tabItems = [
@@ -78,8 +81,8 @@ export default function ProgramTab() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   // APIS
-  const {data} = useGetAllProgramQuery();
-  console.log('data', data?.data?.data);
+  const {data} = useGetProgramScheduleQuery();
+  // console.log('data', data?.data?.data);
 
   return (
     <ScrollView
@@ -197,7 +200,7 @@ export default function ProgramTab() {
           onPress={() => setIsOpen(true)}>
           <AddIcon />
           <Text color="primary.100" fontSize="sm" fontWeight={700}>
-            Add Exercise
+            Add Workout
           </Text>
         </Pressable>
 

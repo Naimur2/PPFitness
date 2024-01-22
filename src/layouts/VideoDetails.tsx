@@ -1,11 +1,17 @@
 import React from 'react';
 import {Factory, HStack, Text, VStack} from 'native-base';
 import Video from 'react-native-video';
+import {GetV1ExerciseGetIdSuccessfulResponse} from '@store/schema';
 
+interface Props {
+  data: GetV1ExerciseGetIdSuccessfulResponse['data']['data'];
+}
 
-
-export default function VideoDetails() {
+export default function VideoDetails({data}: Props) {
   const FVideo = Factory(Video);
+  //
+  // console.log('data', data);
+
   return (
     <VStack space={8} mt={5}>
       <FVideo

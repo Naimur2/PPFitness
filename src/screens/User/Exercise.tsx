@@ -87,7 +87,7 @@ export default function Exercise() {
       <ExerciseItem
         title="B"
         items={data?.data?.data || []}
-        onPress={id => navigation.navigate('ExerciseDetails', {id})}
+        onPress={id => navigation.navigate('ExerciseDetails', {id: 'dddd'})}
       />
       <NewExercise
         isOpen={isOpen}
