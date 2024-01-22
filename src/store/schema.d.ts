@@ -889,7 +889,7 @@ export type PostV1FileDeleteRequestBody = object & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ae8539132397aa6fee6af2","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aea7f4736ab26ea73f613b","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1050,7 +1050,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae8539132397aa6fee6af4","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aea7f4736ab26ea73f613d","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -1181,7 +1181,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65ae8539132397aa6fee6af6","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65aea7f4736ab26ea73f613f","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -2100,7 +2100,7 @@ export type GetV1ProgramScheduleParameterDate = string;
 
 export interface GetV1ProgramScheduleSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65ae853a132397aa6fee6b07","program":{"_id":"65ae853a132397aa6fee6b09","name":"abc","startingDate":"2024-01-22T15:09:46.018Z","endingDate":"2024-01-22T15:09:46.018Z","assignedUsers":[],"createdAt":"2024-01-22T15:09:46.018Z","updatedAt":"2024-01-22T15:09:46.018Z"},"assignedTo":"65ae853a132397aa6fee6b08","schedules":[{"_id":"65ae853a132397aa6fee6b0a","day":"1","week":"1","date":"2024-01-22T15:09:46.018Z","assignedTo":"65ae853a132397aa6fee6b0b","isCompleted":false,"workouts":[{"sets":[{"reps":"1","weight":"1","rest":"1","time":"1"}],"notes":["notes"],"circuit":"circuit","warmup":"warmup","type":"circuit","isCompleted":false,"parentWorkout":"65ae853a132397aa6fee6b0c"}],"programId":"65ae853a132397aa6fee6b0d","createdAt":"2024-01-22T15:09:46.018Z","updatedAt":"2024-01-22T15:09:46.018Z"}]}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65aea7f4736ab26ea73f6150","program":{"_id":"65aea7f4736ab26ea73f6152","name":"abc","startingDate":"2024-01-22T17:37:56.407Z","endingDate":"2024-01-22T17:37:56.407Z","assignedUsers":[],"createdAt":"2024-01-22T17:37:56.407Z","updatedAt":"2024-01-22T17:37:56.407Z"},"assignedTo":"65aea7f4736ab26ea73f6151","schedules":[{"_id":"65aea7f4736ab26ea73f6153","day":"1","week":"1","date":"2024-01-22T17:37:56.407Z","assignedTo":"65aea7f4736ab26ea73f6154","isCompleted":false,"workouts":[{"sets":[{"reps":"1","weight":"1","rest":"1","time":"1"}],"notes":["notes"],"circuit":"circuit","warmup":"warmup","type":"circuit","isCompleted":false,"parentWorkout":"65aea7f4736ab26ea73f6155","exerciseId":"65aea7f4736ab26ea73f6156"}],"programId":"65aea7f4736ab26ea73f6157","createdAt":"2024-01-22T17:37:56.407Z","updatedAt":"2024-01-22T17:37:56.407Z"}]}]} */
   data: {
     message: string;
     data: {
@@ -2163,6 +2163,8 @@ export interface GetV1ProgramScheduleSuccessfulResponse {
           isCompleted: boolean;
           /** @format any */
           parentWorkout?: any;
+          /** @format any */
+          exerciseId: any;
         }[];
         programId: string;
         /**
@@ -2200,7 +2202,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-22T15:09:46.010Z","assignedTo":"abc","programId":{"_id":"65ae853a132397aa6fee6b02","name":"abc","startingDate":"2024-01-22T15:09:46.010Z","endingDate":"2024-01-22T15:09:46.010Z","assignedUsers":[],"createdAt":"2024-01-22T15:09:46.010Z","updatedAt":"2024-01-22T15:09:46.010Z"},"isCompleted":false,"workouts":[{"_id":"65ae853a132397aa6fee6b03","exerciseId":"65ae853a132397aa6fee6b04","programId":"65ae853a132397aa6fee6b05","createdAt":"2024-01-22T15:09:46.011Z","updatedAt":"2024-01-22T15:09:46.011Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65ae853a132397aa6fee6b06","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-22T15:09:46.011Z","updatedAt":"2024-01-22T15:09:46.011Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-22T17:37:56.399Z","assignedTo":"abc","programId":{"_id":"65aea7f4736ab26ea73f614b","name":"abc","startingDate":"2024-01-22T17:37:56.399Z","endingDate":"2024-01-22T17:37:56.399Z","assignedUsers":[],"createdAt":"2024-01-22T17:37:56.399Z","updatedAt":"2024-01-22T17:37:56.399Z"},"isCompleted":false,"workouts":[{"_id":"65aea7f4736ab26ea73f614c","exerciseId":"65aea7f4736ab26ea73f614d","programId":"65aea7f4736ab26ea73f614e","createdAt":"2024-01-22T17:37:56.399Z","updatedAt":"2024-01-22T17:37:56.399Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65aea7f4736ab26ea73f614f","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-22T17:37:56.399Z","updatedAt":"2024-01-22T17:37:56.399Z"}]} */
   data: {
     message: string;
     data: {
@@ -2485,7 +2487,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b1e","createdBy":"65ae853a132397aa6fee6b1f","exerciseId":"65ae853a132397aa6fee6b20","programId":"65ae853a132397aa6fee6b21","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b22","createdAt":"2024-01-22T15:09:46.259Z","updatedAt":"2024-01-22T15:09:46.259Z"}],"createdAt":"2024-01-22T15:09:46.259Z","updatedAt":"2024-01-22T15:09:46.259Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.259Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aea7f4736ab26ea73f6168","createdBy":"65aea7f4736ab26ea73f6169","exerciseId":"65aea7f4736ab26ea73f616a","programId":"65aea7f4736ab26ea73f616b","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65aea7f4736ab26ea73f616c","createdAt":"2024-01-22T17:37:56.637Z","updatedAt":"2024-01-22T17:37:56.637Z"}],"createdAt":"2024-01-22T17:37:56.637Z","updatedAt":"2024-01-22T17:37:56.637Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T17:37:56.637Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -2627,7 +2629,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65ae853a132397aa6fee6b24","createdBy":"65ae853a132397aa6fee6b25","exerciseId":"65ae853a132397aa6fee6b26","programId":"65ae853a132397aa6fee6b27","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b28","createdAt":"2024-01-22T15:09:46.264Z","updatedAt":"2024-01-22T15:09:46.264Z"}],"createdAt":"2024-01-22T15:09:46.264Z","updatedAt":"2024-01-22T15:09:46.264Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.264Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65aea7f4736ab26ea73f616e","createdBy":"65aea7f4736ab26ea73f616f","exerciseId":"65aea7f4736ab26ea73f6170","programId":"65aea7f4736ab26ea73f6171","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65aea7f4736ab26ea73f6172","createdAt":"2024-01-22T17:37:56.641Z","updatedAt":"2024-01-22T17:37:56.641Z"}],"createdAt":"2024-01-22T17:37:56.641Z","updatedAt":"2024-01-22T17:37:56.641Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T17:37:56.641Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -2746,7 +2748,7 @@ export type GetV1WorkoutFilterParameterDay = number | string;
 
 export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65ae853a132397aa6fee6b2b","createdBy":"65ae853a132397aa6fee6b2c","exerciseId":"65ae853a132397aa6fee6b2d","programId":"65ae853a132397aa6fee6b2e","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65ae853a132397aa6fee6b2f","createdAt":"2024-01-22T15:09:46.281Z","updatedAt":"2024-01-22T15:09:46.281Z"}],"createdAt":"2024-01-22T15:09:46.281Z","updatedAt":"2024-01-22T15:09:46.281Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T15:09:46.281Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65aea7f4736ab26ea73f6175","createdBy":"65aea7f4736ab26ea73f6176","exerciseId":"65aea7f4736ab26ea73f6177","programId":"65aea7f4736ab26ea73f6178","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65aea7f4736ab26ea73f6179","createdAt":"2024-01-22T17:37:56.660Z","updatedAt":"2024-01-22T17:37:56.660Z"}],"createdAt":"2024-01-22T17:37:56.660Z","updatedAt":"2024-01-22T17:37:56.660Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-22T17:37:56.660Z"},"isCompleted":false}]} */
   data: {
     message: string;
     data: {
@@ -3477,7 +3479,7 @@ export type GetV1ChatChatParameterLimit = string;
 
 export interface GetV1ChatChatSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b35","text":"text","files":["files"],"createdAt":"2024-01-22T15:09:46.350Z","updatedAt":"2024-01-22T15:09:46.350Z","sender":"65ae853a132397aa6fee6b36"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aea7f4736ab26ea73f617f","text":"text","files":["files"],"createdAt":"2024-01-22T17:37:56.735Z","updatedAt":"2024-01-22T17:37:56.735Z","sender":"65aea7f4736ab26ea73f6180"}]} */
   data: {
     message: string;
     meta: {
@@ -3558,7 +3560,7 @@ export type GetV1ChatGetIdParameterId = string;
 
 export interface GetV1ChatGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65ae853a132397aa6fee6b37","text":"text","files":["files"],"createdAt":"2024-01-22T15:09:46.354Z","updatedAt":"2024-01-22T15:09:46.354Z","sender":"65ae853a132397aa6fee6b38"}]} */
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65aea7f4736ab26ea73f6181","text":"text","files":["files"],"createdAt":"2024-01-22T17:37:56.740Z","updatedAt":"2024-01-22T17:37:56.740Z","sender":"65aea7f4736ab26ea73f6182"}]} */
   data: {
     message: string;
     meta: {
