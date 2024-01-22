@@ -114,8 +114,36 @@ export default function BottomTabs() {
         }}
         component={ProgramTab}
       />
-      <Tab.Screen name="History" component={HistoryTab} />
-      <Tab.Screen name="Call" component={CallScreen} />
+      <Tab.Screen
+        name="History"
+        options={{
+          header: (props: BottomTabHeaderProps) => {
+            return (
+              <Header
+                title={'History'}
+                // onPress={() => navigate('SettingsScreen')}
+                // iconRightType="calender"
+              />
+            );
+          },
+        }}
+        component={HistoryTab}
+      />
+      <Tab.Screen
+        name="Call"
+        options={{
+          header: (props: BottomTabHeaderProps) => {
+            return (
+              <Header
+                title={'Message'}
+                // onPress={() => navigate('SettingsScreen')}
+                // iconRightType="calender"
+              />
+            );
+          },
+        }}
+        component={CallScreen}
+      />
       <Tab.Screen
         name="Profile"
         options={{

@@ -134,7 +134,7 @@ export default function MealPlan() {
             bg="#FFFFFF"
             rounded="xl"
             shadow={1}>
-            {data?.data?.data?.dailyMacro.map((micro, index) => (
+            {data?.data?.data?.dailyMacro?.map((micro, index) => (
               <DailyMacro
                 title={micro?.name}
                 image={
