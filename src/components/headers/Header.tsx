@@ -1,6 +1,6 @@
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {ListBucketIcon, LockIcon, Settings} from '@assets/icons';
+import {CalenderIcon, ListBucketIcon, LockIcon, Settings} from '@assets/icons';
 import {HStack, Image, Text} from 'native-base';
 
 export default function Header({
@@ -11,7 +11,7 @@ export default function Header({
 }: {
   title?: string;
   type?: string;
-  iconRightType?: 'setting' | 'listBucket';
+  iconRightType?: 'setting' | 'listBucket' | 'calender';
   onPress?: () => void;
 }) {
   console.log('onPress', onPress);
@@ -31,10 +31,16 @@ export default function Header({
       <Text fontSize={20} fontWeight={'700'}>
         {title}
       </Text>
-      {}
+
       <TouchableOpacity onPress={onPress}>
         {onPress &&
-          (iconRightType === 'setting' ? <Settings /> : <ListBucketIcon />)}
+          (iconRightType === 'setting' ? (
+            <Settings />
+          ) : iconRightType === 'calender' ? (
+            <CalenderIcon />
+          ) : (
+            <ListBucketIcon />
+          ))}
       </TouchableOpacity>
     </HStack>
   );

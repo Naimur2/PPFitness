@@ -11,6 +11,8 @@ import {
 } from 'native-base';
 import {AddIcon, ArrowDownIcon, Support} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
+import {useGetAllProgramQuery} from '@store/apis/program';
+import AddExercise from 'src/actionSheets/AddExercise';
 
 const tabItems = [
   {
@@ -72,8 +74,13 @@ const tabItems = [
   },
 ];
 
-export default function SettingsScreen() {
+export default function ProgramTab() {
   const [isOpen, setIsOpen] = React.useState(false);
+
+  // APIS
+  const {data} = useGetAllProgramQuery();
+  console.log('data', data?.data?.data);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -190,7 +197,7 @@ export default function SettingsScreen() {
           onPress={() => setIsOpen(true)}>
           <AddIcon />
           <Text color="primary.100" fontSize="sm" fontWeight={700}>
-            New Exercise
+            Add Exercise
           </Text>
         </Pressable>
 
@@ -204,6 +211,14 @@ export default function SettingsScreen() {
           Complete Workout
         </Button>
       </VStack>
+
+      {/* Modal */}
+      <AddExercise
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(prv => !prv);
+        }}
+      />
     </ScrollView>
   );
 }

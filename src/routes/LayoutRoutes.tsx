@@ -83,8 +83,24 @@ export default function LayoutRoutes() {
         }}
         component={BlogDetails}
       />
-      <Stack.Screen name="CirCuit" component={CirCuit} />
-      <Stack.Screen name="Warmup" component={Warmup} />
+      <Stack.Screen
+        name="CirCuit"
+        options={{
+          header: props => {
+            return <Header title={'Cir Cuit'} />;
+          },
+        }}
+        component={CirCuit}
+      />
+      <Stack.Screen
+        name="Warmup"
+        options={{
+          header: props => {
+            return <Header title={'Warm-up'} />;
+          },
+        }}
+        component={Warmup}
+      />
       <Stack.Screen
         name="ExerciseDetails"
         component={ExerciseDetails}

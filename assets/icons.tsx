@@ -1,8 +1,18 @@
-import React from 'react';
 import VectorImage from 'react-native-vector-image';
 
 type TIconProps = typeof VectorImage.defaultProps;
 
+export function CalenderIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/calender-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
 export function ListBucketIcon({...rest}: TIconProps) {
   return (
     <VectorImage
