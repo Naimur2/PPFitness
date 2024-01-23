@@ -1,11 +1,20 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Box, HStack, Pressable, ScrollView, Text, VStack} from 'native-base';
-import {GiftedChat} from 'react-native-gifted-chat';
+import {
+  Box,
+  HStack,
+  Icon,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+  View,
+} from 'native-base';
+import {GiftedChat, Send} from 'react-native-gifted-chat';
 import {useGetChatByIdQuery, useSendMessageMutation} from '@store/apis/chat';
 import {useSelector} from 'react-redux';
 import {selectUser} from '@store/features/authSlice';
 import {useGetSingleProfileQuery} from '@store/apis/userProfile';
-import {Image} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 const adminHelpImage = require('@assets/images/admin-help.png');
 const adminHelpImageUri = Image.resolveAssetSource(adminHelpImage)?.uri;
 
@@ -43,24 +52,13 @@ export default function CallScreen() {
   //
   const onSend = useCallback(async (messages = []) => {
     //
-
     try {
       const res = await sendMessage({
         message: messages?.[0]?.text,
+        createdAt: messages?.[0]?.createdAt,
+        updatedAt: messages?.[0]?.updatedAt,
       }).unwrap();
       console.log('res', res);
-
-      // const mess = {
-      //   _id: res?.data?.data,
-      //   text: mes?.text,
-      //   user: {
-      //     _id: mes?.sender,
-      //     avatar:
-      //       mes?.sender === authUser?._id
-      //         ? profile?.data?.data?.avatar
-      //         : adminHelpImageUri,
-      //   },
-      // };
       setMessages(previousMessages =>
         GiftedChat.append(previousMessages, messages),
       );
@@ -69,22 +67,58 @@ export default function CallScreen() {
     }
   }, []);
 
+  //  MessageContainer
+  const MessageContainer = props => {
+    const position = props?.position;
+    return (
+      <>
+        <HStack
+          py={1}
+          px={4}
+          mr={position === 'left' ? 'auto' : undefined}
+          justifyContent={position === 'right' ? 'flex-end' : 'flex-start'}
+          flexDirection={position === 'right' ? 'row' : 'row-reverse'}
+          space={4}>
+          <Box maxW={'70%'} bg="gray.500" p={2} borderRadius={5}>
+            <Text color={'white'} fontWeight={'500'} fontSize={'md'}>
+              {props.currentMessage.text} g akhjs dajhd as daj dha sd jas djahs
+              dajsbv
+            </Text>
+          </Box>
+          <Image
+            source={{
+              uri: props?.currentMessage?.user?.avatar,
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 5,
+            }}
+          />
+        </HStack>
+      </>
+    );
+  };
+
   return (
-    <ScrollView
-      _contentContainerStyle={{
-        px: 4,
-        py: 4,
-        flexGrow: 1,
-        gap: 4,
-      }}>
-      {/*  */}
+    <>
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
         user={{
           _id: profile?.data?.data?.userId?._id,
         }}
+        renderMessage={props => <MessageContainer {...props} />}
       />
-    </ScrollView>
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  textInputStyle: {
+    borderRadius: 8,
+    backgroundColor: 'red',
+    width: 400,
+    overflow: 'hidden',
+  },
+});

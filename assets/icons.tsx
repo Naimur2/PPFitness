@@ -2,6 +2,64 @@ import VectorImage from 'react-native-vector-image';
 
 type TIconProps = typeof VectorImage.defaultProps;
 
+//  call
+export function CallFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/call/call-fill-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function MicOutlineIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/call/mic-outline-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function VideoFillIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/call/video-fill-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function VideoOutlineIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/call/video-outline-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function SpeakerOutlineIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/call/speaker-outline-icon.svg')}
+      height={24}
+      width={24}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+
+// other
 export function CalenderIcon({...rest}: TIconProps) {
   return (
     <VectorImage
