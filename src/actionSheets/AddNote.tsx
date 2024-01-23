@@ -64,7 +64,7 @@ export default function AddNote({isOpen, onClose}: IProps) {
   });
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal zIndex={99} isOpen={isOpen} onClose={onClose}>
       <Modal.Content w="100%" h="100%" flex={1}>
         <KeyboardAwareScrollView
           contentContainerStyle={{flexGrow: 1}}

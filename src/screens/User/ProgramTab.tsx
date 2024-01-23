@@ -15,7 +15,10 @@ import {
   useGetAllProgramQuery,
   useGetProgramScheduleQuery,
 } from '@store/apis/program';
-import AddExercise from 'src/actionSheets/AddExercise';
+import AddExercise from 'src/actionSheets/AddWorkout';
+import AddSet from 'src/actionSheets/AddSet';
+import {useSelector} from 'react-redux';
+import {selectAccessToken, selectUser} from '@store/features/authSlice';
 
 const tabItems = [
   {
@@ -79,10 +82,12 @@ const tabItems = [
 
 export default function ProgramTab() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const authToken = useSelector(selectUser);
+  console.log('authToken', authToken);
 
   // APIS
   const {data} = useGetProgramScheduleQuery();
-  // console.log('data', data?.data?.data);
+  console.log('data', data?.data?.data);
 
   return (
     <ScrollView
