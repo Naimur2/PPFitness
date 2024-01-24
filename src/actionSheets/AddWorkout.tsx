@@ -25,19 +25,26 @@ import TableRow from 'src/components/TableRow';
 import {AddIcon} from '@assets/icons';
 import {useAddWorkoutMutation} from '@store/apis/workout';
 import AddSet from './AddSet';
+import {GetV1ProgramScheduleSuccessfulResponse} from '@store/schema';
+import NewExercise from './NewExercise';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-  exerciseName: Yup.string().required('Exercise name is required'),
+  exerciseId: Yup.string().required('Exercise name is required'),
 });
 
 interface IProps {
   isOpen: boolean;
+  program: GetV1ProgramScheduleSuccessfulResponse['data']['data'][0];
   onClose: () => void;
   onOpenExercise?: () => void;
 }
 
-export default function AddWorkout({isOpen, onClose, onOpenExercise}: IProps) {
+export default function AddWorkout({
+  isOpen,
+  onClose,
+  onOpenExercise,
+  program,
+}: IProps) {
   // state
   const [isOpenSet, setIsOpenSet] = React.useState(false);
   const [isSets, setIsSets] = React.useState([]);
@@ -52,30 +59,31 @@ export default function AddWorkout({isOpen, onClose, onOpenExercise}: IProps) {
   //  formik
   const formik = useFormik({
     initialValues: {
-      name: '',
       note: '',
-      exerciseName: '',
       exerciseId: '',
     },
     validationSchema,
     onSubmit: async values => {
+      const body = {
+        exerciseId: values?.exerciseId,
+        programId: program?.programId?._id,
+        notes: [values?.note],
+        sets: isSets,
+        type: 'workout',
+        dateTime: {
+          day: program?.day,
+          week: program?.week,
+          date: program?.date,
+        },
+        assignedTo: program?.assignedTo,
+      };
       try {
-        const res = await addWorkout({
-          exerciseId: values?.exerciseId,
-          programId: '65afd7f37f3a5754c49925d8',
-          notes: [values?.note],
-          sets: isSets,
-          type: 'workout',
-          dateTime: {
-            day: 1,
-            week: 1,
-            date: {},
-          },
-          assignedTo: '65afd7f37f3a5754c49925d9',
-        }).unwrap();
+        const res = await addWorkout(body).unwrap();
         onClose();
         toast(res.data?.message);
       } catch (error) {
+        console.log('error', error);
+
         toast(error?.data?.error?.message, 'error');
       }
     },
@@ -103,6 +111,7 @@ export default function AddWorkout({isOpen, onClose, onOpenExercise}: IProps) {
           setIsSets(prv => [...prv, item]);
         }}
       />
+
       <Modal isOpen={isOpen} onClose={onClose}>
         <Modal.Content w="100%" h="100%" flex={1}>
           <KeyboardAwareScrollView
@@ -307,7 +316,7 @@ export default function AddWorkout({isOpen, onClose, onOpenExercise}: IProps) {
                   borderColor="primary.100"
                   bg="white"
                   py={2}
-                  isDisabled={isLoading}
+                  // isDisabled={isLoading}
                   onPress={handleSubmit}>
                   <AddIcon />
                   <Text color="primary.100" fontSize="sm" fontWeight={700}>

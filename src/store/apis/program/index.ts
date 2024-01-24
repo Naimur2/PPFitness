@@ -37,8 +37,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
       void
     >({
       query: () => ({
-        url: `program/schedule`,
+        url: `program/schedule?day=1&week=1&date=2024-01-25T13%3A44%3A55.175Z`,
       }),
+      providesTags: ['AddWorkout', 'AddWorkout'],
     }),
     getProgramUser: builder.query<GetV1ProgramUserSuccessfulResponse, void>({
       query: () => ({

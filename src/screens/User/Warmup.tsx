@@ -1,5 +1,5 @@
-import { AddIcon } from '@assets/icons';
-import { Button, Pressable, ScrollView, Text, VStack } from 'native-base';
+import {AddIcon} from '@assets/icons';
+import {Button, Pressable, ScrollView, Text, VStack} from 'native-base';
 import React from 'react';
 
 export default function Warmup() {

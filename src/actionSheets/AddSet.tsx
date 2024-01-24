@@ -60,6 +60,7 @@ export default function AddSet({isOpen, onClose, onSetValue}: IProps) {
     onSubmit: async values => {
       onSetValue(values);
       onClose();
+      formik.resetForm();
     },
   });
 

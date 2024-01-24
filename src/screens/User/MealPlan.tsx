@@ -19,6 +19,10 @@ import {useSelector} from 'react-redux';
 import {selectAccessToken} from '@store/features/authSlice';
 import {FlatList} from 'react-native';
 import Header from 'src/components/headers/Header';
+import {
+  SkeletonsDailyMacro,
+  SkeletonsRecipePlan,
+} from 'src/components/skeletons';
 
 const dailyMicros = [
   {
@@ -89,7 +93,7 @@ export default function MealPlan() {
   const navigate = useNavigation();
   const token = useSelector(selectAccessToken);
   // APIS
-  const {data} = useGetAllMealPlanQuery(activeTab);
+  const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
 
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
@@ -104,7 +108,6 @@ export default function MealPlan() {
   const SnackData = data?.data?.data?.recipe?.filter(
     it => it?.mealType === 'Snack',
   );
-  console.log(' data?.data?.data', JSON.stringify(data?.data?.data));
 
   return (
     <Box>
@@ -127,25 +130,33 @@ export default function MealPlan() {
           <Text color="black" fontSize="lg" fontWeight={700}>
             Meal Plan
           </Text>
-          <HStack
-            justifyContent={'space-between'}
-            px={2}
-            py={2}
-            bg="#FFFFFF"
-            rounded="xl"
-            shadow={1}>
-            {data?.data?.data?.dailyMacro?.map((micro, index) => (
-              <DailyMacro
-                title={micro?.name}
-                image={
-                  dailyMicros?.find(
-                    t => t?.title?.toLowerCase() === micro?.name?.toLowerCase(),
-                  )?.image
-                }
-                value={`${micro?.quantity} ${micro?.unit}`}
-              />
-            ))}
-          </HStack>
+          {isLoading ? (
+            <SkeletonsDailyMacro />
+          ) : (
+            <>
+              <HStack
+                justifyContent={'space-between'}
+                px={2}
+                py={2}
+                bg="#FFFFFF"
+                rounded="xl"
+                shadow={1}>
+                {data?.data?.data?.dailyMacro?.map((micro, index) => (
+                  <DailyMacro
+                    title={micro?.name}
+                    image={
+                      dailyMicros?.find(
+                        t =>
+                          t?.title?.toLowerCase() ===
+                          micro?.name?.toLowerCase(),
+                      )?.image
+                    }
+                    value={`${micro?.quantity} ${micro?.unit}`}
+                  />
+                ))}
+              </HStack>
+            </>
+          )}
           <HStack justifyContent={'space-between'}>
             <Pressable
               w="48%"
@@ -182,24 +193,30 @@ export default function MealPlan() {
             </Pressable>
           </HStack>
           <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
-          <PlanItem
-            title="Breakfast"
-            items={data?.data?.data?.recipe?.filter(
-              it => it?.mealType === 'Breakfast',
-            )}
-          />
-          <PlanItem
-            title="Lunch"
-            items={data?.data?.data?.recipe?.filter(
-              it => it?.mealType === 'Lunch',
-            )}
-          />
-          <PlanItem
-            title="Dinner"
-            items={data?.data?.data?.recipe?.filter(
-              it => it?.mealType === 'Dinner',
-            )}
-          />
+          {isLoading ? (
+            <SkeletonsRecipePlan />
+          ) : (
+            <>
+              <PlanItem
+                title="Breakfast"
+                items={data?.data?.data?.recipe?.filter(
+                  it => it?.mealType === 'Breakfast',
+                )}
+              />
+              <PlanItem
+                title="Lunch"
+                items={data?.data?.data?.recipe?.filter(
+                  it => it?.mealType === 'Lunch',
+                )}
+              />
+              <PlanItem
+                title="Dinner"
+                items={data?.data?.data?.recipe?.filter(
+                  it => it?.mealType === 'Dinner',
+                )}
+              />
+            </>
+          )}
         </VStack>
         {SnackData?.length > 0 && (
           <Text color="black" fontSize="lg" fontWeight={700} px="4">

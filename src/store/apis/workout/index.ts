@@ -51,18 +51,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
       PostV1WorkoutAddSuccessfulResponse,
       PostV1WorkoutAddRequestBody
     >({
-      query: () => ({
+      query: props => ({
         url: `workout/add`,
         method: 'POST',
+        body: props,
       }),
+      invalidatesTags: ['AddWorkout'],
     }),
     addWorkoutAddByProgram: builder.mutation<
       PostV1WorkoutAddByProgramSuccessfulResponse,
       PostV1WorkoutAddByProgramRequestBody
     >({
-      query: () => ({
+      query: props => ({
         url: `workout/add/by-program`,
         method: 'POST',
+        body: props,
       }),
     }),
   }),
