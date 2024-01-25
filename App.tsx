@@ -50,6 +50,7 @@ export default function App() {
         console.log(error);
       }
     });
+    console.log('onMessage2');
   }, []);
 
   const prefixes = ['com.ppfitness.app://'];

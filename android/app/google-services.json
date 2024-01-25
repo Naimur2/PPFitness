@@ -12,7 +12,28 @@
           "package_name": "com.ppfitness.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "563722976692-i3no631vqaemc35h0dc0ubd26vnuo15t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ppfitness.app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "563722976692-lo2n90q2mr2omogq1gam38lubrtvk4ut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ppfitness.app",
+            "certificate_hash": "dcb0e52b087531eefac2ced224109dd74ed1e0ee"
+          }
+        },
+        {
+          "client_id": "563722976692-elu414tmd4hj854qslhkmmn8c2g85nra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA8sWCREr3STOhS1FwLCGWzAvfvy-cWSWY"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563722976692-elu414tmd4hj854qslhkmmn8c2g85nra.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "563722976692-mfd1a9tfli218pl7gt4lpa72dfgpneci.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ppfitness.app"
+              }
+            }
+          ]
         }
       }
     }

@@ -14,7 +14,7 @@ import {
   useGetAllProgramQuery,
   useGetProgramScheduleQuery,
 } from '@store/apis/program';
-import AddExercise from 'src/actionSheets/AddWorkout';
+import AddWorkout from 'src/actionSheets/AddWorkout';
 import AddSet from 'src/actionSheets/AddSet';
 import {useSelector} from 'react-redux';
 import {selectAccessToken, selectUser} from '@store/features/authSlice';
@@ -240,7 +240,7 @@ export default function ProgramTab() {
         </>
       )}
       {/* Modal */}
-      <AddExercise
+      <AddWorkout
         isOpen={isOpen}
         program={isSelectedProg}
         onClose={() => {

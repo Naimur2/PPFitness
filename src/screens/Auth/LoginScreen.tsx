@@ -28,6 +28,7 @@ import {
 } from '@assets/icons';
 import {useLoginMutation} from '@store/apis/auth';
 import useShowToastMessage from '@hooks/useShowToastMessage';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -83,6 +84,38 @@ export default function LoginScreen() {
     }
   };
   //
+  // handelSignInGoogle
+  const handelSignInGoogle = async () => {
+    try {
+      console.log('Start --->>>>');
+
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+
+      // Get the users ID token
+      const details = await GoogleSignin.signIn();
+
+      const data = {
+        username: details?.user?.email,
+        type: 'google',
+      };
+      console.log('details', details);
+    } catch (error) {
+      console.log('error', error);
+
+      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      //   // user cancelled the login flow
+      // } else if (error.code === statusCodes.IN_PROGRESS) {
+      //   // operation (e.g. sign in) is in progress already
+      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      //   // play services not available or outdated
+      // } else {
+      //   // some other error happened
+      // }
+    }
+  };
   return (
     <FBgImage
       source={require('@assets/images/screen2.png')}
@@ -187,7 +220,9 @@ export default function LoginScreen() {
             style={{
               gap: 10,
             }}>
-            <GoogleIcon />
+            <Pressable onPress={handelSignInGoogle}>
+              <GoogleIcon />
+            </Pressable>
             <FacebookIcon />
             <AppleIcon />
           </VStack>
