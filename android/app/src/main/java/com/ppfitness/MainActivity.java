@@ -1,4 +1,4 @@
-package com.ppfitness;
+package com.ppfitness.app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

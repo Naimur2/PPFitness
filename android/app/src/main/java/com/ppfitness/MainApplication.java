@@ -1,4 +1,4 @@
-package com.ppfitness;
+package com.ppfitness.app;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
