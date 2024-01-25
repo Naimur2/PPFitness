@@ -111,13 +111,20 @@ export default function ProgramTab() {
 
                 {item?.workouts?.map(work => {
                   const handelNavigate = () => {
-                    navigate('');
+                    if (work?.type == 'circuit') {
+                      navigate('CirCuit');
+                    } else if (work?.type == 'warmup') {
+                      navigate('Warmup');
+                    } else if (work?.type == 'workout') {
+                      navigate('WorkoutAddSet', work);
+                    }
                   };
                   const imageUri = tabItems?.find(
                     v =>
                       v?.type?.toLocaleLowerCase() ==
                       work?.type?.toLocaleLowerCase(),
                   )?.icon;
+                  console.log('work?.type', work?.type);
 
                   return (
                     <Pressable onPress={handelNavigate}>

@@ -21,7 +21,8 @@ export default function Header({
       paddingX={4}
       justifyContent={'space-between'}
       alignItems={'center'}
-      height={60}>
+      height={60}
+      bg={'white'}>
       <Image
         source={require('@assets/images/logo.png')}
         alt="logo"

@@ -17,6 +17,7 @@ import HelpSupport from '@screens/User/HelpSupport';
 import Header from 'src/components/headers/Header';
 import RecipeDetails from '@screens/User/RecipeDetails';
 import GroceryList from '@screens/User/GroceryList';
+import WorkoutAddSet from '@screens/User/WorkoutAddSet';
 
 const Stack = createNativeStackNavigator();
 
@@ -91,6 +92,13 @@ export default function LayoutRoutes() {
           },
         }}
         component={CirCuit}
+      />
+      <Stack.Screen
+        name="WorkoutAddSet"
+        options={{
+          headerShown: false,
+        }}
+        component={WorkoutAddSet}
       />
       <Stack.Screen
         name="Warmup"
