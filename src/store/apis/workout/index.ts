@@ -41,11 +41,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       PutV1WorkoutUpdateIdSuccessfulResponse,
       PutV1WorkoutUpdateIdParameterId
     >({
-      query: props => ({
-        url: `workout/update/${props?.id}`,
-        method: 'PUT',
-        body: props?.body,
-      }),
+      query: props => {
+        return {
+          url: `workout/update/${props?.id}`,
+          method: 'POST',
+          body: props?.body,
+        };
+      },
+      invalidatesTags: ['AddWorkout'],
     }),
     addWorkout: builder.mutation<
       PostV1WorkoutAddSuccessfulResponse,
@@ -77,4 +80,5 @@ export const {
   useDeleteWorkoutMutation,
   useGetAllWorkoutQuery,
   useGetSingleWorkoutByIdQuery,
+  useUpdateWorkoutMutation,
 } = authApiSlice;

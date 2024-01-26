@@ -1,22 +1,73 @@
 import {AddIcon} from '@assets/icons';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import {useRoute} from '@react-navigation/native';
+import {useUpdateExerciseMutation} from '@store/apis/exercise';
+import {useUpdateWorkoutMutation} from '@store/apis/workout';
 import {Button, Pressable, ScrollView, Text, VStack} from 'native-base';
 import React from 'react';
-import AddSet from 'src/actionSheets/AddSet';
+import AddNote from 'src/actionSheets/AddNote';
 
 export default function CirCuit() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isOpenSet, setIsOpenSet] = React.useState(false);
-  const [isSets, setIsSets] = React.useState([]);
+  const {item} = useRoute().params;
+  // State
+  const [isOpenNote, setIsOpenNote] = React.useState(false);
+  const [isNotes, setNotes] = React.useState<string>();
+
+  // hooks
+  const toast = useShowToastMessage();
+
+  // APIS
+  const [updateWorkout, {isLoading}] = useUpdateWorkoutMutation();
+
+  // handel
+  const handelUpdateNotes = async () => {
+    const props = {
+      id: item?.exerciseId?._id,
+      body: {
+        note: [...item?.notes, isNotes],
+        sets: [...item?.sets],
+      },
+    };
+    try {
+      const res = await updateWorkout(props).unwrap();
+      setIsOpenNote(prv => !prv);
+      toast(res?.data?.message);
+    } catch (error) {
+      setIsOpenNote(prv => !prv);
+      toast(error?.data?.error?.message, 'error');
+    }
+  };
+  const handelComplete = async () => {
+    const props = {
+      id: item?.exerciseId?._id,
+      body: {
+        note: [...item?.notes],
+        sets: [...item?.sets],
+        complete: true,
+      },
+    };
+    try {
+      const res = await updateWorkout(props).unwrap();
+      toast(res?.data?.message);
+    } catch (error) {
+      toast(error?.data?.error?.message, 'error');
+    }
+  };
+  //
+  // console.log('item', item?.notes);
+
   return (
     <>
-      <AddSet
-        isOpen={isOpenSet}
+      <AddNote
+        onPress={handelUpdateNotes}
+        isOpen={isOpenNote}
         onClose={() => {
-          setIsOpenSet(prv => !prv);
+          setIsOpenNote(prv => !prv);
         }}
-        onSetValue={item => {
-          setIsSets(prv => [...prv, item]);
+        onSetValue={props => {
+          setNotes(props);
         }}
+        isLoading={isLoading}
       />
 
       <ScrollView
@@ -31,20 +82,7 @@ export default function CirCuit() {
           justifyContent: 'space-between',
         }}>
         <VStack space={3}>
-          <Text color="gray.2">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatu. A gránit az tiszta lap; az
-            nem mond semmit. “Végtelenség!” - az a felelete. Nála be van csukva
-            a kön
-          </Text>
-          <Text color="gray.2">
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-            officia deserunt mollit anim id es
-          </Text>
-          <Text color="gray.2">
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo con
-          </Text>
+          <Text color="gray.2">{item?.exerciseId?.instruction}</Text>
         </VStack>
 
         <VStack space={4} mt={5}>
@@ -54,7 +92,9 @@ export default function CirCuit() {
             rounded={8}
             py={3}
             _text={{color: 'white', fontWeight: 700}}
-            _pressed={{bg: '#68696B90'}}>
+            _pressed={{bg: '#68696B90'}}
+            onPress={handelComplete}
+            isLoading={isLoading}>
             Complete
           </Button>
 
@@ -69,10 +109,10 @@ export default function CirCuit() {
             borderColor="primary.100"
             bg="white"
             py={2}
-            onPress={() => setIsOpenSet(prv => !prv)}>
+            onPress={() => setIsOpenNote(prv => !prv)}>
             <AddIcon />
             <Text color="primary.100" fontSize="sm" fontWeight={700}>
-              Add Notes
+              Edit Notes
             </Text>
           </Pressable>
         </VStack>

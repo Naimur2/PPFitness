@@ -1,16 +1,9 @@
 import React from 'react';
 import {
-  Box,
   Button,
-  Center,
-  CheckIcon,
-  Checkbox,
   FormControl,
-  HStack,
   Input,
   Modal,
-  Pressable,
-  Select,
   Stack,
   Text,
   VStack,
@@ -19,12 +12,6 @@ import {fontSizes} from '@theme/typography';
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {CloseIcon, FileUploadIcon} from '@assets/icons';
-import useImageUploader from '@hooks/useImageUploader';
-import useShowToastMessage from '@hooks/useShowToastMessage';
-import {useUpdateFileMutation} from '@store/apis/userProfile';
-import createFormFile from 'src/utils/fileDetails';
-import {useAddExerciseMutation} from '@store/apis/exercise';
 
 const validationSchema = Yup.object().shape({
   note: Yup.string().required('Note is required'),
@@ -32,18 +19,19 @@ const validationSchema = Yup.object().shape({
 
 interface IProps {
   isOpen: boolean;
+  isLoading: boolean;
   onClose: () => void;
+  onPress: () => void;
+  onSetValue?: (props: string) => void;
 }
 
-export default function AddNote({isOpen, onClose}: IProps) {
-  // state
-
-  // Hooks
-
-  const toast = useShowToastMessage();
-
-  // APIS
-  const [addExercise, {isLoading}] = useAddExerciseMutation();
+export default function AddNote({
+  isOpen,
+  isLoading,
+  onClose,
+  onSetValue,
+  onPress,
+}: IProps) {
   //  formik
   const formik = useFormik({
     initialValues: {
@@ -51,33 +39,26 @@ export default function AddNote({isOpen, onClose}: IProps) {
     },
     validationSchema,
     onSubmit: async values => {
-      try {
-        const res = await addExercise({
-          name: values?.name,
-        }).unwrap();
-        onClose();
-        toast(res.data?.message);
-      } catch (error) {
-        toast(error?.data?.error?.message, 'error');
-      }
+      onSetValue?.(values?.note);
+      onPress?.();
     },
   });
 
   return (
     <Modal zIndex={99} isOpen={isOpen} onClose={onClose}>
-      <Modal.Content w="100%" h="100%" flex={1}>
+      <Modal.Content w="100%" h="50%">
         <KeyboardAwareScrollView
           contentContainerStyle={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}
           enableOnAndroid={true}>
-          <VStack bg={'white'} flex={1} py={4}>
+          <VStack bg={'white'} py={4}>
             <Text
               fontSize={fontSizes.xl}
               fontWeight="bold"
               color="black"
               textAlign="center"
               py={4}>
-              Add Exercise
+              Edit Note
             </Text>
 
             <VStack px={4} py={2} bg="white" space={4}>
@@ -101,6 +82,9 @@ export default function AddNote({isOpen, onClose}: IProps) {
                     onChangeText={formik.handleChange('note')}
                     value={formik.values.note}
                     onBlur={formik.handleBlur('note')}
+                    multiline={true}
+                    numberOfLines={10}
+                    textAlignVertical="top"
                   />
                   <FormControl.ErrorMessage>
                     {formik.errors.note}
@@ -115,12 +99,12 @@ export default function AddNote({isOpen, onClose}: IProps) {
                 onPress={() => {
                   formik?.handleSubmit();
                 }}
-                isLoading={isLoading || isLoadingFile}
                 py={3}
                 mt={4}
+                isLoading={isLoading}
                 _text={{color: 'white', fontWeight: 700}}
                 _pressed={{bg: '#68696B90'}}>
-                Get Started
+                Save
               </Button>
             </VStack>
           </VStack>

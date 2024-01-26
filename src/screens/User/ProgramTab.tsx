@@ -110,11 +110,29 @@ export default function ProgramTab() {
                 </Text>
 
                 {item?.workouts?.map(work => {
+                  const propsData = {
+                    exerciseId: work?.exerciseId,
+                    programId: item?.programId,
+                    notes: [work?.notes],
+                    sets: work?.sets,
+                    type: 'workout',
+                    dateTime: {
+                      day: item?.day,
+                      week: item?.week,
+                      date: item?.date,
+                    },
+                    assignedTo: item?.assignedTo,
+                  };
+
                   const handelNavigate = () => {
                     if (work?.type == 'circuit') {
-                      navigate('CirCuit');
+                      navigate('CirCuit', {
+                        item: propsData,
+                      });
                     } else if (work?.type == 'warmup') {
-                      navigate('Warmup');
+                      navigate('Warmup', {
+                        item: propsData,
+                      });
                     } else if (work?.type == 'workout') {
                       navigate('WorkoutAddSet', work);
                     }
