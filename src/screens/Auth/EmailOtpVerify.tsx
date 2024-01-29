@@ -1,20 +1,11 @@
-import {Dimensions, ImageBackground, StyleSheet} from 'react-native';
-import React from 'react';
-import {
-  Button,
-  Factory,
-  HStack,
-  Image,
-  Text,
-  VStack,
-  useToast,
-} from 'native-base';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 import {useNavigation} from '@react-navigation/native';
 import {useVerifyOtpMutation} from '@store/apis/auth';
-import OtpInputs from 'react-native-otp-inputs';
-import useShowModal from '@hooks/useShowModal';
-import useShowToastMessage from '@hooks/useShowToastMessage';
 import {PostV1AuthVerifyOtpErrorResponse} from '@store/schema';
+import {Button, Factory, HStack, Image, Text, VStack} from 'native-base';
+import React from 'react';
+import {Dimensions, ImageBackground, StyleSheet} from 'react-native';
+import OtpInputs from 'react-native-otp-inputs';
 
 const FBgImage = Factory(ImageBackground);
 //

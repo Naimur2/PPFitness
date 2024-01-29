@@ -11,6 +11,7 @@ import {
   Image,
   Input,
   Pressable,
+  ScrollView,
   Text,
   VStack,
 } from 'native-base';
@@ -79,51 +80,64 @@ export default function ForgetPassword() {
       flex={1}
       resizeMode="cover"
       alignItems="center">
-      <Image
-        source={require('@assets/images/logo.png')}
-        alt="logo"
-        mt={16}
-        height={100}
-        width={100}
-      />
+      <ScrollView
+        _contentContainerStyle={{
+          flexGrow: 1,
+          width: '100%',
+          paddingBottom: 10,
+        }}
+        showsVerticalScrollIndicator={false}
+        w="100%">
+        <Image
+          source={require('@assets/images/logo.png')}
+          alt="logo"
+          mt={16}
+          height={100}
+          width={100}
+          mx={'auto'}
+        />
 
-      <VStack w="100%" px={4} mt={10}>
-        <Text fontSize="2xl" color="white" fontWeight={700}>
-          Forge Password
-        </Text>
-        <Text color="gray.4">Please enter your email to reset password</Text>
-        <VStack mt={10} space="4">
-          <FormControl isInvalid={Boolean(errors.email)}>
-            <Input
-              bg="white"
-              placeholder="Email"
+        <VStack w="100%" px={4} mt={10}>
+          <Text fontSize="2xl" color="white" fontWeight={700}>
+            Forge Password
+          </Text>
+          <Text color="gray.4">Please enter your email to reset password</Text>
+          <VStack mt={10} space="4">
+            <FormControl isInvalid={Boolean(errors.email)}>
+              <Input
+                bg="white"
+                placeholder="Email"
+                rounded={8}
+                placeholderTextColor={'gray.2'}
+                color={'black'}
+                _focus={{bg: 'white'}}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                py={3}
+              />
+              <FormControl.ErrorMessage
+                color="white"
+                _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
+                {errors.email}
+              </FormControl.ErrorMessage>
+            </FormControl>
+
+            <Button
+              w="full"
+              bg={'secondary.100'}
               rounded={8}
-              placeholderTextColor={'gray.2'}
-              color={'black'}
-              _focus={{bg: 'white'}}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-            />
-            <FormControl.ErrorMessage color="white">
-              {errors.email}
-            </FormControl.ErrorMessage>
-          </FormControl>
-
-          <Button
-            w="full"
-            bg={'secondary.100'}
-            rounded={8}
-            py={3}
-            mt={10}
-            _text={{color: 'black', fontWeight: 700}}
-            _pressed={{bg: '#68696B90'}}
-            isLoading={isLoading}
-            onPress={handleSubmit}>
-            Sign In
-          </Button>
+              py={3}
+              mt={10}
+              _text={{color: 'black', fontWeight: 700}}
+              _pressed={{bg: '#68696B90'}}
+              isLoading={isLoading}
+              onPress={handleSubmit}>
+              Sign In
+            </Button>
+          </VStack>
         </VStack>
-      </VStack>
+      </ScrollView>
     </FBgImage>
   );
 }

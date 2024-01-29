@@ -1,7 +1,21 @@
-import {ImageBackground} from 'react-native';
-import React from 'react';
+import {
+  AppleIcon,
+  EyeCloseIcon,
+  EyeOpenIcon,
+  FacebookIcon,
+  GoogleIcon,
+  LockIcon,
+} from '@assets/icons';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import useToggle from '@hooks/useToggle';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useNavigation} from '@react-navigation/native';
+import {useLoginMutation} from '@store/apis/auth';
+import {
+  PostV1AuthLoginErrorResponse,
+  PostV1AuthLoginRequestBody,
+} from '@store/schema';
 import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import {
   Box,
   Button,
@@ -11,24 +25,13 @@ import {
   Image,
   Input,
   Pressable,
+  ScrollView,
   Text,
   VStack,
 } from 'native-base';
-import VectorImage from 'react-native-vector-image';
-import useToggle from '@hooks/useToggle';
-import {useNavigation} from '@react-navigation/native';
-import {
-  AppleIcon,
-  EmailIcon,
-  EyeCloseIcon,
-  EyeOpenIcon,
-  FacebookIcon,
-  GoogleIcon,
-  LockIcon,
-} from '@assets/icons';
-import {useLoginMutation} from '@store/apis/auth';
-import useShowToastMessage from '@hooks/useShowToastMessage';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import React from 'react';
+import {ImageBackground} from 'react-native';
+import * as Yup from 'yup';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -48,7 +51,18 @@ export default function LoginScreen() {
   const navigateToSignUp = () => {
     navigation.navigate('Register');
   };
+
   const [loginUser, {isLoading}] = useLoginMutation();
+
+  const handelRegister = async (data: PostV1AuthLoginRequestBody) => {
+    try {
+      const res = await loginUser(data).unwrap();
+      toast(res?.data.message);
+    } catch (error: any) {
+      const err = error as PostV1AuthLoginErrorResponse;
+      toast(err?.error?.message, 'error');
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -56,33 +70,18 @@ export default function LoginScreen() {
       password: '',
     },
     validationSchema,
-    onSubmit: async v => {
-      await handelRegister();
+    onSubmit: async values => {
+      await handelRegister({
+        email: values.email,
+        password: values.password,
+        method: 'email',
+      });
     },
   });
 
   const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
     formik;
 
-  const handelRegister = async () => {
-    // showModal('success', {
-    //   title: 'Success',
-    //   message: 'Information updated successfully.',
-    // });
-
-    try {
-      const res = await loginUser({
-        email: values.email,
-        password: values.password,
-        method: 'email',
-      }).unwrap();
-      console.log('res-', res);
-
-      toast(res?.data.message);
-    } catch (error) {
-      toast(error?.data.message, 'error');
-    }
-  };
   //
   // handelSignInGoogle
   const handelSignInGoogle = async () => {
@@ -98,153 +97,159 @@ export default function LoginScreen() {
       const details = await GoogleSignin.signIn();
 
       const data = {
-        username: details?.user?.email,
-        type: 'google',
+        email: details?.user?.email,
+        method: 'google',
       };
-      console.log('details', details);
+      await handelRegister(data);
     } catch (error) {
-      console.log('error', error);
-
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   // user cancelled the login flow
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   // operation (e.g. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
+      console.log('Error --->>>>', error);
     }
   };
+
   return (
     <FBgImage
       source={require('@assets/images/screen2.png')}
       flex={1}
       resizeMode="cover"
       alignItems="center">
-      <Image
-        source={require('@assets/images/logo.png')}
-        alt="logo"
-        mt={16}
-        height={100}
-        width={100}
-      />
+      <ScrollView
+        _contentContainerStyle={{
+          flexGrow: 1,
+          width: '100%',
+          paddingBottom: 10,
+        }}
+        showsVerticalScrollIndicator={false}
+        w="100%">
+        <Image
+          source={require('@assets/images/logo.png')}
+          alt="logo"
+          mt={16}
+          height={100}
+          width={100}
+          mx={'auto'}
+        />
 
-      <VStack w="100%" px={4} mt={10}>
-        <Text fontSize="2xl" color="white" fontWeight={700}>
-          Sign In
-        </Text>
-        <Text color="gray.4">Please sign in to access your account</Text>
-        <VStack mt={10} space="4">
-          <FormControl
-            isInvalid={Boolean(errors.email) && Boolean(touched.email)}>
-            <Input
-              bg="white"
-              placeholder="Email"
-              rounded={8}
-              placeholderTextColor={'gray.2'}
-              color={'black'}
-              _focus={{bg: 'white'}}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-            />
-            <FormControl.ErrorMessage color="white">
-              {errors.email}
-            </FormControl.ErrorMessage>
-          </FormControl>
-          <FormControl
-            isInvalid={Boolean(errors.password) && Boolean(touched.password)}>
-            <Input
-              bg="white"
-              placeholder="Password"
-              rounded={8}
-              placeholderTextColor={'gray.2'}
-              color={'black'}
-              type={eyeOpen ? 'text' : 'password'}
-              _focus={{bg: 'white'}}
-              onChangeText={handleChange('password')}
-              onBlur={handleBlur('password')}
-              value={values.password}
-              leftElement={<LockIcon style={{marginLeft: 10}} />}
-              rightElement={
-                <Pressable onPress={toggleEyeOpen} mr={'10px'}>
-                  {eyeOpen ? <EyeCloseIcon /> : <EyeOpenIcon />}
-                </Pressable>
-              }
-            />
-            <FormControl.ErrorMessage color="white">
-              {errors.password}
-            </FormControl.ErrorMessage>
-          </FormControl>
-          <VStack space={2} alignItems="flex-end">
-            <Text
-              onPress={() => navigation.navigate('ForgetPassword')}
-              color="white"
-              fontSize="sm">
-              Forgot password?
-            </Text>
-          </VStack>
-
-          <Button
-            w="full"
-            bg={'secondary.100'}
-            rounded={8}
-            py={3}
-            mt={10}
-            _text={{color: 'black', fontWeight: 700}}
-            _pressed={{bg: '#68696B90'}}
-            isLoading={isLoading}
-            onPress={handleSubmit}>
+        <VStack px={4} mt={10}>
+          <Text fontSize="2xl" color="white" fontWeight={700}>
             Sign In
-          </Button>
-
-          <Center
-            mt={5}
-            display="flex"
-            flexDirection="row"
-            justifyContent="center">
-            <Box bg="white" height={'0.5px'} width="50" />
-            <Text color="white" px={2}>
-              or continue with
-            </Text>
-            <Box bg="white" height={'0.5px'} width="50" />
-          </Center>
-
-          <VStack
-            width="100%"
-            alignItems="center"
-            justifyContent={'center'}
-            flexDirection="row"
-            mt={5}
-            style={{
-              gap: 10,
-            }}>
-            <Pressable onPress={handelSignInGoogle}>
-              <GoogleIcon />
-            </Pressable>
-            <FacebookIcon />
-            <AppleIcon />
-          </VStack>
-
-          <Center
-            mt={5}
-            display="flex"
-            flexDirection="row"
-            justifyContent="center">
-            <Text color="white" px={2}>
-              Don’t have and account?{'  '}
+          </Text>
+          <Text color="gray.4">Please sign in to access your account</Text>
+          <VStack mt={10} space="4">
+            <FormControl
+              isInvalid={Boolean(errors.email) && Boolean(touched.email)}>
+              <Input
+                bg="white"
+                placeholder="Email"
+                rounded={8}
+                placeholderTextColor={'gray.2'}
+                color={'black'}
+                _focus={{bg: 'white'}}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+                value={values.email}
+                py={3}
+              />
+              <FormControl.ErrorMessage
+                color="white"
+                _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
+                {errors.email}
+              </FormControl.ErrorMessage>
+            </FormControl>
+            <FormControl
+              isInvalid={Boolean(errors.password) && Boolean(touched.password)}>
+              <Input
+                bg="white"
+                placeholder="Password"
+                rounded={8}
+                placeholderTextColor={'gray.2'}
+                color={'black'}
+                type={eyeOpen ? 'text' : 'password'}
+                _focus={{bg: 'white'}}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+                value={values.password}
+                leftElement={<LockIcon style={{marginLeft: 10}} />}
+                rightElement={
+                  <Pressable onPress={toggleEyeOpen} mr={'10px'}>
+                    {eyeOpen ? <EyeCloseIcon /> : <EyeOpenIcon />}
+                  </Pressable>
+                }
+                py={3}
+              />
+              <FormControl.ErrorMessage
+                _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
+                {errors.password}
+              </FormControl.ErrorMessage>
+            </FormControl>
+            <VStack space={2} alignItems="flex-end">
               <Text
-                color="secondary.100"
-                px={2}
-                fontWeight={600}
-                onPress={navigateToSignUp}>
-                Sign Up
+                onPress={() => navigation.navigate('ForgetPassword')}
+                color="white"
+                fontSize="sm">
+                Forgot password?
               </Text>
-            </Text>
-          </Center>
+            </VStack>
+
+            <Button
+              w="full"
+              bg={'secondary.100'}
+              rounded={8}
+              py={3}
+              mt={10}
+              _text={{color: 'black', fontWeight: 700}}
+              _pressed={{bg: '#68696B90'}}
+              isLoading={isLoading}
+              onPress={handleSubmit}>
+              Sign In
+            </Button>
+
+            <Center
+              mt={5}
+              display="flex"
+              flexDirection="row"
+              justifyContent="center">
+              <Box bg="white" height={'0.5px'} width="50" />
+              <Text color="white" px={2}>
+                or continue with
+              </Text>
+              <Box bg="white" height={'0.5px'} width="50" />
+            </Center>
+
+            <VStack
+              width="100%"
+              alignItems="center"
+              justifyContent={'center'}
+              flexDirection="row"
+              mt={5}
+              style={{
+                gap: 10,
+              }}>
+              <Pressable onPress={handelSignInGoogle}>
+                <GoogleIcon height={30} width={30} />
+              </Pressable>
+              <FacebookIcon height={30} width={30} />
+              <AppleIcon height={30} width={30} />
+            </VStack>
+
+            <Center
+              mt={5}
+              display="flex"
+              flexDirection="row"
+              justifyContent="center">
+              <Text color="white" px={2}>
+                Don’t have and account?{'  '}
+                <Text
+                  color="secondary.100"
+                  px={2}
+                  fontWeight={600}
+                  onPress={navigateToSignUp}>
+                  Sign Up
+                </Text>
+              </Text>
+            </Center>
+          </VStack>
         </VStack>
-      </VStack>
+      </ScrollView>
     </FBgImage>
   );
 }

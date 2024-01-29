@@ -1,5 +1,6 @@
+/* eslint-disable react-native/no-inline-styles */
 import VectorImage from 'react-native-vector-image';
-
+import React from 'react';
 type TIconProps = typeof VectorImage.defaultProps;
 
 //  call
@@ -7,8 +8,12 @@ export function CallFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/call/call-fill-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -18,8 +23,12 @@ export function MicOutlineIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/call/mic-outline-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -29,8 +38,12 @@ export function VideoFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/call/video-fill-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -40,8 +53,12 @@ export function VideoOutlineIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/call/video-outline-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -51,8 +68,12 @@ export function SpeakerOutlineIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/call/speaker-outline-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -64,8 +85,12 @@ export function CalenderIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/calender-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -75,8 +100,12 @@ export function ListBucketIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/list-bucket.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -86,8 +115,12 @@ export function PhoneHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/help/call-phone-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -97,8 +130,12 @@ export function EmailHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/help/message-email.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -108,8 +145,12 @@ export function TwitterHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/help/twitter-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -119,8 +160,12 @@ export function WhatsAppHelpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/help/whats-app-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -130,8 +175,12 @@ export function FacebookIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/facebook-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -142,8 +191,12 @@ export function GoogleIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/google-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -153,8 +206,12 @@ export function AppleIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/apple-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -164,8 +221,12 @@ export function PlayIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/play-button.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -176,8 +237,12 @@ export function EmailIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/email-icon.svg')}
-      height={20}
-      width={20}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -187,8 +252,12 @@ export function EyeCloseIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/eye-close.svg')}
-      height={20}
-      width={20}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -198,8 +267,12 @@ export function EyeOpenIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/eye-open.svg')}
-      height={20}
-      width={20}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -210,8 +283,12 @@ export function LockIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/lock-icon.svg')}
-      height={20}
-      width={20}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 20,
+        width: rest?.width ? rest.width : 20,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -221,8 +298,12 @@ export function SearchIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/search-icon.svg')}
-      height={20}
-      width={20}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -232,8 +313,12 @@ export function ArrowDownIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/arrow-down.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -244,8 +329,12 @@ export function ArrowUpIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/arrow-up.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
@@ -255,8 +344,12 @@ export function AddIcon({...rest}: TIconProps) {
   return (
     <VectorImage
       source={require('@assets/svg/add-icon.svg')}
-      height={24}
-      width={24}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       resizeMode="contain"
       {...rest}
     />
