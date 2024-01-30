@@ -8,7 +8,12 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import {AddIcon, ArrowDownIcon, Support} from '@assets/icons';
+import {
+  AddIcon,
+  ArrowDownIcon,
+  Support,
+  WorkoutNotFoundIcon,
+} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import {
   useGetAllProgramQuery,
@@ -100,7 +105,7 @@ export default function ProgramTab() {
       </HStack> */}
       {isLoading ? (
         <SkeletonsProgramList />
-      ) : (
+      ) : data?.data?.data?.length > 0 ? (
         <>
           {data?.data?.data?.map((item, index) => {
             return (
@@ -255,6 +260,15 @@ export default function ProgramTab() {
               </VStack>
             );
           })}
+        </>
+      ) : (
+        <>
+          <VStack justifyContent={'center'} alignItems={'center'} flexGrow={1}>
+            <WorkoutNotFoundIcon width={100} height={100} />
+            <Text fontWeight={700} fontSize={fontSizes.xs}>
+              Program not available!
+            </Text>
+          </VStack>
         </>
       )}
       {/* Modal */}

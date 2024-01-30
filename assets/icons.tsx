@@ -3,6 +3,37 @@ import VectorImage from 'react-native-vector-image';
 import React from 'react';
 type TIconProps = typeof VectorImage.defaultProps;
 
+// not found
+export function WorkoutNotFoundIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/workout-not-fount-icon.svg')}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
+export function CongratulationsIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/congratulations-icon.svg')}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
+      resizeMode="contain"
+      {...rest}
+    />
+  );
+}
 //  call
 export function CallFillIcon({...rest}: TIconProps) {
   return (
