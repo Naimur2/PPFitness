@@ -27,6 +27,7 @@ import {useAddWorkoutMutation} from '@store/apis/workout';
 import AddSet from './AddSet';
 import {GetV1ProgramScheduleSuccessfulResponse} from '@store/schema';
 import NewExercise from './NewExercise';
+import {Keyboard} from 'react-native';
 
 const validationSchema = Yup.object().shape({
   exerciseId: Yup.string().required('Exercise name is required'),
@@ -36,6 +37,7 @@ interface IProps {
   isOpen: boolean;
   program: GetV1ProgramScheduleSuccessfulResponse['data']['data'][0];
   onClose: () => void;
+  onSuccess: () => void;
   onOpenExercise?: () => void;
 }
 
@@ -44,6 +46,7 @@ export default function AddWorkout({
   onClose,
   onOpenExercise,
   program,
+  onSuccess,
 }: IProps) {
   // state
   const [isOpenSet, setIsOpenSet] = React.useState(false);
@@ -64,6 +67,7 @@ export default function AddWorkout({
     },
     validationSchema,
     onSubmit: async values => {
+      Keyboard.dismiss();
       const body = {
         exerciseId: values?.exerciseId,
         programId: program?.programId?._id,
@@ -80,6 +84,7 @@ export default function AddWorkout({
       try {
         const res = await addWorkout(body).unwrap();
         onClose();
+        onSuccess();
         toast(res.data?.message);
       } catch (error) {
         console.log('error', error);

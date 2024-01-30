@@ -8,26 +8,16 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import {
-  AddIcon,
-  ArrowDownIcon,
-  Support,
-  WorkoutNotFoundIcon,
-} from '@assets/icons';
+import {AddIcon, WorkoutNotFoundIcon} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
-import {
-  useGetAllProgramQuery,
-  useGetProgramScheduleQuery,
-} from '@store/apis/program';
+import {useGetProgramScheduleQuery} from '@store/apis/program';
 import AddWorkout from 'src/actionSheets/AddWorkout';
-import AddSet from 'src/actionSheets/AddSet';
-import {useSelector} from 'react-redux';
-import {selectAccessToken, selectUser} from '@store/features/authSlice';
 import {Image} from 'react-native';
 import useNavigate from '@hooks/useNavigate';
 import {GetV1ProgramScheduleSuccessfulResponse} from '@store/schema';
 import {SkeletonsProgramList} from 'src/components/skeletons';
 import NewExercise from 'src/actionSheets/NewExercise';
+import CongratulationsModal from 'src/actionSheets/CongratulationsModal';
 
 const tabItems = [
   {
@@ -56,6 +46,7 @@ export default function ProgramTab() {
   const [isAddWorkout, setIsAddWorkout] = React.useState(false);
 
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpenCongrats, setIsOpenCongrats] = React.useState(false);
   const [isSelectedProg, setSelectedProg] =
     React.useState<GetV1ProgramScheduleSuccessfulResponse['data']['data'][0]>();
 
@@ -276,7 +267,10 @@ export default function ProgramTab() {
         isOpen={isOpen}
         program={isSelectedProg}
         onClose={() => {
-          setIsOpen(prv => !prv);
+          setIsOpen(false);
+        }}
+        onSuccess={() => {
+          setIsOpenCongrats(true);
         }}
         onOpenExercise={() => {
           setIsAddWorkout(prv => !prv);
@@ -287,6 +281,12 @@ export default function ProgramTab() {
         isOpen={isAddWorkout}
         onClose={() => {
           setIsAddWorkout(prv => !prv);
+        }}
+      />
+      <CongratulationsModal
+        isOpen={isOpenCongrats}
+        onClose={() => {
+          setIsOpenCongrats(prv => !prv);
         }}
       />
     </ScrollView>
