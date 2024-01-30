@@ -13,6 +13,7 @@ import DailyMacro from 'src/components/meal-plan/DailyMacro';
 import {AddIcon} from '@assets/icons';
 import {useNavigation} from '@react-navigation/native';
 import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
+import {fontSizes} from '@theme/typography';
 import Tab from 'src/components/Tab';
 import Header from 'src/components/headers/Header';
 import PlanItem from 'src/components/meal-plan/PlanItem';
@@ -103,8 +104,8 @@ export default function MealPlan() {
     });
   };
 
-  // SnackData
-  const SnackData = data?.data?.data?.recipe?.filter(
+  // snackData
+  const snackData = data?.data?.data?.recipe?.filter(
     it => it?.mealType === 'Snack',
   );
 
@@ -223,11 +224,23 @@ export default function MealPlan() {
             </>
           )}
         </VStack>
-        {SnackData?.length > 0 && (
-          <Text color="black" fontSize="lg" fontWeight={700} px="4">
-            Snacks
-          </Text>
-        )}
+
+        <Text color="black" fontSize="lg" fontWeight={700} px="4">
+          Snacks
+        </Text>
+
+        {snackData?.length === 0 ? (
+          <Box p="4">
+            <Text
+              textAlign={'center'}
+              fontSize={fontSizes.md}
+              fontWeight={600}
+              color="black">
+              No recipe found
+            </Text>
+          </Box>
+        ) : null}
+
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -235,7 +248,7 @@ export default function MealPlan() {
             mb: 4,
           }}>
           <HStack space="2" px="4" pb="4">
-            {SnackData?.map((item, index) => (
+            {snackData?.map((item, index) => (
               <VStack
                 key={index}
                 justifyContent="center"

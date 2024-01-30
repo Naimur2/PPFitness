@@ -71,7 +71,7 @@ export default function ProgramTab() {
         gap: 4,
         bgColor: '#F8F8F8',
       }}>
-      <HStack
+      {/* <HStack
         w="100%"
         bg="white"
         px={4}
@@ -97,7 +97,7 @@ export default function ProgramTab() {
         <Pressable>
           <ArrowDownIcon style={{transform: [{rotate: '-90deg'}]}} />
         </Pressable>
-      </HStack>
+      </HStack> */}
       {isLoading ? (
         <SkeletonsProgramList />
       ) : (

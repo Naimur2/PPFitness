@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, VStack} from 'native-base';
+import {Box, Text, VStack} from 'native-base';
 import {fontSizes} from '@theme/typography';
 import {GetV1RecipeGetIdSuccessfulResponse} from '@store/schema';
 import RecipeCard from './RecipeCard';
@@ -34,11 +34,20 @@ interface Props {
 export default function PlanItem({items, title, id}: Props) {
   return (
     <VStack space="2">
-      {items?.length > 0 && (
-        <Text fontSize={fontSizes.lg} fontWeight={700} color="black">
-          {title}
-        </Text>
-      )}
+      <Text fontSize={fontSizes.lg} fontWeight={700} color="black">
+        {title}
+      </Text>
+      {items?.length === 0 ? (
+        <Box p="4">
+          <Text
+            textAlign={'center'}
+            fontSize={fontSizes.md}
+            fontWeight={600}
+            color="black">
+            No recipe found
+          </Text>
+        </Box>
+      ) : null}
       {items?.map((item, index) => {
         return <RecipeCard index={index} item={item} />;
       })}
