@@ -7,7 +7,7 @@ import {Button, Center, HStack, ScrollView, Text, VStack} from 'native-base';
 import React from 'react';
 import Tab from 'src/components/Tab';
 import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
-import MelPlanRowCard from 'src/components/meal-plan/MelPlanRowCard';
+import MealPlanRowCard from 'src/components/meal-plan/MealPlanRowCard';
 import NotFoundCard from 'src/components/not-found-card';
 
 const dailyMicros = [
@@ -132,25 +132,25 @@ export default function CreateMealPlan() {
         </VStack>
       </VStack>
       {/* cards */}
-      <MelPlanRowCard
+      <MealPlanRowCard
         title="Breakfast"
         data={breakfastData}
         selectedData={mealPlanData}
         onAddNewMeal={id => handleAddMeal(id)}
       />
-      <MelPlanRowCard
+      <MealPlanRowCard
         title="Lunch"
         data={lunchData}
         selectedData={mealPlanData}
         onAddNewMeal={id => handleAddMeal(id)}
       />
-      <MelPlanRowCard
+      <MealPlanRowCard
         title="Dinner"
         data={dinnerData}
         selectedData={mealPlanData}
         onAddNewMeal={id => handleAddMeal(id)}
       />
-      <MelPlanRowCard
+      <MealPlanRowCard
         title="Snack"
         data={snackData}
         selectedData={mealPlanData}
