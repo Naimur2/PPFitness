@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">PPFitness</string>
+	<string name="app_name">
+		PPFitness
+	</string>
+	<string name="facebook_app_id">
+		297994456224676
+	</string>
+	<string name="facebook_client_token">
+		0a33a85e57a7367bd18951061c5fa9ce
+	</string>
 </resources>
