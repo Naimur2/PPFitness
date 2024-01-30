@@ -32,6 +32,7 @@ import {
 import React from 'react';
 import {ImageBackground} from 'react-native';
 import * as Yup from 'yup';
+import {LoginManager} from 'react-native-fbsdk-next';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -59,8 +60,10 @@ export default function LoginScreen() {
       const res = await loginUser(data).unwrap();
       toast(res?.data.message);
     } catch (error: any) {
-      const err = error as PostV1AuthLoginErrorResponse;
-      toast(err?.error?.message, 'error');
+      const err = error as
+        | {data: PostV1AuthRegisterRequestBody}
+        | PostV1AuthRegisterRequestBody;
+      toast(err?.data?.error?.message || err.message, 'error');
     }
   };
 
@@ -101,6 +104,24 @@ export default function LoginScreen() {
         method: 'google',
       };
       await handelRegister(data);
+    } catch (error) {
+      console.log('Error --->>>>', error);
+    }
+  };
+
+  const handelSignInFacebook = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions([
+        'public_profile',
+        'email',
+      ]);
+      if (!result.isCancelled) {
+        const data = {
+          email: result?.grantedPermissions?.email,
+          method: 'facebook',
+        };
+        console.log('data', data);
+      }
     } catch (error) {
       console.log('Error --->>>>', error);
     }
@@ -227,7 +248,9 @@ export default function LoginScreen() {
               <Pressable onPress={handelSignInGoogle}>
                 <GoogleIcon height={30} width={30} />
               </Pressable>
-              <FacebookIcon height={30} width={30} />
+              <Pressable onPress={handelSignInFacebook}>
+                <FacebookIcon height={30} width={30} />
+              </Pressable>
               <AppleIcon height={30} width={30} />
             </VStack>
 

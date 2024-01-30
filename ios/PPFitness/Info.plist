@@ -30,6 +30,12 @@
 				<string>com.googleusercontent.apps.563722976692-mfd1a9tfli218pl7gt4lpa72dfgpneci</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb297994456224676</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
@@ -74,5 +80,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+
+	<key>FacebookAppID</key>
+	<string>297994456224676</string>
+	<key>FacebookClientToken</key>
+	<string>0a33a85e57a7367bd18951061c5fa9ce</string>
+	<key>FacebookDisplayName</key>
+	<string>PP Fitness</string>
 </dict>
 </plist>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Box,
   HStack,
@@ -8,17 +7,15 @@ import {
   Text,
   VStack,
 } from 'native-base';
+import React from 'react';
 import DailyMacro from 'src/components/meal-plan/DailyMacro';
 
-import Tab from 'src/components/Tab';
-import PlanItem from 'src/components/meal-plan/PlanItem';
-import {useNavigation} from '@react-navigation/native';
 import {AddIcon} from '@assets/icons';
+import {useNavigation} from '@react-navigation/native';
 import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
-import {useSelector} from 'react-redux';
-import {selectAccessToken} from '@store/features/authSlice';
-import {FlatList} from 'react-native';
+import Tab from 'src/components/Tab';
 import Header from 'src/components/headers/Header';
+import PlanItem from 'src/components/meal-plan/PlanItem';
 import {
   SkeletonsDailyMacro,
   SkeletonsRecipePlan,
@@ -27,32 +24,32 @@ import {
 const dailyMicros = [
   {
     title: 'Calories',
-    value: '1800',
+    key: 'calories',
     image: require('@assets/images/calories.png'),
   },
   {
     title: 'Protein',
-    value: '150g',
+    key: 'protein',
     image: require('@assets/images/protein.png'),
   },
   {
     title: 'Carbs',
-    value: '300g',
+    key: 'carbs',
     image: require('@assets/images/carbs.png'),
   },
   {
     title: 'Fat',
-    value: '50g',
+    key: 'fat',
     image: require('@assets/images/fat.png'),
   },
   {
     title: 'Fiber',
-    value: '220g',
+    key: 'fiber',
     image: require('@assets/images/fiber.png'),
   },
   {
     title: 'Water',
-    value: '2.4l',
+    key: 'water',
     image: require('@assets/images/water.png'),
   },
 ];
@@ -91,9 +88,11 @@ const dayTabs = [
 export default function MealPlan() {
   const [activeTab, setActiveTab] = React.useState('Sunday');
   const navigate = useNavigation();
-  const token = useSelector(selectAccessToken);
-  // APIS
+
   const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
+
+  console.log('data', data);
+  console.log(activeTab);
 
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
@@ -108,6 +107,18 @@ export default function MealPlan() {
   const SnackData = data?.data?.data?.recipe?.filter(
     it => it?.mealType === 'Snack',
   );
+
+  const macrosWithValues = React.useMemo(() => {
+    return dailyMicros.map(micro => {
+      const macro = data?.data?.data?.dailyMacro?.find(
+        t => t?.name?.toLowerCase() === micro?.title?.toLowerCase(),
+      );
+      return {
+        ...micro,
+        value: `${macro?.quantity ?? 0} ${macro?.unit ?? ''}`,
+      };
+    });
+  }, [data]);
 
   return (
     <Box>
@@ -141,17 +152,11 @@ export default function MealPlan() {
                 bg="#FFFFFF"
                 rounded="xl"
                 shadow={1}>
-                {data?.data?.data?.dailyMacro?.map((micro, index) => (
+                {macrosWithValues?.map((micro, index) => (
                   <DailyMacro
-                    title={micro?.name}
-                    image={
-                      dailyMicros?.find(
-                        t =>
-                          t?.title?.toLowerCase() ===
-                          micro?.name?.toLowerCase(),
-                      )?.image
-                    }
-                    value={`${micro?.quantity} ${micro?.unit}`}
+                    title={micro.title}
+                    image={micro.image}
+                    value={micro?.value ?? 0}
                   />
                 ))}
               </HStack>

@@ -1,6 +1,18 @@
-import React from 'react';
+import {
+  AppleIcon,
+  EyeCloseIcon,
+  EyeOpenIcon,
+  FacebookIcon,
+  GoogleIcon,
+  LockIcon,
+} from '@assets/icons';
+import useShowToastMessage from '@hooks/useShowToastMessage';
+import useToggle from '@hooks/useToggle';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useNavigation} from '@react-navigation/native';
+import {useRegisterMutation} from '@store/apis/auth';
+import {PostV1AuthRegisterRequestBody} from '@store/schema';
 import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import {
   Box,
   Button,
@@ -14,21 +26,9 @@ import {
   Text,
   VStack,
 } from 'native-base';
+import React from 'react';
 import {ImageBackground} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import useToggle from '@hooks/useToggle';
-import {useRegisterMutation} from '@store/apis/auth';
-import {
-  AppleIcon,
-  EmailIcon,
-  EyeCloseIcon,
-  EyeOpenIcon,
-  FacebookIcon,
-  GoogleIcon,
-  LockIcon,
-} from '@assets/icons';
-import useShowModal from '@hooks/useShowModal';
-import useShowToastMessage from '@hooks/useShowToastMessage';
+import * as Yup from 'yup';
 
 const FBgImage = Factory(ImageBackground);
 
@@ -56,6 +56,22 @@ export default function RegisterScreen() {
   };
   const [register, {isLoading}] = useRegisterMutation();
 
+  const handelRegister = async (data: PostV1AuthRegisterRequestBody) => {
+    try {
+      const res = await register(data).unwrap();
+      console.log('res-', res);
+
+      navigation.navigate('Login');
+      toast(res?.data.message);
+    } catch (error: any) {
+      const err = error as
+        | {data: PostV1AuthRegisterRequestBody}
+        | PostV1AuthRegisterRequestBody;
+      console.log('err-', err);
+      toast(err?.data?.error?.message || err?.error?.message, 'error');
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -72,26 +88,31 @@ export default function RegisterScreen() {
   const {values, errors, touched, handleChange, handleSubmit, handleBlur} =
     formik;
 
-  const handelRegister = async () => {
-    // return;
-    const body = {
-      email: values.email,
-      password: values.password,
-      method: 'email',
-      fullName: values.name,
-    };
-
+  // handelSignInGoogle
+  const handelSignInGoogle = async () => {
     try {
-      const res = await register(body).unwrap();
-      console.log('res-', res);
+      console.log('Start --->>>>');
 
-      navigation.navigate('Login');
-      toast(res?.data.message);
+      // Check if your device supports Google Play
+      await GoogleSignin.hasPlayServices({
+        showPlayServicesUpdateDialog: true,
+      });
+
+      // Get the users ID token
+      const details = await GoogleSignin.signIn();
+
+      if (!details) return;
+
+      const data = {
+        email: details?.user?.email as string,
+        method: 'google' as any,
+        fullName: details?.user?.name as string,
+      };
+      await handelRegister(data);
     } catch (error) {
-      toast(error?.data.message, 'error');
+      console.log('Error --->>>>', error);
     }
   };
-  // console.log('errors', errors);
 
   return (
     <FBgImage
@@ -136,7 +157,9 @@ export default function RegisterScreen() {
                 value={values.name}
               />
 
-              <FormControl.ErrorMessage color="white">
+              <FormControl.ErrorMessage
+                color="white"
+                _text={{fontSize: 'xs', fontWeight: 500, color: 'white'}}>
                 {errors.name}
               </FormControl.ErrorMessage>
             </FormControl>
@@ -246,7 +269,9 @@ export default function RegisterScreen() {
               style={{
                 gap: 10,
               }}>
-              <GoogleIcon />
+              <Pressable onPress={handelSignInGoogle}>
+                <GoogleIcon />
+              </Pressable>
               <FacebookIcon />
               <AppleIcon />
             </VStack>

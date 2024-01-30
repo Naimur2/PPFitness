@@ -11,14 +11,15 @@
 
 export interface PostV1AuthLoginSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"id","email":"example@xyz.abc","emailVerified":false,"role":"user"}}} */
+  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65b8ad563a6957125b5573a7","email":"example@xyz.abc","emailVerified":false,"role":"user"}}} */
   data: {
     message: string;
     data: {
       accessToken: string;
       refreshToken: string;
       user: {
-        _id: string;
+        /** @format any */
+        _id: any;
         email: string;
         emailVerified?: boolean;
         role?: 'admin' | 'user';
@@ -67,12 +68,7 @@ export type PostV1AuthRegisterRequestBody = (object & object) & {
    * @format email
    */
   email: string;
-  /**
-   * Password Of the User
-   * @minLength 8
-   * @maxLength 16
-   * @pattern /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/
-   */
+  /** Password Of the User */
   password?: string;
   method?: 'email' | 'google' | 'apple' | 'facebook';
   fullName?: string;
@@ -894,7 +890,7 @@ export type PostV1FileDeleteRequestBody = (object & object) & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65b2391ec74a86095880a9c4","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65b8ad573a6957125b5573b5","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -955,7 +951,7 @@ export interface PostV1IngredientsAddSuccessfulResponse {
           | 'calories'
           | 'protein'
           | 'fat'
-          | 'carbohydrate'
+          | 'carbs'
           | 'fiber'
           | 'sugar'
           | 'sodium'
@@ -1018,7 +1014,7 @@ export type PostV1IngredientsAddRequestBody = ((object & object) & object) & {
       | 'calories'
       | 'protein'
       | 'fat'
-      | 'carbohydrate'
+      | 'carbs'
       | 'fiber'
       | 'sugar'
       | 'sodium'
@@ -1055,7 +1051,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b2391ec74a86095880a9c6","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b8ad573a6957125b5573b7","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -1150,7 +1146,7 @@ export interface GetV1IngredientsGetSuccessfulResponse {
           | 'calories'
           | 'protein'
           | 'fat'
-          | 'carbohydrate'
+          | 'carbs'
           | 'fiber'
           | 'sugar'
           | 'sodium'
@@ -1186,7 +1182,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65b2391ec74a86095880a9c8","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65b8ad573a6957125b5573b9","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1247,7 +1243,7 @@ export interface GetV1IngredientsGetIdSuccessfulResponse {
           | 'calories'
           | 'protein'
           | 'fat'
-          | 'carbohydrate'
+          | 'carbs'
           | 'fiber'
           | 'sugar'
           | 'sodium'
@@ -1324,7 +1320,7 @@ export type PutV1IngredientsUpdateRequestBody = (((object & object) & object) &
       | 'calories'
       | 'protein'
       | 'fat'
-      | 'carbohydrate'
+      | 'carbs'
       | 'fiber'
       | 'sugar'
       | 'sodium'
@@ -1498,7 +1494,7 @@ export interface GetV1MealPlanGetSuccessfulResponse {
               | 'calories'
               | 'protein'
               | 'fat'
-              | 'carbohydrate'
+              | 'carbs'
               | 'fiber'
               | 'sugar'
               | 'sodium'
@@ -1580,7 +1576,7 @@ export interface GetV1MealPlanGetSuccessfulResponse {
           | 'calories'
           | 'protein'
           | 'fat'
-          | 'carbohydrate'
+          | 'carbs'
           | 'fiber'
           | 'sugar'
           | 'sodium'
@@ -2240,7 +2236,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-25T10:34:07.338Z","assignedTo":"abc","programId":{"_id":"65b2391fc74a86095880a9d4","name":"abc","startingDate":"2024-01-25T10:34:07.338Z","endingDate":"2024-01-25T10:34:07.338Z","assignedUsers":[],"createdAt":"2024-01-25T10:34:07.338Z","updatedAt":"2024-01-25T10:34:07.338Z"},"isCompleted":false,"workouts":[{"_id":"65b2391fc74a86095880a9d5","exerciseId":"65b2391fc74a86095880a9d6","programId":"65b2391fc74a86095880a9d7","createdAt":"2024-01-25T10:34:07.338Z","updatedAt":"2024-01-25T10:34:07.338Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65b2391fc74a86095880a9d8","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-25T10:34:07.338Z","updatedAt":"2024-01-25T10:34:07.338Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-01-30T08:03:36.134Z","assignedTo":"abc","programId":{"_id":"65b8ad583a6957125b5573c5","name":"abc","startingDate":"2024-01-30T08:03:36.134Z","endingDate":"2024-01-30T08:03:36.134Z","assignedUsers":[],"createdAt":"2024-01-30T08:03:36.134Z","updatedAt":"2024-01-30T08:03:36.134Z"},"isCompleted":false,"workouts":[{"_id":"65b8ad583a6957125b5573c6","exerciseId":"65b8ad583a6957125b5573c7","programId":"65b8ad583a6957125b5573c8","createdAt":"2024-01-30T08:03:36.134Z","updatedAt":"2024-01-30T08:03:36.134Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65b8ad583a6957125b5573c9","notes":["notes"],"type":"circuit"}],"createdAt":"2024-01-30T08:03:36.134Z","updatedAt":"2024-01-30T08:03:36.134Z"}]} */
   data: {
     message: string;
     data: {
@@ -2528,7 +2524,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b2391fc74a86095880a9f1","createdBy":"65b2391fc74a86095880a9f2","exerciseId":"65b2391fc74a86095880a9f3","programId":"65b2391fc74a86095880a9f4","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b2391fc74a86095880a9f5","createdAt":"2024-01-25T10:34:07.585Z","updatedAt":"2024-01-25T10:34:07.585Z"}],"createdAt":"2024-01-25T10:34:07.585Z","updatedAt":"2024-01-25T10:34:07.585Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-25T10:34:07.585Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b8ad583a6957125b5573e2","createdBy":"65b8ad583a6957125b5573e3","exerciseId":"65b8ad583a6957125b5573e4","programId":"65b8ad583a6957125b5573e5","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b8ad583a6957125b5573e6","createdAt":"2024-01-30T08:03:36.365Z","updatedAt":"2024-01-30T08:03:36.365Z"}],"createdAt":"2024-01-30T08:03:36.365Z","updatedAt":"2024-01-30T08:03:36.365Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-30T08:03:36.365Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -2670,7 +2666,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65b2391fc74a86095880a9f7","createdBy":"65b2391fc74a86095880a9f8","exerciseId":"65b2391fc74a86095880a9f9","programId":"65b2391fc74a86095880a9fa","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b2391fc74a86095880a9fb","createdAt":"2024-01-25T10:34:07.589Z","updatedAt":"2024-01-25T10:34:07.589Z"}],"createdAt":"2024-01-25T10:34:07.589Z","updatedAt":"2024-01-25T10:34:07.589Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-25T10:34:07.589Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65b8ad583a6957125b5573e8","createdBy":"65b8ad583a6957125b5573e9","exerciseId":"65b8ad583a6957125b5573ea","programId":"65b8ad583a6957125b5573eb","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b8ad583a6957125b5573ec","createdAt":"2024-01-30T08:03:36.369Z","updatedAt":"2024-01-30T08:03:36.369Z"}],"createdAt":"2024-01-30T08:03:36.369Z","updatedAt":"2024-01-30T08:03:36.369Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-30T08:03:36.369Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -2789,7 +2785,7 @@ export type GetV1WorkoutFilterParameterDay = number | string;
 
 export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65b2391fc74a86095880a9fe","createdBy":"65b2391fc74a86095880a9ff","exerciseId":"65b2391fc74a86095880aa00","programId":"65b2391fc74a86095880aa01","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b2391fc74a86095880aa02","createdAt":"2024-01-25T10:34:07.602Z","updatedAt":"2024-01-25T10:34:07.602Z"}],"createdAt":"2024-01-25T10:34:07.602Z","updatedAt":"2024-01-25T10:34:07.602Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-25T10:34:07.602Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65b8ad583a6957125b5573ef","createdBy":"65b8ad583a6957125b5573f0","exerciseId":"65b8ad583a6957125b5573f1","programId":"65b8ad583a6957125b5573f2","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65b8ad583a6957125b5573f3","createdAt":"2024-01-30T08:03:36.384Z","updatedAt":"2024-01-30T08:03:36.384Z"}],"createdAt":"2024-01-30T08:03:36.384Z","updatedAt":"2024-01-30T08:03:36.384Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-01-30T08:03:36.384Z"},"isCompleted":false}]} */
   data: {
     message: string;
     data: {
@@ -3150,7 +3146,7 @@ export interface GetV1RecipeGetSuccessfulResponse {
             | 'calories'
             | 'protein'
             | 'fat'
-            | 'carbohydrate'
+            | 'carbs'
             | 'fiber'
             | 'sugar'
             | 'sodium'
@@ -3270,7 +3266,7 @@ export interface GetV1RecipeGetIdSuccessfulResponse {
             | 'calories'
             | 'protein'
             | 'fat'
-            | 'carbohydrate'
+            | 'carbs'
             | 'fiber'
             | 'sugar'
             | 'sodium'
@@ -3349,7 +3345,7 @@ export interface GetV1RecipeGetIdSuccessfulResponse {
           | 'calories'
           | 'protein'
           | 'fat'
-          | 'carbohydrate'
+          | 'carbs'
           | 'fiber'
           | 'sugar'
           | 'sodium'
@@ -3436,7 +3432,7 @@ export interface DeleteV1RecipeDeleteIdErrorResponse {
 
 export interface PostV1ChatSendMessagesSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","data":{"_id":"65b2391fc74a86095880aa0d","text":"text","files":["files"],"createdAt":"2024-01-25T10:34:07.755Z","updatedAt":"2024-01-25T10:34:07.755Z","sender":"65b2391fc74a86095880aa0e"}} */
+  /** @example {"message":"Message Sent Successfully","data":{"_id":"65b8ad583a6957125b5573fe","text":"text","files":["files"],"createdAt":"2024-01-30T08:03:36.522Z","updatedAt":"2024-01-30T08:03:36.522Z","sender":"65b8ad583a6957125b5573ff"}} */
   data: {
     message: string;
     data: {
@@ -3487,7 +3483,7 @@ export type GetV1ChatChatParameterLimit = string;
 
 export interface GetV1ChatChatSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b2391fc74a86095880aa08","text":"text","files":["files"],"createdAt":"2024-01-25T10:34:07.689Z","updatedAt":"2024-01-25T10:34:07.689Z","sender":"65b2391fc74a86095880aa09"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b8ad583a6957125b5573f9","text":"text","files":["files"],"createdAt":"2024-01-30T08:03:36.463Z","updatedAt":"2024-01-30T08:03:36.463Z","sender":"65b8ad583a6957125b5573fa"}]} */
   data: {
     message: string;
     meta: {
@@ -3568,7 +3564,7 @@ export type GetV1ChatGetIdParameterId = string;
 
 export interface GetV1ChatGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b2391fc74a86095880aa0a","text":"text","files":["files"],"createdAt":"2024-01-25T10:34:07.696Z","updatedAt":"2024-01-25T10:34:07.696Z","sender":"65b2391fc74a86095880aa0b"}]} */
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b8ad583a6957125b5573fb","text":"text","files":["files"],"createdAt":"2024-01-30T08:03:36.468Z","updatedAt":"2024-01-30T08:03:36.468Z","sender":"65b8ad583a6957125b5573fc"}]} */
   data: {
     message: string;
     meta: {
@@ -3666,7 +3662,7 @@ export type PutV1ContactDetailsUpdateRequestBody = (((object & object) &
 
 export interface GetV1ContactDetailsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65b2391fc74a86095880aa0f","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-01-25T10:34:07.795Z","updatedAt":"2024-01-25T10:34:07.795Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65b8ad583a6957125b557400","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-01-30T08:03:36.560Z","updatedAt":"2024-01-30T08:03:36.560Z"}} */
   data: {
     message: string;
     data: {
@@ -3699,7 +3695,7 @@ export interface GetV1ContactDetailsGetErrorResponse {
 
 export interface PostV1NotificationFcmSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Added Successfully","data":{"_id":"65b2391fc74a86095880aa10","token":"abc","userId":"65b2391fc74a86095880aa11","createdAt":"2024-01-25T10:34:07.866Z","updatedAt":"2024-01-25T10:34:07.866Z","type":"web"}} */
+  /** @example {"message":"Token Added Successfully","data":{"_id":"65b8ad583a6957125b557401","token":"abc","userId":"65b8ad583a6957125b557402","createdAt":"2024-01-30T08:03:36.624Z","updatedAt":"2024-01-30T08:03:36.624Z","type":"web"}} */
   data: {
     message: string;
     data: {
@@ -3792,7 +3788,7 @@ export type GetV1NotificationGetParameterSearch = string;
 
 export interface GetV1NotificationGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b2391fc74a86095880aa12","title":"title","body":"body","userId":{"_id":"65b2391fc74a86095880aa13","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-01-25T10:34:07.879Z","updatedAt":"2024-01-25T10:34:07.879Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65b8ad583a6957125b557403","title":"title","body":"body","userId":{"_id":"65b8ad583a6957125b557404","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-01-30T08:03:36.638Z","updatedAt":"2024-01-30T08:03:36.638Z"}]} */
   data: {
     message: string;
     meta: {

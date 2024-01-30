@@ -1,20 +1,12 @@
-import React from 'react';
-import {
-  Button,
-  Center,
-  HStack,
-  Image,
-  ScrollView,
-  Text,
-  VStack,
-} from 'native-base';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {useUpdateMealPlanMutation} from '@store/apis/mealPlan';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {PostV1MealPlanUpdateErrorResponse} from '@store/schema';
-import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
+import {useRoute} from '@react-navigation/native';
+import {useUpdateMealPlanMutation} from '@store/apis/mealPlan';
 import {useGetAllRecipeQuery} from '@store/apis/recipe';
+import {PostV1MealPlanUpdateErrorResponse} from '@store/schema';
+import {Button, Center, HStack, ScrollView, Text, VStack} from 'native-base';
+import React from 'react';
 import Tab from 'src/components/Tab';
+import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
 
 const dailyMicros = [
   {
@@ -81,14 +73,13 @@ const dayTabs = [
 ];
 
 export default function CreateMealPlan() {
-  const day = useRoute()?.params?.dailyMicro;
+  const day = (useRoute()?.params as any)?.dailyMicro;
 
   const [activeTab, setActiveTab] = React.useState(day);
-  const navigate = useNavigation();
+
   const [mealPlanData, setMealPlanData] = React.useState<string[]>([]);
-  // Hooks
+
   const toast = useShowToastMessage();
-  // APIS
 
   const [handelCreate, {isLoading}] = useUpdateMealPlanMutation();
   const {data} = useGetAllRecipeQuery();
@@ -98,8 +89,6 @@ export default function CreateMealPlan() {
       recipe: mealPlanData,
     };
     try {
-      console.log('body', body);
-
       const res = await handelCreate(body).unwrap();
       console.log('res', res);
       toast(res?.data?.message);
@@ -109,9 +98,16 @@ export default function CreateMealPlan() {
       toast(error?.error?.message, 'error');
     }
   };
-  // data
 
-  console.log('mealPlanData', mealPlanData);
+  const handleAddMeal = (id: string) => {
+    if (mealPlanData.includes(id)) {
+      const mealPlanDataWithoutId = mealPlanData.filter(item => item !== id);
+
+      setMealPlanData(mealPlanDataWithoutId);
+    } else {
+      setMealPlanData(prev => [...prev, id]);
+    }
+  };
 
   return (
     <ScrollView
@@ -142,25 +138,8 @@ export default function CreateMealPlan() {
                 <MealPlanCard
                   index={index}
                   item={item}
-                  onPress={() => {
-                    setMealPlanData(prv => {
-                      const itemId = item?._id;
-
-                      // Check if the item is already in the array
-                      const itemIndex = prv.indexOf(itemId);
-
-                      if (itemIndex !== -1) {
-                        // If the item is found, remove it from the array
-                        const updatedArray = [...prv];
-                        updatedArray.splice(itemIndex, 1);
-                        return updatedArray;
-                      }
-
-                      // If the item is not found, add it to the array
-                      return [...prv, itemId];
-                    });
-                  }}
-                  checked={mealPlanData?.indexOf(item?._id) == 0 ? true : false}
+                  onPress={() => handleAddMeal(item?._id)}
+                  checked={mealPlanData.includes(item?._id)}
                 />
               ))}
           </HStack>
@@ -183,10 +162,8 @@ export default function CreateMealPlan() {
                 <MealPlanCard
                   index={index}
                   item={item}
-                  onPress={() => {
-                    setMealPlanData(prv => [...prv, item?._id]);
-                  }}
-                  checked={true}
+                  onPress={() => handleAddMeal(item?._id)}
+                  checked={mealPlanData.includes(item?._id)}
                 />
               ))}
           </HStack>
@@ -209,10 +186,32 @@ export default function CreateMealPlan() {
                 <MealPlanCard
                   index={index}
                   item={item}
-                  onPress={() => {
-                    setMealPlanData(prv => [...prv, item?._id]);
-                  }}
-                  checked={true}
+                  onPress={() => handleAddMeal(item?._id)}
+                  checked={mealPlanData.includes(item?._id)}
+                />
+              ))}
+          </HStack>
+        </ScrollView>
+      </VStack>
+      <VStack space={4}>
+        <Text color="black" fontSize="lg" fontWeight={700} px="4">
+          Snack
+        </Text>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          _contentContainerStyle={{
+            mb: 4,
+          }}>
+          <HStack space="2" pb="4" px={2}>
+            {data?.data?.data
+              ?.filter(it => it?.mealType === 'Snack')
+              ?.map((item, index) => (
+                <MealPlanCard
+                  index={item?._id}
+                  item={item}
+                  onPress={() => handleAddMeal(item?._id)}
+                  checked={mealPlanData.includes(item?._id)}
                 />
               ))}
           </HStack>
