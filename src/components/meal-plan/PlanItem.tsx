@@ -3,6 +3,7 @@ import {Box, Text, VStack} from 'native-base';
 import {fontSizes} from '@theme/typography';
 import {GetV1RecipeGetIdSuccessfulResponse} from '@store/schema';
 import RecipeCard from './RecipeCard';
+import NotFoundCard from '../not-found-card';
 
 export interface Ingredient {
   _id?: string;
@@ -37,20 +38,13 @@ export default function PlanItem({items, title, id}: Props) {
       <Text fontSize={fontSizes.lg} fontWeight={700} color="black">
         {title}
       </Text>
-      {items?.length === 0 ? (
-        <Box p="4">
-          <Text
-            textAlign={'center'}
-            fontSize={fontSizes.md}
-            fontWeight={600}
-            color="black">
-            No recipe found
-          </Text>
-        </Box>
-      ) : null}
-      {items?.map((item, index) => {
-        return <RecipeCard index={index} item={item} />;
-      })}
+      {items && items?.length > 0 ? (
+        items?.map((item, index) => {
+          return <RecipeCard index={index} item={item} />;
+        })
+      ) : (
+        <NotFoundCard title=" No recipe found" />
+      )}
     </VStack>
   );
 }

@@ -21,6 +21,7 @@ import {
   SkeletonsDailyMacro,
   SkeletonsRecipePlan,
 } from 'src/components/skeletons';
+import NotFoundCard from 'src/components/not-found-card';
 
 const dailyMicros = [
   {
@@ -225,52 +226,44 @@ export default function MealPlan() {
           )}
         </VStack>
 
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
+        <Text fontSize={fontSizes.lg} fontWeight={700} color="black" px="4">
           Snacks
         </Text>
 
-        {snackData?.length === 0 ? (
-          <Box p="4">
-            <Text
-              textAlign={'center'}
-              fontSize={fontSizes.md}
-              fontWeight={600}
-              color="black">
-              No recipe found
-            </Text>
-          </Box>
-        ) : null}
+        {snackData && snackData?.length > 0 ? (
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            _contentContainerStyle={{
+              mb: 4,
+            }}>
+            <HStack space="2" px="4" pb="4">
+              {snackData?.map((item, index) => (
+                <VStack
+                  key={index}
+                  justifyContent="center"
+                  px={2}
+                  style={{
+                    gap: 8,
+                  }}>
+                  <Image
+                    source={{uri: item?.photo}}
+                    alt={item.name}
+                    height={'120px'}
+                    width={'150px'}
+                    rounded="lg"
+                  />
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          _contentContainerStyle={{
-            mb: 4,
-          }}>
-          <HStack space="2" px="4" pb="4">
-            {snackData?.map((item, index) => (
-              <VStack
-                key={index}
-                justifyContent="center"
-                px={2}
-                style={{
-                  gap: 8,
-                }}>
-                <Image
-                  source={{uri: item?.photo}}
-                  alt={item.name}
-                  height={'120px'}
-                  width={'150px'}
-                  rounded="lg"
-                />
-
-                <Text fontSize="sm" fontWeight={600} color="black">
-                  {item.name}
-                </Text>
-              </VStack>
-            ))}
-          </HStack>
-        </ScrollView>
+                  <Text fontSize="sm" fontWeight={600} color="black">
+                    {item.name}
+                  </Text>
+                </VStack>
+              ))}
+            </HStack>
+          </ScrollView>
+        ) : (
+          <NotFoundCard title=" No recipe found" />
+        )}
       </ScrollView>
     </Box>
   );

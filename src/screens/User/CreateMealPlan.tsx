@@ -7,6 +7,8 @@ import {Button, Center, HStack, ScrollView, Text, VStack} from 'native-base';
 import React from 'react';
 import Tab from 'src/components/Tab';
 import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
+import MelPlanRowCard from 'src/components/meal-plan/MelPlanRowCard';
+import NotFoundCard from 'src/components/not-found-card';
 
 const dailyMicros = [
   {
@@ -108,6 +110,12 @@ export default function CreateMealPlan() {
       setMealPlanData(prev => [...prev, id]);
     }
   };
+  // data
+  const mealData = data?.data?.data;
+  const breakfastData = mealData?.filter(it => it?.mealType === 'Breakfast');
+  const lunchData = mealData?.filter(it => it?.mealType === 'Lunch');
+  const dinnerData = mealData?.filter(it => it?.mealType === 'Dinner');
+  const snackData = mealData?.filter(it => it?.mealType === 'Snack');
 
   return (
     <ScrollView
@@ -122,101 +130,32 @@ export default function CreateMealPlan() {
         <VStack px={2}>
           <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
         </VStack>
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
-          Breakfast
-        </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          _contentContainerStyle={{
-            mb: 4,
-          }}>
-          <HStack space="2" pb="4" px={2}>
-            {data?.data?.data
-              ?.filter(it => it?.mealType === 'Breakfast')
-              .map((item, index) => (
-                <MealPlanCard
-                  index={index}
-                  item={item}
-                  onPress={() => handleAddMeal(item?._id)}
-                  checked={mealPlanData.includes(item?._id)}
-                />
-              ))}
-          </HStack>
-        </ScrollView>
       </VStack>
-      <VStack space={4}>
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
-          Lunch
-        </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          _contentContainerStyle={{
-            mb: 4,
-          }}>
-          <HStack space="2" pb="4" px={2}>
-            {data?.data?.data
-              ?.filter(it => it?.mealType === 'Lunch')
-              .map((item, index) => (
-                <MealPlanCard
-                  index={index}
-                  item={item}
-                  onPress={() => handleAddMeal(item?._id)}
-                  checked={mealPlanData.includes(item?._id)}
-                />
-              ))}
-          </HStack>
-        </ScrollView>
-      </VStack>
-      <VStack space={4}>
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
-          Dinner
-        </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          _contentContainerStyle={{
-            mb: 4,
-          }}>
-          <HStack space="2" pb="4" px={2}>
-            {data?.data?.data
-              ?.filter(it => it?.mealType === 'Dinner')
-              ?.map((item, index) => (
-                <MealPlanCard
-                  index={index}
-                  item={item}
-                  onPress={() => handleAddMeal(item?._id)}
-                  checked={mealPlanData.includes(item?._id)}
-                />
-              ))}
-          </HStack>
-        </ScrollView>
-      </VStack>
-      <VStack space={4}>
-        <Text color="black" fontSize="lg" fontWeight={700} px="4">
-          Snack
-        </Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          _contentContainerStyle={{
-            mb: 4,
-          }}>
-          <HStack space="2" pb="4" px={2}>
-            {data?.data?.data
-              ?.filter(it => it?.mealType === 'Snack')
-              ?.map((item, index) => (
-                <MealPlanCard
-                  index={item?._id}
-                  item={item}
-                  onPress={() => handleAddMeal(item?._id)}
-                  checked={mealPlanData.includes(item?._id)}
-                />
-              ))}
-          </HStack>
-        </ScrollView>
-      </VStack>
+      {/* cards */}
+      <MelPlanRowCard
+        title="Breakfast"
+        data={breakfastData}
+        selectedData={mealPlanData}
+        onAddNewMeal={id => handleAddMeal(id)}
+      />
+      <MelPlanRowCard
+        title="Lunch"
+        data={lunchData}
+        selectedData={mealPlanData}
+        onAddNewMeal={id => handleAddMeal(id)}
+      />
+      <MelPlanRowCard
+        title="Dinner"
+        data={dinnerData}
+        selectedData={mealPlanData}
+        onAddNewMeal={id => handleAddMeal(id)}
+      />
+      <MelPlanRowCard
+        title="Snack"
+        data={snackData}
+        selectedData={mealPlanData}
+        onAddNewMeal={id => handleAddMeal(id)}
+      />
       <Center px={4}>
         <Button
           w="full"
