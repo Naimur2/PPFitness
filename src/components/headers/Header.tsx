@@ -1,8 +1,6 @@
-import {CalenderIcon, ListBucketIcon, Settings} from '@assets/icons';
-import {HStack, Image, Text} from 'native-base';
-import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useNavigation} from '@react-navigation/native';
+import React, {useLayoutEffect} from 'react';
+import MainHeader from './MainHeader';
 
 export default function Header({
   title,
@@ -15,38 +13,21 @@ export default function Header({
   iconRightType?: 'setting' | 'listBucket' | 'calender';
   onPress?: () => void;
 }) {
-  const insets = useSafeAreaInsets();
+  const navigation = useNavigation();
+  //
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <MainHeader
+          title={title}
+          onPress={onPress}
+          iconRightType={iconRightType}
+          type={type}
+        />
+      ),
+    });
+  }, [navigation]);
 
-  return (
-    <HStack
-      paddingX={4}
-      justifyContent={'space-between'}
-      alignItems={'center'}
-      height={60 + insets.top + 'px'}
-      bg={'white'}
-      pt={insets.top + 'px'}>
-      <Image
-        source={require('@assets/images/logo.png')}
-        alt="logo"
-        height={8}
-        width={8}
-      />
-      <Text fontSize={20} fontWeight={'700'}>
-        {title}
-      </Text>
-
-      <TouchableOpacity onPress={onPress}>
-        {onPress &&
-          (iconRightType === 'setting' ? (
-            <Settings />
-          ) : iconRightType === 'calender' ? (
-            <CalenderIcon />
-          ) : (
-            <ListBucketIcon />
-          ))}
-      </TouchableOpacity>
-    </HStack>
-  );
+  return <></>;
 }
-
-const styles = StyleSheet.create({});

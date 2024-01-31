@@ -7,7 +7,7 @@ import {
   Text,
   VStack,
 } from 'native-base';
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import DailyMacro from 'src/components/meal-plan/DailyMacro';
 
 import {AddIcon} from '@assets/icons';
@@ -93,9 +93,6 @@ export default function MealPlan() {
 
   const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
 
-  console.log('data', data);
-  console.log(activeTab);
-
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
   };
@@ -121,6 +118,7 @@ export default function MealPlan() {
       };
     });
   }, [data]);
+  //  header set
 
   return (
     <Box>

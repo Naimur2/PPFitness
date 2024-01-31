@@ -26,8 +26,8 @@ import ProgramTab from '@screens/User/ProgramTab';
 import HistoryTab from '@screens/User/HistoryTab';
 import CallScreen from '@screens/User/CallScreen';
 import ProfileTab from '@screens/User/ProfileTab';
-import Header from 'src/components/headers/Header';
 import useNavigate from '@hooks/useNavigate';
+import MainHeader from 'src/components/headers/MainHeader';
 
 const Tab = createBottomTabNavigator();
 
@@ -104,7 +104,7 @@ export default function BottomTabs() {
         options={{
           header: (props: BottomTabHeaderProps) => {
             return (
-              <Header
+              <MainHeader
                 title={'Program'}
                 onPress={() => navigate('SettingsScreen')}
                 iconRightType="calender"
@@ -119,7 +119,7 @@ export default function BottomTabs() {
         options={{
           header: (props: BottomTabHeaderProps) => {
             return (
-              <Header
+              <MainHeader
                 title={'History'}
                 // onPress={() => navigate('SettingsScreen')}
                 // iconRightType="calender"
@@ -134,7 +134,7 @@ export default function BottomTabs() {
         options={{
           header: (props: BottomTabHeaderProps) => {
             return (
-              <Header
+              <MainHeader
                 title={'Message'}
                 // onPress={() => navigate('SettingsScreen')}
                 // iconRightType="calender"
@@ -149,7 +149,7 @@ export default function BottomTabs() {
         options={{
           header: (props: BottomTabHeaderProps) => {
             return (
-              <Header
+              <MainHeader
                 title={'Settings'}
                 onPress={() => navigate('SettingsScreen')}
               />

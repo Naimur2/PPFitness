@@ -5,7 +5,6 @@ import LayoutRoutes from './LayoutRoutes';
 import useNotificationPermission from '@hooks/useNotificationPermission';
 import React from 'react';
 import messaging from '@react-native-firebase/messaging';
-import {Alert} from 'react-native';
 
 export default function Routes() {
   const {accessToken} = useSelector(selectAuth);
