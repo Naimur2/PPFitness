@@ -66,6 +66,40 @@ export const SkeletonsProgramList = () => {
     </Center>
   );
 };
+export const SkeletonsExerciseItem = () => {
+  return (
+    <Center w="100%">
+      <VStack
+        w="100%"
+        maxW="400"
+        space={8}
+        rounded="md"
+        _dark={{
+          borderColor: 'coolGray.500',
+        }}
+        _light={{
+          borderColor: 'coolGray.200',
+        }}>
+        <Skeleton h="5" w={'2/4'} rounded="md" />
+        {[{}, {}, {}, {}]?.map((i, index) => (
+          <VStack
+            key={index}
+            flex="3"
+            space="4"
+            borderWidth={1}
+            borderColor={'gray.100'}
+            borderRadius={'md'}
+            p={3}>
+            <HStack space="2" alignItems="center">
+              <Skeleton size="16" rounded="md" />
+              <Skeleton.Text w={'4/5'} />
+            </HStack>
+          </VStack>
+        ))}
+      </VStack>
+    </Center>
+  );
+};
 export const SkeletonsRecipePlan = () => {
   return (
     <Center w="100%">

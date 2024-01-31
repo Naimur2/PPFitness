@@ -24,13 +24,14 @@ interface Props {
 }
 
 export default function ExerciseItem({items, title, onPress}: Props) {
-  const [checked, setChecked] = React.useState(false);
-
   return (
     <VStack space="3">
-      <Text fontSize="lg" fontWeight={700} color="black">
-        {title}
-      </Text>
+      {title && (
+        <Text fontSize="lg" fontWeight={700} color="black">
+          {title}
+        </Text>
+      )}
+
       {items.map((item, index) => (
         <Pressable
           onPress={() => onPress?.(item?._id)}

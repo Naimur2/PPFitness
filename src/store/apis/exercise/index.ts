@@ -3,6 +3,7 @@ import {
   DeleteV1ExerciseDeleteIdSuccessfulResponse,
   GetV1ExerciseGetIdParameterId,
   GetV1ExerciseGetIdSuccessfulResponse,
+  GetV1ExerciseGetParameterSearch,
   GetV1ExerciseGetSuccessfulResponse,
   GetV1ExerciseHistoryIdParameterId,
   GetV1ExerciseHistoryIdSuccessfulResponse,
@@ -13,7 +14,8 @@ import {
   PutV1ExerciseUpdateIdSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
-
+import queryString from 'query-string';
+import {ExerciseParamProps} from './types';
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getExerciseHistory: builder.query<
@@ -40,10 +42,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: `exercise/get/${id}`,
       }),
     }),
-    getAllExercise: builder.query<GetV1ExerciseGetSuccessfulResponse, void>({
-      query: () => ({
-        url: `exercise/get`,
-      }),
+    getAllExercise: builder.query<
+      GetV1ExerciseGetSuccessfulResponse,
+      ExerciseParamProps
+    >({
+      query: searchFilter => {
+        const query = queryString.stringify(searchFilter);
+        return {url: `exercise/get?${query}`};
+      },
       providesTags: ['ExerciseAdd'],
     }),
     deleteExercise: builder.mutation<

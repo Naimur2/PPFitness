@@ -1,8 +1,12 @@
 import React from 'react';
-import {VStack, Text} from 'native-base';
+import {VStack, Text, NativeBaseProviderProps} from 'native-base';
 import {fontSizes} from '@theme/typography';
 
-export default function NotFoundCard({title}: {title: string}) {
+type Props = {
+  title: string;
+} & React.ComponentProps<typeof VStack>;
+
+export default function NotFoundCard({title, ...props}: Props) {
   return (
     <VStack
       borderWidth={1}
@@ -11,7 +15,8 @@ export default function NotFoundCard({title}: {title: string}) {
       mx={4}
       justifyContent={'center'}
       borderColor={'gray.200'}
-      bg={'white'}>
+      bg={'white'}
+      {...props}>
       <Text
         textAlign={'center'}
         fontSize={fontSizes.md}
