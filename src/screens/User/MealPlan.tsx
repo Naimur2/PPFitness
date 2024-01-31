@@ -91,7 +91,7 @@ export default function MealPlan() {
   const [activeTab, setActiveTab] = React.useState('Sunday');
   const navigate = useNavigation();
 
-  const {data, isLoading, error} = useGetAllMealPlanQuery(activeTab);
+  const {data, isLoading, isFetching} = useGetAllMealPlanQuery(activeTab);
 
   const navigateToBlogs = () => {
     navigate.navigate('Blogs');
@@ -198,7 +198,7 @@ export default function MealPlan() {
             </Pressable>
           </HStack>
           <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
-          {isLoading ? (
+          {isLoading || isFetching ? (
             <SkeletonsRecipePlan />
           ) : (
             <>

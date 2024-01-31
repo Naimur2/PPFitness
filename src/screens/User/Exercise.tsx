@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Box,
+  Button,
   CheckIcon,
   HStack,
   Input,
@@ -30,6 +31,13 @@ export default function Exercise() {
   // apis
   const {data, isFetching, isLoading} = useGetAllExerciseQuery(searchFilter);
   //
+  const handelClear = () => {
+    setSearchFilter({
+      search: '',
+      bodyPart: '',
+      equipment: '',
+    });
+  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -40,18 +48,26 @@ export default function Exercise() {
         flexGrow: 1,
         gap: 4,
       }}>
-      <Input
-        bg="white"
-        placeholder="Search Exercise"
-        rounded={8}
-        placeholderTextColor={'gray.2'}
-        color={'black'}
-        _focus={{bg: 'white'}}
-        leftElement={<SearchIcon style={{marginLeft: 10}} />}
-        backgroundColor={'white'}
-        fontSize={fontSizes.xs}
-        onChangeText={text => setSearchFilter({...searchFilter, search: text})}
-      />
+      <HStack justifyContent={'space-between'} alignItems={'center'}>
+        <Input
+          w={'80%'}
+          bg="white"
+          placeholder="Search Exercise"
+          rounded={8}
+          placeholderTextColor={'gray.2'}
+          color={'black'}
+          _focus={{bg: 'white'}}
+          leftElement={<SearchIcon style={{marginLeft: 10}} />}
+          backgroundColor={'white'}
+          fontSize={fontSizes.xs}
+          onChangeText={text =>
+            setSearchFilter({...searchFilter, search: text})
+          }
+        />
+        <Button onPress={handelClear} variant={'unstyled'}>
+          Clear
+        </Button>
+      </HStack>
 
       <HStack justifyContent={'space-between'} alignItems={'center'}>
         <Box w={'48%'}>
@@ -118,7 +134,7 @@ export default function Exercise() {
         <>
           {data?.data?.data?.length > 0 ? (
             <ExerciseItem
-              title="B"
+              title=""
               items={data?.data?.data || []}
               onPress={id =>
                 navigation.navigate('ExerciseDetails', {id: 'dddd'})
