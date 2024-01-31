@@ -104,13 +104,7 @@ export default function BottomTabs() {
         name="Program"
         options={{
           header: (props: BottomTabHeaderProps) => {
-            return (
-              <MainHeader
-                title={'Program'}
-                onPress={() => navigate('SettingsScreen')}
-                iconRightType="calender"
-              />
-            );
+            return <MainHeader title={'Program'} />;
           },
         }}
         component={ProgramTab}
