@@ -115,21 +115,7 @@ export default function BottomTabs() {
         }}
         component={ProgramTab}
       />
-      <Tab.Screen
-        name="History"
-        options={{
-          header: (props: BottomTabHeaderProps) => {
-            return (
-              <MainHeader
-                title={'History'}
-                // onPress={() => navigate('SettingsScreen')}
-                // iconRightType="calender"
-              />
-            );
-          },
-        }}
-        component={HistoryTab}
-      />
+      <Tab.Screen name="History" component={HistoryTab} />
       <Tab.Screen
         name="Call"
         options={{

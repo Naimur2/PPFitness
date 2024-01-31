@@ -132,7 +132,7 @@ export default function Exercise() {
         <SkeletonsExerciseItem />
       ) : (
         <>
-          {data?.data?.data?.length > 0 ? (
+          {data?.data && data?.data?.data?.length > 0 ? (
             <ExerciseItem
               title=""
               items={data?.data?.data || []}

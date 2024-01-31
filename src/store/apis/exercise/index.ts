@@ -20,11 +20,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getExerciseHistory: builder.query<
       GetV1ExerciseHistorySuccessfulResponse,
-      void
+      ExerciseParamProps
     >({
-      query: id => ({
-        url: `exercise/history/${id}`,
-      }),
+      query: searchFilter => {
+        const query = queryString.stringify(searchFilter);
+        return {
+          url: `exercise/history/${query}`,
+        };
+      },
     }),
     getExerciseHistoryBuyId: builder.query<
       GetV1ExerciseHistoryIdSuccessfulResponse,
