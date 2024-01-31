@@ -82,6 +82,7 @@ const tabbarOptions: TBottomTabNavigationOptions = ({route}) => ({
     }
   },
   title: '',
+  tabBarHideOnKeyboard: true,
   tabBarStyle: {
     height: 70,
   },
