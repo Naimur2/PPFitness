@@ -100,7 +100,7 @@ export default function ProgramTab() {
         <>
           {data?.data?.data?.map((item, index) => {
             return (
-              <VStack>
+              <VStack space={4}>
                 <Text fontWeight={700} fontSize={fontSizes.md}>
                   {item?.programId?.name}
                 </Text>

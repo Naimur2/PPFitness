@@ -136,6 +136,7 @@ export default function MealPlan() {
           flexGrow: 1,
           bg: '#F8F8F8',
           gap: 4,
+          py: 4,
         }}>
         <VStack px="4" space={4}>
           <Text color="black" fontSize="lg" fontWeight={700}>

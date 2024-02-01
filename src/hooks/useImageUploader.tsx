@@ -8,7 +8,7 @@ import {
 
 type TOnImageUpload = (fileName?: string, uri?: string) => void;
 
-export default function useImageUploader(props: {mediaType?: string}) {
+export default function useImageUploader(props?: {mediaType?: string}) {
   const mediaType = props?.mediaType || 'image';
   const [fileData, setFileData] = React.useState<
     | {

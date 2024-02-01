@@ -16,6 +16,8 @@ import {
   PutV1ProgramUpdateIdSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
+import {TProgramScheduleQuery} from './type';
+import queryString from 'query-string';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -34,11 +36,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     getProgramSchedule: builder.query<
       GetV1ProgramScheduleSuccessfulResponse,
-      void
+      TProgramScheduleQuery
     >({
-      query: () => ({
-        url: `program/schedule?day=1&week=1&date=2024-01-25T13%3A44%3A55.175Z`,
-      }),
+      query: args => {
+        const query = queryString.stringify(args);
+        return {
+          url: `program/schedule?day=1&week=1&date=2024-01-25T13%3A44%3A55.175Z`,
+        };
+      },
       providesTags: ['AddWorkout', 'AddWorkout'],
     }),
     getProgramUser: builder.query<GetV1ProgramUserSuccessfulResponse, void>({

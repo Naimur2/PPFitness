@@ -1,5 +1,13 @@
 import React from 'react';
-import {Box, HStack, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {
+  Box,
+  Button,
+  HStack,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import {Edit, TotalWorkouts, WeightLoss} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import WorkoutPerWeek from 'src/layouts/WorkoutPerWeek';
@@ -58,39 +66,56 @@ export default function ProfileTab() {
         flexGrow: 1,
         gap: 4,
       }}>
-      <HStack space={4} py={4}>
-        <Box position={'relative'}>
-          <Image
-            source={{
-              uri:
-                data?.data?.data?.avatar ??
-                'https://www.postendekker.nl/wp-content/uploads/2021/10/dummy-profile.jpg',
-            }}
-            alt={data?.data?.data?.fullName || 'image base'}
-            style={{
-              width: 56,
-              height: 56,
-              resizeMode: 'cover',
-              borderRadius: 50,
-            }}
-          />
-
-          <Pressable
-            onPress={handelImage}
-            position={'absolute'}
-            bottom={0}
-            right={0}>
-            <Edit height={20} width={20} />
-          </Pressable>
-        </Box>
-        <VStack justifyContent={'space-between'}>
-          <Text color={'#58565E'} fontSize={fontSizes.xs}>
-            Welcome Back
-          </Text>
-          <Text color={'#1A1929'} fontSize={fontSizes.md} fontWeight={700}>
-            {data?.data?.data?.fullName}
-          </Text>
-        </VStack>
+      <HStack
+        space={4}
+        py={4}
+        justifyContent={'space-between'}
+        alignItems={'center'}>
+        <HStack space={4}>
+          <Box position={'relative'}>
+            <Image
+              source={{
+                uri:
+                  data?.data?.data?.avatar ??
+                  'https://www.postendekker.nl/wp-content/uploads/2021/10/dummy-profile.jpg',
+              }}
+              alt={data?.data?.data?.fullName || 'image base'}
+              style={{
+                width: 56,
+                height: 56,
+                resizeMode: 'cover',
+                borderRadius: 50,
+              }}
+            />
+            <Pressable
+              onPress={handelImage}
+              position={'absolute'}
+              bottom={0}
+              right={0}>
+              <Edit height={20} width={20} />
+            </Pressable>
+          </Box>
+          <VStack justifyContent={'space-between'}>
+            <Text color={'#58565E'} fontSize={fontSizes.xs}>
+              Welcome Back
+            </Text>
+            <Text color={'#1A1929'} fontSize={fontSizes.md} fontWeight={700}>
+              {data?.data?.data?.fullName}
+            </Text>
+          </VStack>
+        </HStack>
+        <Button
+          bg={'#C7B4A0'}
+          _text={{
+            color: '#1A1929',
+          }}
+          px={4}
+          rounded={20}
+          py={'6px'}
+          
+          >
+          Book In
+        </Button>
       </HStack>
 
       <HStack justifyContent={'space-between'}>
