@@ -11,9 +11,10 @@ const persistConfig = {
 };
 
 const persistadeAuthReducer = persistReducer(persistConfig, authReducer);
+const persistadeUiReducer = persistReducer(persistConfig, uiReducer);
 
 const rootReducer = combineReducers({
-  ui: uiReducer,
+  ui: persistadeUiReducer,
   auth: persistadeAuthReducer,
   [authApiSlice.reducerPath]: authApiSlice.reducer,
 });

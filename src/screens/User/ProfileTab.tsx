@@ -22,7 +22,7 @@ import {
 } from '@store/apis/userProfile';
 import createFormFile from 'src/utils/fileDetails';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {Image} from 'react-native';
+import {Image, Linking} from 'react-native';
 
 export default function ProfileTab() {
   // Hooks
@@ -109,11 +109,17 @@ export default function ProfileTab() {
           _text={{
             color: '#1A1929',
           }}
+          _pressed={{
+            bg: '#C7B4A0',
+          }}
           px={4}
           rounded={20}
           py={'6px'}
-          
-          >
+          onPress={() => {
+            if (Linking.canOpenURL('https://ppfit.setmore.com')) {
+              Linking.openURL('https://ppfit.setmore.com');
+            }
+          }}>
           Book In
         </Button>
       </HStack>

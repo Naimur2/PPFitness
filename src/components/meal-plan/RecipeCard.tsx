@@ -5,6 +5,7 @@ import {fontSizes} from '@theme/typography';
 import {GetV1RecipeGetIdSuccessfulResponse} from '@store/schema';
 import {Image} from 'react-native';
 import {useGetSingleRecipeByIdQuery} from '@store/apis/recipe';
+import LazyImage from '../LazyImage';
 
 export interface RecipeInt {
   item: GetV1RecipeGetIdSuccessfulResponse['data']['data'];
@@ -28,7 +29,7 @@ export default function RecipeCard({item, index}: RecipeInt) {
       p={2}
       key={item?.name + index}
       position={'relative'}>
-      <Image
+      <LazyImage
         source={{
           uri:
             item?.photo ||

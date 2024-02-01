@@ -2,14 +2,16 @@ import {ImageBackground} from 'react-native';
 import React from 'react';
 import {Button, Factory, Image, Text, VStack} from 'native-base';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import {setHasViewedOnboarding} from '@store/features/ui/uiSlice';
 
 const FBgImage = Factory(ImageBackground);
 
 export default function WelcomeScreen() {
-  const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const navigateToLogin = () => {
-    navigation.navigate('Login');
+    dispatch(setHasViewedOnboarding(true));
   };
 
   return (

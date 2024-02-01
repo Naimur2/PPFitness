@@ -8,14 +8,13 @@ import {
 } from '@assets/icons';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import useToggle from '@hooks/useToggle';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {useNavigation} from '@react-navigation/native';
-import {useLoginMutation} from '@store/apis/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useNavigation } from '@react-navigation/native';
+import { useLoginMutation } from '@store/apis/auth';
 import {
-  PostV1AuthLoginErrorResponse,
-  PostV1AuthLoginRequestBody,
+  PostV1AuthLoginRequestBody
 } from '@store/schema';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import {
   Box,
   Button,
@@ -30,9 +29,9 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import {ImageBackground} from 'react-native';
+import { ImageBackground } from 'react-native';
+import { LoginManager } from 'react-native-fbsdk-next';
 import * as Yup from 'yup';
-import {LoginManager} from 'react-native-fbsdk-next';
 
 const FBgImage = Factory(ImageBackground);
 //
