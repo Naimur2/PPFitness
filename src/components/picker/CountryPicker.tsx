@@ -33,7 +33,8 @@ const CountrySelectPicker: React.FC<CountryPickerProps> = ({
         filterPlaceholder={'Search'}
         modalProps={{animationType: 'slide'}}
         placeholder={values || 'Select country'}
-        textStyle={{fontSize: 10}}
+      
+        textStyle={{fontSize: 8}}
       />
     </>
   );

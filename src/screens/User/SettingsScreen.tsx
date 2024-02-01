@@ -4,6 +4,7 @@ import {
   ArrowDownIcon,
   Bell,
   LockV2,
+  LogoutIcon,
   ProfileRound,
   Settings,
   Sheild,
@@ -47,7 +48,7 @@ const tabItems = [
   },
   {
     label: 'Logout',
-    icon: Support,
+    icon: LogoutIcon,
     nav: 'logout',
   },
 ];

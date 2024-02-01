@@ -36,6 +36,7 @@ export const apiSlice = createApi({
     'Chats',
     'AddWorkout',
     'AddProgram',
+    'WorkoutPerWeek',
   ],
   endpoints: () => ({}),
 });

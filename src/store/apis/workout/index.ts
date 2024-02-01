@@ -4,6 +4,7 @@ import {
   GetV1WorkoutGetIdParameterId,
   GetV1WorkoutGetIdSuccessfulResponse,
   GetV1WorkoutGetSuccessfulResponse,
+  GetV1WorkoutPerWeekSuccessfulResponse,
   PostV1WorkoutAddByProgramRequestBody,
   PostV1WorkoutAddByProgramSuccessfulResponse,
   PostV1WorkoutAddRequestBody,
@@ -71,6 +72,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: props,
       }),
     }),
+    getWorkoutPerWeek: builder.query<GetV1WorkoutPerWeekSuccessfulResponse, void>({
+      query: () => ({
+        url: `workout/per-week`,
+      }),
+      providesTags: ['WorkoutPerWeek'],
+    }),
   }),
   overrideExisting: true,
 });
@@ -81,4 +88,6 @@ export const {
   useGetAllWorkoutQuery,
   useGetSingleWorkoutByIdQuery,
   useUpdateWorkoutMutation,
+  useAddWorkoutAddByProgramMutation,
+  useGetWorkoutPerWeekQuery,
 } = authApiSlice;

@@ -23,6 +23,7 @@ import {
 import createFormFile from 'src/utils/fileDetails';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import {Image, Linking} from 'react-native';
+import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
 
 export default function ProfileTab() {
   // Hooks
@@ -32,8 +33,6 @@ export default function ProfileTab() {
   const [handelProfile, {}] = useUpdateProfileMutation();
   const [handelFileUpload, {}] = useUpdateFileMutation();
   const {data} = useGetSingleProfileQuery();
-
-  //
   const handelImage = async () => {
     try {
       const file = await handleImagePicker();
@@ -57,9 +56,12 @@ export default function ProfileTab() {
       toast(error?.data?.error?.message, 'error');
     }
   };
+  const {data: workoutData} = useGetWorkoutPerWeekQuery();
+
 
   return (
     <ScrollView
+      showsVerticalScrollIndicator={false}
       _contentContainerStyle={{
         px: 4,
         py: 4,
@@ -115,8 +117,11 @@ export default function ProfileTab() {
           px={4}
           rounded={20}
           py={'6px'}
-          onPress={() => {
-            if (Linking.canOpenURL('https://ppfit.setmore.com')) {
+          onPress={async () => {
+            const supported = await Linking.canOpenURL(
+              'https://ppfit.setmore.com',
+            );
+            if (supported) {
               Linking.openURL('https://ppfit.setmore.com');
             }
           }}>
@@ -167,7 +172,7 @@ export default function ProfileTab() {
               fontSize={fontSizes.md}
               fontWeight={700}
               textAlign={'center'}>
-              234
+              {workoutData?.data?.data?.totalWorkouts || 0}
             </Text>
             <Text
               color={'#58565E'}
@@ -181,7 +186,7 @@ export default function ProfileTab() {
 
       <WorkoutPerWeek />
       <DailyMacroChart />
-      <BenchPress />
+      {/* <BenchPress /> */}
       <CircumfenceMeasurement />
     </ScrollView>
   );

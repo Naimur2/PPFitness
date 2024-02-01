@@ -47,24 +47,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body,
       }),
-      async onQueryStarted(args, {dispatch, queryFulfilled}) {
-        try {
-          const {data: result} = await queryFulfilled;
-
-          if (result.data) {
-            // dispatch(
-            //   setProfile({
-            //     ...result.data,
-            //   }),
-            // );
-          }
-
-          return result;
-        } catch (error: any) {
-          return error;
-        }
-      },
-      invalidatesTags: ['ProfileUpdate'],
+      invalidatesTags: ['ProfileUpdate', 'WorkoutPerWeek'],
     }),
     deleteProfile: builder.mutation<
       DeleteV1ProfileDeleteIdSuccessfulResponse,

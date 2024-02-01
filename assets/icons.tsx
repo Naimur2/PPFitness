@@ -15,6 +15,12 @@ export function WorkoutNotFoundIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -30,6 +36,12 @@ export function CongratulationsIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -46,6 +58,12 @@ export function CallFillIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -61,6 +79,12 @@ export function MicOutlineIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -76,6 +100,12 @@ export function VideoFillIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -91,6 +121,12 @@ export function VideoOutlineIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -106,6 +142,12 @@ export function SpeakerOutlineIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -123,6 +165,12 @@ export function CalenderIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -138,6 +186,12 @@ export function ListBucketIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -153,6 +207,12 @@ export function PhoneHelpIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -168,6 +228,12 @@ export function EmailHelpIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -183,6 +249,12 @@ export function TwitterHelpIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -198,6 +270,12 @@ export function WhatsAppHelpIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -213,6 +291,12 @@ export function FacebookIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -229,6 +313,12 @@ export function GoogleIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -244,6 +334,12 @@ export function AppleIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -259,6 +355,12 @@ export function PlayIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -275,6 +377,12 @@ export function EmailIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -290,6 +398,12 @@ export function EyeCloseIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -305,6 +419,12 @@ export function EyeOpenIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -321,6 +441,12 @@ export function LockIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 20,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -336,6 +462,12 @@ export function SearchIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -351,6 +483,12 @@ export function ArrowDownIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -367,6 +505,12 @@ export function ArrowUpIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -382,6 +526,12 @@ export function AddIcon({...rest}: TIconProps) {
         width: rest?.width ? rest.width : 24,
       }}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -392,6 +542,12 @@ export function MealIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/meal.svg')}
       resizeMode="contain"
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -401,6 +557,12 @@ export function MealFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/meal-fill.svg')}
       resizeMode="contain"
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -410,6 +572,12 @@ export function ExerciseIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/exercise.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -420,6 +588,12 @@ export function ExerciseFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/exercise-fill.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -429,6 +603,12 @@ export function CloseIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/close-icon.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -438,6 +618,12 @@ export function FileUploadIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/file-upload.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -447,6 +633,12 @@ export function ChartIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/chart.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -457,6 +649,12 @@ export function ChartFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/chart-fill.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -466,6 +664,12 @@ export function HistoryIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/history.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -476,6 +680,12 @@ export function HistoryFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/history-fill.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -486,6 +696,12 @@ export function PhoneIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/phone.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -496,6 +712,12 @@ export function PhoneFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/phone-fill.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -505,6 +727,12 @@ export function ProfileIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/profile.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -515,6 +743,12 @@ export function ProfileFillIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bootom-tab/profile-fill.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -524,6 +758,12 @@ export function ClockIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/clock.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -534,6 +774,12 @@ export function LbsIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/lbs.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -544,6 +790,12 @@ export function TrophyIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/trophy.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -554,6 +806,12 @@ export function NoteIcon({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/note.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -564,6 +822,12 @@ export function ProfileRound({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/profile-round.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -573,6 +837,12 @@ export function LockV2({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/lock-v2.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -582,6 +852,12 @@ export function Bell({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/bell.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -591,6 +867,12 @@ export function Settings({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/settings.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -601,6 +883,12 @@ export function Sheild({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/sheild.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -611,6 +899,12 @@ export function Support({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/support.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -620,6 +914,12 @@ export function ChevronRight({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/chevron-right.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -629,6 +929,12 @@ export function Edit({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/edit.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -638,6 +944,12 @@ export function WeightLoss({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/weight-loss.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
@@ -648,6 +960,28 @@ export function TotalWorkouts({...rest}: TIconProps) {
     <VectorImage
       source={require('@assets/svg/totalworkouts.svg')}
       resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
+      {...rest}
+    />
+  );
+}
+
+export function LogoutIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/logout.svg')}
+      resizeMode="contain"
+            height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
       {...rest}
     />
   );
