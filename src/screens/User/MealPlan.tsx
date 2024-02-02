@@ -1,13 +1,12 @@
 import {
   Box,
   HStack,
-  Image,
   Pressable,
   ScrollView,
   Text,
   VStack,
 } from 'native-base';
-import React, {useLayoutEffect} from 'react';
+import React from 'react';
 import DailyMacro from 'src/components/meal-plan/DailyMacro';
 
 import {AddIcon} from '@assets/icons';
@@ -22,6 +21,7 @@ import {
   SkeletonsRecipePlan,
 } from 'src/components/skeletons';
 import NotFoundCard from 'src/components/not-found-card';
+import LazyImage from 'src/components/LazyImage';
 
 const dailyMicros = [
   {
@@ -245,7 +245,7 @@ export default function MealPlan() {
                   style={{
                     gap: 8,
                   }}>
-                  <Image
+                  <LazyImage
                     source={{uri: item?.photo}}
                     alt={item.name}
                     height={'120px'}

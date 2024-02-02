@@ -1,7 +1,6 @@
 import {Pressable, StyleSheet} from 'react-native';
 import React from 'react';
 import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import {
   Actionsheet,
@@ -9,7 +8,6 @@ import {
   Button,
   FormControl,
   HStack,
-  Image,
   Input,
   ScrollView,
   Stack,
@@ -30,6 +28,7 @@ import useImageUploader from '@hooks/useImageUploader';
 import createFormFile from 'src/utils/fileDetails';
 import {fontSizes} from '@theme/typography';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import LazyImage from 'src/components/LazyImage';
 // You2$Ppsw
 export default function EditProfile() {
   //
@@ -124,7 +123,7 @@ export default function EditProfile() {
         <VStack space="4">
           <HStack alignSelf={'center'}>
             <Box position={'relative'}>
-              <Image
+              <LazyImage
                 source={{
                   uri:
                     data?.data?.data?.avatar ??

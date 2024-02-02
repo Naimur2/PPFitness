@@ -12,7 +12,6 @@ import {Edit, TotalWorkouts, WeightLoss} from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import WorkoutPerWeek from 'src/layouts/WorkoutPerWeek';
 import DailyMacroChart from 'src/layouts/DailyMacroChart';
-import BenchPress from 'src/layouts/BenchPress';
 import CircumfenceMeasurement from 'src/layouts/CircumfenceMeasurement';
 import useImageUploader from '@hooks/useImageUploader';
 import {
@@ -22,8 +21,9 @@ import {
 } from '@store/apis/userProfile';
 import createFormFile from 'src/utils/fileDetails';
 import useShowToastMessage from '@hooks/useShowToastMessage';
-import {Image, Linking} from 'react-native';
+import {Linking} from 'react-native';
 import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
+import LazyImage from 'src/components/LazyImage';
 
 export default function ProfileTab() {
   // Hooks
@@ -58,7 +58,6 @@ export default function ProfileTab() {
   };
   const {data: workoutData} = useGetWorkoutPerWeekQuery();
 
-
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -75,7 +74,7 @@ export default function ProfileTab() {
         alignItems={'center'}>
         <HStack space={4}>
           <Box position={'relative'}>
-            <Image
+            <LazyImage
               source={{
                 uri:
                   data?.data?.data?.avatar ??

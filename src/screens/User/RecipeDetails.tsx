@@ -1,17 +1,9 @@
 import React, {useState} from 'react';
-import {
-  Box,
-  Button,
-  HStack,
-  ScrollView,
-  Stack,
-  Text,
-  VStack,
-} from 'native-base';
+import {Box, Button, HStack, ScrollView, Text, VStack} from 'native-base';
 import {useRoute} from '@react-navigation/native';
 import Header from 'src/components/headers/Header';
 import {useGetSingleRecipeByIdQuery} from '@store/apis/recipe';
-import {Image} from 'react-native';
+import LazyImage from 'src/components/LazyImage';
 
 export default function RecipeDetails() {
   const [switchButton, setSwitchButton] = useState<boolean>(true);
@@ -49,7 +41,7 @@ export default function RecipeDetails() {
           </Button>
         </HStack>
         <HStack alignItems="center">
-          <Image
+          <LazyImage
             source={{uri: data?.data?.data?.photo}}
             style={{
               width: '100%',

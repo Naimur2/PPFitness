@@ -1,5 +1,6 @@
 import React from 'react';
-import {HStack, Image, Pressable, Text, VStack} from 'native-base';
+import {HStack, Pressable, Text, VStack} from 'native-base';
+import LazyImage from '../LazyImage';
 
 export interface IBlogCardProps {
   title: string;
@@ -32,7 +33,7 @@ export default function BlogCard({
       borderRadius={16}
       overflow="hidden"
       bg="white">
-      <Image
+      <LazyImage
         source={{uri: thumbnail}}
         alt={title}
         height={'200'}
@@ -48,7 +49,7 @@ export default function BlogCard({
           {description}
         </Text>
         <HStack alignItems="center">
-          {/* <Image
+          {/* <LazyImage
             source={{uri: ''}}
             alt={author.name}
             height={8}

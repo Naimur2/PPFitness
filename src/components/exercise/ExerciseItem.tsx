@@ -1,8 +1,7 @@
 import React from 'react';
-import {Image, Pressable, Text, VStack} from 'native-base';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import VectorImage from 'react-native-vector-image';
+import {Pressable, Text, VStack} from 'native-base';
 import {PlayIcon} from '@assets/icons';
+import LazyImage from '../LazyImage';
 
 interface Item {
   _id: string;
@@ -43,7 +42,7 @@ export default function ExerciseItem({items, title, onPress}: Props) {
           p={2}
           key={item.name + index}
           position={'relative'}>
-          <Image
+          <LazyImage
             source={{
               uri: 'https://images.unsplash.com/photo-1558611848-73f7eb4001a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80',
             }}

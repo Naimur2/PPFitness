@@ -1,10 +1,10 @@
-import {Image, StyleSheet} from 'react-native';
+import { StyleSheet} from 'react-native';
 import React from 'react';
 import {Box, CheckIcon, Pressable, Text, VStack} from 'native-base';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {GetV1RecipeGetSuccessfulResponse} from '@store/schema';
 import useNavigate from '@hooks/useNavigate';
-//  GetV1RecipeGetSuccessfulResponse['data']['data']
+import LazyImage from '../LazyImage';
+
+
 export interface MealPlanInt {
   item: any;
   index: number;
@@ -35,7 +35,7 @@ export default function MealPlanCard({
         style={{
           gap: 8,
         }}>
-        <Image
+        <LazyImage
           source={{uri: item?.photo}}
           style={{
             height: 200,

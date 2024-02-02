@@ -15,6 +15,7 @@ import {useSelector} from 'react-redux';
 import {selectUser} from '@store/features/authSlice';
 import {useGetSingleProfileQuery} from '@store/apis/userProfile';
 import {Image, StyleSheet} from 'react-native';
+import LazyImage from 'src/components/LazyImage';
 const adminHelpImage = require('@assets/images/admin-help.png');
 const adminHelpImageUri = Image.resolveAssetSource(adminHelpImage)?.uri;
 
@@ -85,7 +86,7 @@ export default function CallScreen() {
               dajsbv
             </Text>
           </Box>
-          <Image
+          <LazyImage
             source={{
               uri: props?.currentMessage?.user?.avatar,
             }}

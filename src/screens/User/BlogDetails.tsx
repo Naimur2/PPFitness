@@ -1,6 +1,7 @@
 import React from 'react';
 import {HStack, Image, Stack, Text, VStack} from 'native-base';
 import {useRoute} from '@react-navigation/native';
+import LazyImage from 'src/components/LazyImage';
 
 export default function BlogDetails() {
   const {thumbnail, title, description} = useRoute()?.params?.item;
@@ -9,7 +10,7 @@ export default function BlogDetails() {
   return (
     <VStack h={'100%'} p={4}>
       {/* <HStack alignItems="center">
-        <Image
+        <LazyImage
           source={{uri: thumbnail}}
           height={8}
           width={8}
@@ -20,7 +21,7 @@ export default function BlogDetails() {
           {author.name}
         </Text>
       </HStack> */}
-      <Image
+      <LazyImage
         source={{uri: thumbnail}}
         alt={title}
         height={'200'}
