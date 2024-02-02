@@ -39,6 +39,12 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FacebookAppID</key>
+	<string>297994456224676</string>
+	<key>FacebookClientToken</key>
+	<string>0a33a85e57a7367bd18951061c5fa9ce</string>
+	<key>FacebookDisplayName</key>
+	<string>PP Fitness</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -52,8 +58,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your microphone (for videos)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Outfit-Black.ttf</string>
@@ -65,6 +77,11 @@
 		<string>Outfit-Regular.ttf</string>
 		<string>Outfit-SemiBold.ttf</string>
 		<string>Outfit-Thin.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -80,13 +97,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-
-
-	<key>FacebookAppID</key>
-	<string>297994456224676</string>
-	<key>FacebookClientToken</key>
-	<string>0a33a85e57a7367bd18951061c5fa9ce</string>
-	<key>FacebookDisplayName</key>
-	<string>PP Fitness</string>
 </dict>
 </plist>
