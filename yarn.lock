@@ -3446,6 +3446,11 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+agora-rn-uikit@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/agora-rn-uikit/-/agora-rn-uikit-5.0.2.tgz#02e9681cfde4d3909302b8c15312bcb1c975d820"
+  integrity sha512-r1jKK7/Q4fXaPr4lItZo1OSIc2SmHan2KdeKYyMNi51nhAWciZWLKls5UHCj7anUI0NdBS7fudRyDxtOAy3brQ==
+
 ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
