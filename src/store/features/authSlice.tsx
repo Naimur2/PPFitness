@@ -5,6 +5,7 @@ export interface AuthState {
   accessToken?: string | null;
   refreshToken?: string | null;
   fcmToken?: string | null;
+  fcmTokenId?: string | null;
   showWelcome?: boolean;
   language?: string;
 }
@@ -14,6 +15,7 @@ const initialState: AuthState = {
   accessToken: undefined,
   refreshToken: undefined,
   fcmToken: undefined,
+  fcmTokenId: undefined,
   showWelcome: true,
   language: undefined,
 };
@@ -86,6 +88,11 @@ const authSlice = createSlice({
         state.fcmToken = action.payload;
       }
     },
+    setFcmTokenId: (state, action: {payload: string}) => {
+      if (action.payload) {
+        state.fcmTokenId = action.payload;
+      }
+    },
     setShowWelcome: (state, action: {payload: boolean}) => {
       state.showWelcome = action.payload;
     },
@@ -100,6 +107,7 @@ export const {
   logout,
   updateToken,
   setFcmToken,
+  setFcmTokenId,
   setShowWelcome,
   setLanguage,
   setProfile,
@@ -113,6 +121,8 @@ export const selectRefreshToken = (state: {auth: AuthState}) =>
   state.auth.refreshToken;
 export const selectFcmToken = (state: {auth: AuthState}) =>
   state?.auth?.fcmToken;
+export const selectFcmTokenId = (state: {auth: AuthState}) =>
+  state?.auth?.fcmTokenId;
 export const selectShowWelcome = (state: {auth: AuthState}) =>
   state?.auth?.showWelcome;
 export const selectLanguage = (state: {auth: AuthState}) =>

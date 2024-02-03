@@ -20,10 +20,37 @@ import GroceryList from '@screens/User/GroceryList';
 import WorkoutAddSet from '@screens/User/WorkoutAddSet';
 import AudioCallScreen from '@screens/User/AudioCallScreen';
 import VideoCallScreen from '@screens/User/VideoCallScreen';
+import {useAddFcmTokenMutation} from '@store/apis/notification';
+import {selectFcmToken, setFcmTokenId} from '@store/features/authSlice';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Stack = createNativeStackNavigator();
 
 export default function LayoutRoutes() {
+  // hooks
+  const token = useSelector(selectFcmToken);
+  const dispatch = useDispatch();
+  // Apis
+  const [addFcmToken] = useAddFcmTokenMutation();
+
+  const handelAddFcm = async () => {
+    try {
+      const res = await addFcmToken({
+        token: token || '',
+        type: 'mobile',
+      }).unwrap();
+      dispatch(setFcmTokenId(res?.data?.data?._id));
+    } catch (error) {
+      console.log('addFcmToken error', error);
+    }
+  };
+
+  React.useEffect(() => {
+    if (token) {
+      handelAddFcm();
+    }
+  }, []);
+
   return (
     <Stack.Navigator screenOptions={{}}>
       <Stack.Screen
