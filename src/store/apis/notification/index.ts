@@ -22,8 +22,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
       DeleteV1NotificationFcmIdSuccessfulResponse,
       DeleteV1NotificationFcmIdParameterId
     >({
-      query: id => ({
-        url: `notification/fcm/${id}`,
+      query: props => ({
+        url: `notification/fcm/${props}`,
         method: 'DELETE',
       }),
     }),

@@ -56,9 +56,11 @@ export default function MainHeader({
               <ListBucketIcon />
             ))}
         </TouchableOpacity>
-        <TouchableOpacity onPress={onRightPress}>
-          {onRightPress && <VideoFillIcon width={22} height={22} />}
-        </TouchableOpacity>
+        {onRightPress && (
+          <TouchableOpacity onPress={onRightPress}>
+            <VideoFillIcon width={22} height={22} />
+          </TouchableOpacity>
+        )}
       </HStack>
     </HStack>
   );

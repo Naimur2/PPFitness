@@ -12,8 +12,10 @@ import {
 } from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import useNavigate from '@hooks/useNavigate';
-import {logout} from '@store/features/authSlice';
-import {useDispatch} from 'react-redux';
+import {logout, selectFcmTokenId} from '@store/features/authSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {useLoginMutation} from '@store/apis/auth';
+import {useDeleteFcmTokenMutation} from '@store/apis/notification';
 
 const tabItems = [
   {
@@ -56,7 +58,21 @@ const tabItems = [
 export default function SettingsScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const fcmId = useSelector(selectFcmTokenId);
+  // APIS
+  const [handelFcmDelete] = useDeleteFcmTokenMutation();
   // admin@ppfitness.com
+  const handelLogout = async () => {
+    try {
+      if (fcmId) {
+        const res = await handelFcmDelete(fcmId).unwrap();
+        dispatch(logout());
+      }
+    } catch (error) {
+      dispatch(logout());
+    }
+  };
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -81,7 +97,7 @@ export default function SettingsScreen() {
           justifyContent="space-between"
           alignItems="center"
           onPress={() =>
-            item?.nav !== 'logout' ? navigate(item?.nav) : dispatch(logout())
+            item?.nav !== 'logout' ? navigate(item?.nav) : handelLogout()
           }
           _pressed={{bg: 'gray.100'}}>
           <HStack space={4}>
