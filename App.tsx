@@ -6,12 +6,13 @@ import theme from '@theme/index';
 
 import store from '@store/index';
 import Routes from '@routes/index';
-import {Linking, Platform} from 'react-native';
+import {Alert, Linking, Platform} from 'react-native';
 import notifee, {EventType} from '@notifee/react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {ANDROID_CLIENT_ID, IOS_CLIENT_ID} from '@env';
 import messaging from '@react-native-firebase/messaging';
 import onMessageReceived from 'src/utils/notifeeHandler';
+import handleNotification from 'src/utils/notificationHandler';
 
 notifee.onBackgroundEvent(async ({type, detail}) => {
   try {
@@ -27,6 +28,7 @@ notifee.onBackgroundEvent(async ({type, detail}) => {
 });
 
 export default function App() {
+  //
   useEffect(() => {
     GoogleSignin.configure({
       webClientId:
@@ -34,24 +36,40 @@ export default function App() {
     });
   }, []);
 
-  React.useEffect(() => {
+  //
+  React.useEffect(async () => {
     messaging().onMessage(onMessageReceived);
+    const token = await messaging().getToken();
+    console.log('token', token);
   }, []);
-  React.useEffect(() => {
-    notifee.onForegroundEvent(async ({type, detail}) => {
-      try {
-        const user = await store.getState().auth.user;
-        if (user) {
-          if (type === EventType.PRESS) {
-            Linking.openURL('com.ppfitness.app://notification');
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
+  //
+  useEffect(() => {
+    notifee.onForegroundEvent(handleNotification);
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
-    console.log('onMessage2');
+
+    return unsubscribe;
   }, []);
+
+  // React.useEffect(() => {
+  //   notifee.onForegroundEvent(async ({type, detail}) => {
+  //     try {
+  //       const user = await store.getState().auth.user;
+  //       if (user) {
+  //         if (type === EventType.PRESS) {
+  //           Linking.openURL('com.ppfitness.app://notification');
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   });
+  //   console.log('onMessage2');
+  // }, []);
 
   const prefixes = ['com.ppfitness.app://'];
 
@@ -71,7 +89,7 @@ export default function App() {
   return (
     <>
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
           <NativeBaseProvider theme={theme}>
             <Routes />
           </NativeBaseProvider>

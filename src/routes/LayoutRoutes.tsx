@@ -18,6 +18,8 @@ import Header from 'src/components/headers/Header';
 import RecipeDetails from '@screens/User/RecipeDetails';
 import GroceryList from '@screens/User/GroceryList';
 import WorkoutAddSet from '@screens/User/WorkoutAddSet';
+import AudioCallScreen from '@screens/User/AudioCallScreen';
+import VideoCallScreen from '@screens/User/VideoCallScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,6 +94,20 @@ export default function LayoutRoutes() {
           },
         }}
         component={CirCuit}
+      />
+      <Stack.Screen
+        name="AudioCall"
+        component={AudioCallScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="VideoCall"
+        component={VideoCallScreen}
+        options={{
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="WorkoutAddSet"

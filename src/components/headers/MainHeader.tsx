@@ -1,4 +1,10 @@
-import {CalenderIcon, ListBucketIcon, Settings} from '@assets/icons';
+import {
+  CalenderIcon,
+  CallFillIcon,
+  ListBucketIcon,
+  Settings,
+  VideoFillIcon,
+} from '@assets/icons';
 import {HStack, Image, Text} from 'native-base';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
@@ -8,12 +14,14 @@ export default function MainHeader({
   title,
   type,
   onPress,
+  onRightPress,
   iconRightType = 'setting',
 }: {
   title?: string;
   type?: string;
-  iconRightType?: 'setting' | 'listBucket' | 'calender';
+  iconRightType?: 'setting' | 'listBucket' | 'calender' | 'call';
   onPress?: () => void;
+  onRightPress?: () => void;
 }) {
   const insets = useSafeAreaInsets();
 
@@ -35,16 +43,23 @@ export default function MainHeader({
         {title}
       </Text>
 
-      <TouchableOpacity onPress={onPress}>
-        {onPress &&
-          (iconRightType === 'setting' ? (
-            <Settings />
-          ) : iconRightType === 'calender' ? (
-            <CalenderIcon />
-          ) : (
-            <ListBucketIcon />
-          ))}
-      </TouchableOpacity>
+      <HStack alignItems={'center'} space={6}>
+        <TouchableOpacity onPress={onPress}>
+          {onPress &&
+            (iconRightType === 'setting' ? (
+              <Settings />
+            ) : iconRightType === 'calender' ? (
+              <CalenderIcon />
+            ) : iconRightType === 'call' ? (
+              <CallFillIcon width={20} height={20} />
+            ) : (
+              <ListBucketIcon />
+            ))}
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onRightPress}>
+          {onRightPress && <VideoFillIcon width={22} height={22} />}
+        </TouchableOpacity>
+      </HStack>
     </HStack>
   );
 }

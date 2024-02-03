@@ -16,13 +16,19 @@ import {selectUser} from '@store/features/authSlice';
 import {useGetSingleProfileQuery} from '@store/apis/userProfile';
 import {Image, StyleSheet} from 'react-native';
 import LazyImage from 'src/components/LazyImage';
+import Header from 'src/components/headers/Header';
+import useNavigate from '@hooks/useNavigate';
+import {useNavigation} from '@react-navigation/native';
+import OnCalling from 'src/actionSheets/onCalling';
 const adminHelpImage = require('@assets/images/admin-help.png');
 const adminHelpImageUri = Image.resolveAssetSource(adminHelpImage)?.uri;
 
 export default function CallScreen() {
   // state
   const [messages, setMessages] = useState([]);
+  const [onCallOpen, setOnCallOpen] = useState(false);
   // hooks
+  const navigate = useNavigation();
   const authUser = useSelector(selectUser);
   // console.log('authUser', authUser);
 
@@ -100,9 +106,26 @@ export default function CallScreen() {
       </>
     );
   };
+  // call
+
+  const handelAudioCall = () => {
+    navigate.navigate('AudioCall');
+    
+  };
+  const handelVideoCall = () => {
+    navigate.navigate('AudioCall');
+  };
 
   return (
     <>
+      <Header
+        title="Message"
+        onPress={handelAudioCall}
+        onRightPress={handelVideoCall}
+        iconRightType="call"
+      />
+
+      {/*  chat */}
       <GiftedChat
         messages={messages}
         onSend={messages => onSend(messages)}
@@ -114,12 +137,3 @@ export default function CallScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  textInputStyle: {
-    borderRadius: 8,
-    backgroundColor: 'red',
-    width: 400,
-    overflow: 'hidden',
-  },
-});

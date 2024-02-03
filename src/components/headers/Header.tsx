@@ -7,11 +7,13 @@ export default function Header({
   type,
   onPress,
   iconRightType = 'setting',
+  onRightPress,
 }: {
   title?: string;
   type?: string;
   iconRightType?: 'setting' | 'listBucket' | 'calender';
   onPress?: () => void;
+  onRightPress?: () => void;
 }) {
   const navigation = useNavigation();
   //
@@ -23,6 +25,7 @@ export default function Header({
           title={title}
           onPress={onPress}
           iconRightType={iconRightType}
+          onRightPress={onRightPress}
           type={type}
         />
       ),
