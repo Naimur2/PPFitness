@@ -8,37 +8,38 @@ import AgoraUIKit, {
   StylePropInterface,
 } from 'agora-rn-uikit';
 import {useGetStartCallQuery} from '@store/apis/call';
-import { useSelector } from 'react-redux';
-import { selectAccessToken } from '@store/features/authSlice';
-import { useRoute } from '@react-navigation/native';
+import {useSelector} from 'react-redux';
+import {selectAccessToken, selectUser} from '@store/features/authSlice';
+import {useRoute} from '@react-navigation/native';
+import {CallbacksInterface} from 'agora-rn-uikit/src/Contexts/PropsContext';
 
 export default function AudioCallScreen() {
   // hooks
-  const route = useRoute()?.params
+  const route = useRoute()?.params;
   const navigate = useNavigate();
-  const authUser = useSelector(selectAccessToken)
-
+  const authUser = useSelector(selectUser);
 
   //  state
   const [videoCall, setVideoCall] = useState(true);
 
   const props = `?to=admin&type=audio`;
   //  APIS
-  const {data, isLoading , error} = useGetStartCallQuery(props);
-console.log('authUser',authUser);
+  console.log('authUser', authUser);
+  const {data, isLoading, error} = useGetStartCallQuery(props);
 
   //   Callbacks
   const connectionData = {
     appId: '12b44196cb9242b3ad51e03ff34da1a5',
-    channel: data?.data?.data?.channelName ?? 'ss',
+    channel: data?.data?.data?.channelName,
     token: data?.data?.data?.token,
-    uid: data?.data?.data?.uId,
+    uid: data?.data?.data?.uId, // must be a number
   };
 
-  console.log('connectionData', error);
-
-  const rtcCallbacks = {
-    EndCall: () => setVideoCall(false),
+  const rtcCallbacks: Partial<CallbacksInterface> = {
+    EndCall: () => {
+      setVideoCall(false);
+      navigate(undefined, undefined, 'goBack');
+    },
   };
 
   //  style
@@ -59,17 +60,21 @@ console.log('authUser',authUser);
     },
   };
   return (
-    <VStack flex={1} bg={'red.100'}>
-      <StatusBar
+    <VStack flex={1}>
+      {/* <StatusBar
         translucent={true}
         backgroundColor={'#ff000000'}
         barStyle={'dark-content'}
-      />
-      <AgoraUIKit
-        styleProps={style}
-        connectionData={connectionData}
-        rtcCallbacks={rtcCallbacks}
-      />
+      /> */}
+      {isLoading ? (
+        <></>
+      ) : (
+        <AgoraUIKit
+          styleProps={style}
+          connectionData={connectionData}
+          rtcCallbacks={rtcCallbacks}
+        />
+      )}
     </VStack>
   );
 }

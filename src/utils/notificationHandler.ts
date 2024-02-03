@@ -2,7 +2,7 @@ import notifee, { EventDetail, EventType } from '@notifee/react-native';
 // import { callApiSlice } from '@store/api/callApi/callApiSlice';
 import { callTimerNotification } from './callTimerNotification';
 import { Linking } from 'react-native';
-import store from '@store/index';
+
 
 async function handleNotification({
   type,

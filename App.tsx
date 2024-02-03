@@ -6,26 +6,13 @@ import theme from '@theme/index';
 
 import store from '@store/index';
 import Routes from '@routes/index';
-import {Alert, Linking, Platform} from 'react-native';
-import notifee, {EventType} from '@notifee/react-native';
+import {Platform} from 'react-native';
+import notifee from '@notifee/react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {ANDROID_CLIENT_ID, IOS_CLIENT_ID} from '@env';
 import messaging from '@react-native-firebase/messaging';
 import onMessageReceived from 'src/utils/notifeeHandler';
 import handleNotification from 'src/utils/notificationHandler';
-
-notifee.onBackgroundEvent(async ({type, detail}) => {
-  try {
-    const user = await store.getState().auth?.user;
-    if (user) {
-      if (type === EventType.PRESS) {
-        Linking.openURL('com.ppfitness.app://notification');
-      }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
 
 export default function App() {
   //
@@ -40,35 +27,21 @@ export default function App() {
   React.useEffect(async () => {
     messaging().onMessage(onMessageReceived);
   }, []);
+
+  React.useEffect(() => {
+    notifee.cancelAllNotifications();
+  }, []);
   //
   useEffect(() => {
     notifee.onForegroundEvent(handleNotification);
   }, []);
 
-
-  // React.useEffect(() => {
-  //   notifee.onForegroundEvent(async ({type, detail}) => {
-  //     try {
-  //       const user = await store.getState().auth.user;
-  //       if (user) {
-  //         if (type === EventType.PRESS) {
-  //           Linking.openURL('com.ppfitness.app://notification');
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   });
-  //   console.log('onMessage2');
-  // }, []);
-
-  const prefixes = ['com.ppfitness.app://'];
+  const prefixes = ['https://ppfitness.com', 'ppfitness://'];
 
   const config = {
     screens: {
-      mealPlan: {
-        screens: {},
-      },
+      mealPlan: 'meal-plan/:day',
+      AudioCall: 'call',
     },
   };
 

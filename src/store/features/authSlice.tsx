@@ -42,6 +42,8 @@ const authSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.refreshToken = null;
+      state.fcmToken = null;
+      state.fcmTokenId = null;
     },
     updateToken: (
       state,

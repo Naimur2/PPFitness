@@ -51,16 +51,16 @@ export default function MainHeader({
             ) : iconRightType === 'calender' ? (
               <CalenderIcon />
             ) : iconRightType === 'call' ? (
-              <CallFillIcon width={20} height={20} />
+              <VideoFillIcon width={22} height={22} />
             ) : (
               <ListBucketIcon />
             ))}
         </TouchableOpacity>
-        {onRightPress && (
+        {/* {onRightPress && (
           <TouchableOpacity onPress={onRightPress}>
             <VideoFillIcon width={22} height={22} />
           </TouchableOpacity>
-        )}
+        )} */}
       </HStack>
     </HStack>
   );

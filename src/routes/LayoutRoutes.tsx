@@ -21,35 +21,58 @@ import WorkoutAddSet from '@screens/User/WorkoutAddSet';
 import AudioCallScreen from '@screens/User/AudioCallScreen';
 import VideoCallScreen from '@screens/User/VideoCallScreen';
 import {useAddFcmTokenMutation} from '@store/apis/notification';
-import {selectFcmToken, setFcmTokenId} from '@store/features/authSlice';
+import {
+  selectFcmToken,
+  setFcmToken,
+  setFcmTokenId,
+} from '@store/features/authSlice';
 import {useDispatch, useSelector} from 'react-redux';
+import useNotificationPermission from '@hooks/useNotificationPermission';
+import messaging from '@react-native-firebase/messaging';
 
 const Stack = createNativeStackNavigator();
 
 export default function LayoutRoutes() {
-  // hooks
-  const token = useSelector(selectFcmToken);
-  const dispatch = useDispatch();
   // Apis
   const [addFcmToken] = useAddFcmTokenMutation();
 
-  const handelAddFcm = async () => {
+  // hooks
+  const token = useSelector(selectFcmToken);
+  const dispatch = useDispatch();
+
+  const {handleNotificationPermission} = useNotificationPermission();
+
+  const permissionsHandler = async () => {
+    await handleNotificationPermission();
+  };
+
+  React.useEffect(() => {
+    permissionsHandler();
+  }, []);
+
+  React.useEffect(() => {
+    messaging()
+      .getToken()
+      .then(props => {
+        console.log('token for device', props);
+        if (!token) {
+          handelAddFcm(props);
+        }
+      });
+  }, []);
+
+  const handelAddFcm = async (props: string) => {
     try {
       const res = await addFcmToken({
-        token: token || '',
+        token: props,
         type: 'mobile',
       }).unwrap();
       dispatch(setFcmTokenId(res?.data?.data?._id));
+      dispatch(setFcmToken(props));
     } catch (error) {
       console.log('addFcmToken error', error);
     }
   };
-
-  React.useEffect(() => {
-    if (token) {
-      handelAddFcm();
-    }
-  }, []);
 
   return (
     <Stack.Navigator screenOptions={{}}>
