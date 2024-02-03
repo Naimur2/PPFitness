@@ -39,21 +39,12 @@ export default function App() {
   //
   React.useEffect(async () => {
     messaging().onMessage(onMessageReceived);
-    const token = await messaging().getToken();
-    console.log('token', token);
   }, []);
   //
   useEffect(() => {
     notifee.onForegroundEvent(handleNotification);
   }, []);
 
-  useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    });
-
-    return unsubscribe;
-  }, []);
 
   // React.useEffect(() => {
   //   notifee.onForegroundEvent(async ({type, detail}) => {

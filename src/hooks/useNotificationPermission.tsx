@@ -21,6 +21,7 @@ export default function useNotificationPermission() {
   const requestAndroidNotificationPermission = async () => {
     try {
       const checkper = await check(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+      console.log('checkper', checkper);
 
       const isGranted = checkper === RESULTS.GRANTED;
 

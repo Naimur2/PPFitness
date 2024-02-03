@@ -46,7 +46,7 @@ async function handleNotification({
 
   if (pressAction?.id === 'View') {
     const callChannelId = notification?.data?.callChannelId;
-    console.log({noteeid: notification?.id})
+  
     Linking.openURL(`com.ppfitness.app://call/${callChannelId}`);
     await notifee.cancelNotification(notification?.id);
   }

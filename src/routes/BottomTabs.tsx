@@ -6,7 +6,6 @@ import {
   BottomTabNavigationOptions,
   BottomTabHeaderProps,
 } from '@react-navigation/bottom-tabs';
-import VectorImage from 'react-native-vector-image';
 import Exercise from '@screens/User/Exercise';
 import {
   ChartFillIcon,
