@@ -13,6 +13,8 @@ import {useNavigation} from '@react-navigation/native';
 import {useLoginMutation} from '@store/apis/auth';
 import {PostV1AuthLoginRequestBody} from '@store/schema';
 import {useFormik} from 'formik';
+import crypto from 'crypto';
+
 import {
   Box,
   Button,
@@ -107,16 +109,18 @@ export default function LoginScreen() {
       // Get the users ID token
       const details = await GoogleSignin.signIn();
       const idToken = details?.idToken;
-      const data = {
+
+      await handelRegister({
         email: details?.user?.email,
         method: 'google',
-      };
-      await handelRegister(data);
+        idToken: idToken ?? undefined,
+      });
     } catch (error) {
       console.log('Error --->>>>', error);
     }
   };
 
+  // handelSignInFacebook
   const handelSignInFacebook = async () => {
     try {
       const result = await LoginManager.logInWithPermissions([
@@ -134,43 +138,63 @@ export default function LoginScreen() {
         }
 
         const profile = await Profile.getCurrentProfile();
-        const response = {
+        if (!profile?.email) {
+          throw new Error('Something went wrong obtaining the users profile');
+        }
+        await handelRegister({
           email: profile?.email,
           method: 'facebook',
-          name: profile?.name,
-          idToken: data.accessToken,
-        };
+          idToken: data.accessToken ?? undefined,
+        });
       }
     } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
       console.log('Error --->>>>', error);
     }
   };
 
+  // handleSignInApple for ios
   const handleSignInApple = async () => {
-    // performs login request
-    const appleAuthRequestResponse = await appleAuth.performRequest({
-      requestedOperation: appleAuth.Operation.LOGIN,
-      // Note: it appears putting FULL_NAME first is important, see issue #293
-      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
-    });
+    try {
+      // performs login request
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        // Note: it appears putting FULL_NAME first is important, see issue #293
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+      });
 
-    const idToken = appleAuthRequestResponse.identityToken;
-    const useeName = appleAuthRequestResponse.fullName;
-    const userEmail = appleAuthRequestResponse.email;
+      const idToken = appleAuthRequestResponse.identityToken;
+      const userName = appleAuthRequestResponse.fullName;
+      const userEmail = appleAuthRequestResponse.email;
 
-    // // get current authentication state for user
-    // // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
-    // const credentialState = await appleAuth.getCredentialStateForUser(
-    //   appleAuthRequestResponse.user,
-    // );
+      const nonceData = appleAuthRequestResponse.nonce;
 
-    // // use credentialState response to ensure the user is authenticated
-    // if (credentialState === appleAuth.State.AUTHORIZED) {
-    //   // user is authenticated
-    //   console.log(credentialState);
-    // }
+      const hashedNonce = crypto
+        .createHash('sha256')
+        .update(nonceData)
+        .digest('hex');
+
+      if (!userEmail)
+        throw new Error('Something went wrong obtaining the users email');
+
+      await handelRegister({
+        email: userEmail,
+        method: 'apple',
+        idToken: idToken ?? undefined,
+        nonce: hashedNonce,
+      });
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
+    }
   };
 
+  // onAppleButtonPressAndroid for android
   async function onAppleButtonPressAndroid() {
     try {
       // Generate secure, random values for state and nonce
@@ -203,7 +227,28 @@ export default function LoginScreen() {
       const idToken = response.id_token;
       const useeName = response.user?.email;
       const userEmail = response.user?.email;
-    } catch (error) {}
+
+      if (!userEmail) {
+        throw new Error('Something went wrong obtaining the users email');
+      }
+
+      const hashedNonce = crypto
+        .createHash('sha256')
+        .update(rawNonce)
+        .digest('hex');
+
+      await handelRegister({
+        email: userEmail,
+        method: 'apple',
+        idToken: idToken ?? undefined,
+        nonce: hashedNonce,
+      });
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
+    }
   }
 
   return (
