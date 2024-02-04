@@ -8,13 +8,11 @@ import {
 } from '@assets/icons';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import useToggle from '@hooks/useToggle';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { useNavigation } from '@react-navigation/native';
-import { useLoginMutation } from '@store/apis/auth';
-import {
-  PostV1AuthLoginRequestBody
-} from '@store/schema';
-import { useFormik } from 'formik';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useNavigation} from '@react-navigation/native';
+import {useLoginMutation} from '@store/apis/auth';
+import {PostV1AuthLoginRequestBody} from '@store/schema';
+import {useFormik} from 'formik';
 import {
   Box,
   Button,
@@ -29,9 +27,15 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import { ImageBackground } from 'react-native';
-import { LoginManager } from 'react-native-fbsdk-next';
+import {Alert, ImageBackground, Platform} from 'react-native';
+import {AccessToken, LoginManager, Profile} from 'react-native-fbsdk-next';
 import * as Yup from 'yup';
+import {
+  appleAuthAndroid,
+  appleAuth,
+} from '@invertase/react-native-apple-authentication';
+import 'react-native-get-random-values';
+import {v4 as uuid} from 'uuid';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -91,13 +95,18 @@ export default function LoginScreen() {
       console.log('Start --->>>>');
 
       // Check if your device supports Google Play
-      await GoogleSignin.hasPlayServices({
+      const hasPlayServices = await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
 
+      if (!hasPlayServices) {
+        Alert.alert('Google Play Services are not available');
+        return;
+      }
+
       // Get the users ID token
       const details = await GoogleSignin.signIn();
-
+      const idToken = details?.idToken;
       const data = {
         email: details?.user?.email,
         method: 'google',
@@ -114,17 +123,88 @@ export default function LoginScreen() {
         'public_profile',
         'email',
       ]);
+
       if (!result.isCancelled) {
-        const data = {
-          email: result?.grantedPermissions?.email,
+        const data = await AccessToken.getCurrentAccessToken();
+
+        if (!data) {
+          throw new Error(
+            'Something went wrong obtaining the users access token',
+          );
+        }
+
+        const profile = await Profile.getCurrentProfile();
+        const response = {
+          email: profile?.email,
           method: 'facebook',
+          name: profile?.name,
+          idToken: data.accessToken,
         };
-        console.log('data', data);
       }
     } catch (error) {
       console.log('Error --->>>>', error);
     }
   };
+
+  const handleSignInApple = async () => {
+    // performs login request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    const idToken = appleAuthRequestResponse.identityToken;
+    const useeName = appleAuthRequestResponse.fullName;
+    const userEmail = appleAuthRequestResponse.email;
+
+    // // get current authentication state for user
+    // // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    // const credentialState = await appleAuth.getCredentialStateForUser(
+    //   appleAuthRequestResponse.user,
+    // );
+
+    // // use credentialState response to ensure the user is authenticated
+    // if (credentialState === appleAuth.State.AUTHORIZED) {
+    //   // user is authenticated
+    //   console.log(credentialState);
+    // }
+  };
+
+  async function onAppleButtonPressAndroid() {
+    try {
+      // Generate secure, random values for state and nonce
+      const rawNonce = uuid();
+      const state = uuid();
+
+      // Configure the request
+      appleAuthAndroid.configure({
+        // The Service ID you registered with Apple
+        clientId: 'com.ppfitness.android.app',
+
+        // Return URL added to your Apple dev console. We intercept this redirect, but it must still match
+        // the URL you provided to Apple. It can be an empty route on your backend as it's never called.
+        redirectUri: 'https://ppfitness-server.onrender.com',
+
+        // The type of response requested - code, id_token, or both.
+        responseType: appleAuthAndroid.ResponseType.ALL,
+
+        // The amount of user information requested from Apple.
+        scope: appleAuthAndroid.Scope.ALL,
+
+        // Random nonce value that will be SHA256 hashed before sending to Apple.
+        nonce: rawNonce,
+
+        // Unique state value used to prevent CSRF attacks. A UUID will be generated if nothing is provided.
+        state,
+      });
+
+      const response = await appleAuthAndroid.signIn();
+      const idToken = response.id_token;
+      const useeName = response.user?.email;
+      const userEmail = response.user?.email;
+    } catch (error) {}
+  }
 
   return (
     <FBgImage
@@ -250,7 +330,14 @@ export default function LoginScreen() {
               <Pressable onPress={handelSignInFacebook}>
                 <FacebookIcon height={30} width={30} />
               </Pressable>
-              <AppleIcon height={30} width={30} />
+              <Pressable
+                onPress={
+                  Platform.OS === 'ios'
+                    ? handleSignInApple
+                    : onAppleButtonPressAndroid
+                }>
+                <AppleIcon height={30} width={30} />
+              </Pressable>
             </VStack>
 
             <Center
