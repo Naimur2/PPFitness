@@ -66,8 +66,8 @@ export default function SettingsScreen() {
     try {
       if (fcmId) {
         const res = await handelFcmDelete(fcmId).unwrap();
-        dispatch(logout());
       }
+      dispatch(logout());
     } catch (error) {
       dispatch(logout());
     }

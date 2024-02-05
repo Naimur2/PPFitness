@@ -8,13 +8,13 @@ import {
 } from '@assets/icons';
 import useShowToastMessage from '@hooks/useShowToastMessage';
 import useToggle from '@hooks/useToggle';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { useNavigation } from '@react-navigation/native';
-import { useLoginMutation } from '@store/apis/auth';
-import {
-  PostV1AuthLoginRequestBody
-} from '@store/schema';
-import { useFormik } from 'formik';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useNavigation} from '@react-navigation/native';
+import {useLoginMutation} from '@store/apis/auth';
+import {PostV1AuthLoginRequestBody} from '@store/schema';
+import {useFormik} from 'formik';
+import crypto from 'crypto';
+
 import {
   Box,
   Button,
@@ -29,9 +29,15 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import { ImageBackground } from 'react-native';
-import { LoginManager } from 'react-native-fbsdk-next';
+import {Alert, ImageBackground, Platform} from 'react-native';
+import {AccessToken, LoginManager, Profile} from 'react-native-fbsdk-next';
 import * as Yup from 'yup';
+import {
+  appleAuthAndroid,
+  appleAuth,
+} from '@invertase/react-native-apple-authentication';
+import 'react-native-get-random-values';
+import {v4 as uuid} from 'uuid';
 
 const FBgImage = Factory(ImageBackground);
 //
@@ -91,40 +97,159 @@ export default function LoginScreen() {
       console.log('Start --->>>>');
 
       // Check if your device supports Google Play
-      await GoogleSignin.hasPlayServices({
+      const hasPlayServices = await GoogleSignin.hasPlayServices({
         showPlayServicesUpdateDialog: true,
       });
 
+      if (!hasPlayServices) {
+        Alert.alert('Google Play Services are not available');
+        return;
+      }
+
       // Get the users ID token
       const details = await GoogleSignin.signIn();
+      const idToken = details?.idToken;
 
-      const data = {
+      await handelRegister({
         email: details?.user?.email,
         method: 'google',
-      };
-      await handelRegister(data);
+        idToken: idToken ?? undefined,
+      });
     } catch (error) {
       console.log('Error --->>>>', error);
     }
   };
 
+  // handelSignInFacebook
   const handelSignInFacebook = async () => {
     try {
       const result = await LoginManager.logInWithPermissions([
         'public_profile',
         'email',
       ]);
+
       if (!result.isCancelled) {
-        const data = {
-          email: result?.grantedPermissions?.email,
+        const data = await AccessToken.getCurrentAccessToken();
+
+        if (!data) {
+          throw new Error(
+            'Something went wrong obtaining the users access token',
+          );
+        }
+
+        const profile = await Profile.getCurrentProfile();
+        if (!profile?.email) {
+          throw new Error('Something went wrong obtaining the users profile');
+        }
+        await handelRegister({
+          email: profile?.email,
           method: 'facebook',
-        };
-        console.log('data', data);
+          idToken: data.accessToken ?? undefined,
+        });
       }
     } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
       console.log('Error --->>>>', error);
     }
   };
+
+  // handleSignInApple for ios
+  const handleSignInApple = async () => {
+    try {
+      // performs login request
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        // Note: it appears putting FULL_NAME first is important, see issue #293
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+      });
+
+      const idToken = appleAuthRequestResponse.identityToken;
+      const userName = appleAuthRequestResponse.fullName;
+      const userEmail = appleAuthRequestResponse.email;
+
+      const nonceData = appleAuthRequestResponse.nonce;
+
+      const hashedNonce = crypto
+        .createHash('sha256')
+        .update(nonceData)
+        .digest('hex');
+
+      if (!userEmail)
+        throw new Error('Something went wrong obtaining the users email');
+
+      await handelRegister({
+        email: userEmail,
+        method: 'apple',
+        idToken: idToken ?? undefined,
+        nonce: hashedNonce,
+      });
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
+    }
+  };
+
+  // onAppleButtonPressAndroid for android
+  async function onAppleButtonPressAndroid() {
+    try {
+      // Generate secure, random values for state and nonce
+      const rawNonce = uuid();
+      const state = uuid();
+
+      // Configure the request
+      appleAuthAndroid.configure({
+        // The Service ID you registered with Apple
+        clientId: 'com.ppfitness.android.app',
+
+        // Return URL added to your Apple dev console. We intercept this redirect, but it must still match
+        // the URL you provided to Apple. It can be an empty route on your backend as it's never called.
+        redirectUri: 'https://ppfitness-server.onrender.com',
+
+        // The type of response requested - code, id_token, or both.
+        responseType: appleAuthAndroid.ResponseType.ALL,
+
+        // The amount of user information requested from Apple.
+        scope: appleAuthAndroid.Scope.ALL,
+
+        // Random nonce value that will be SHA256 hashed before sending to Apple.
+        nonce: rawNonce,
+
+        // Unique state value used to prevent CSRF attacks. A UUID will be generated if nothing is provided.
+        state,
+      });
+
+      const response = await appleAuthAndroid.signIn();
+      const idToken = response.id_token;
+      const useeName = response.user?.email;
+      const userEmail = response.user?.email;
+
+      if (!userEmail) {
+        throw new Error('Something went wrong obtaining the users email');
+      }
+
+      const hashedNonce = crypto
+        .createHash('sha256')
+        .update(rawNonce)
+        .digest('hex');
+
+      await handelRegister({
+        email: userEmail,
+        method: 'apple',
+        idToken: idToken ?? undefined,
+        nonce: hashedNonce,
+      });
+    } catch (error) {
+      Alert.alert(
+        'Error',
+        error?.message || 'Something went wrong obtaining the users email',
+      );
+    }
+  }
 
   return (
     <FBgImage
@@ -250,7 +375,14 @@ export default function LoginScreen() {
               <Pressable onPress={handelSignInFacebook}>
                 <FacebookIcon height={30} width={30} />
               </Pressable>
-              <AppleIcon height={30} width={30} />
+              <Pressable
+                onPress={
+                  Platform.OS === 'ios'
+                    ? handleSignInApple
+                    : onAppleButtonPressAndroid
+                }>
+                <AppleIcon height={30} width={30} />
+              </Pressable>
             </VStack>
 
             <Center
