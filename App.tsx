@@ -28,20 +28,20 @@ export default function App() {
     messaging().onMessage(onMessageReceived);
   }, []);
 
-  React.useEffect(() => {
-    notifee.cancelAllNotifications();
-  }, []);
+  // React.useEffect(() => {
+  //   notifee.cancelAllNotifications();
+  // }, []);
   //
   useEffect(() => {
     notifee.onForegroundEvent(handleNotification);
   }, []);
 
-  const prefixes = ['https://ppfitness.com', 'ppfitness://'];
+  const prefixes = ['ppfitness://'];
 
   const config = {
     screens: {
       mealPlan: 'meal-plan/:day',
-      AudioCall: 'call',
+      AudioCall: 'call/:channelName/:token/:uid',
     },
   };
 

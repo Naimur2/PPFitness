@@ -12,33 +12,39 @@ import {useSelector} from 'react-redux';
 import {selectAccessToken, selectUser} from '@store/features/authSlice';
 import {useRoute} from '@react-navigation/native';
 import {CallbacksInterface} from 'agora-rn-uikit/src/Contexts/PropsContext';
+import notifee from '@notifee/react-native';
+type PropsRoute = {
+  channelName: string;
+  token: string;
+  uid: string;
+};
 
 export default function AudioCallScreen() {
   // hooks
-  const route = useRoute()?.params;
+  const route = useRoute()?.params as PropsRoute;
   const navigate = useNavigate();
   const authUser = useSelector(selectUser);
 
   //  state
   const [videoCall, setVideoCall] = useState(true);
 
-  const props = `?to=admin&type=audio`;
   //  APIS
-  console.log('authUser', authUser);
+  const props = `?to=admin&type=audio`;
   const {data, isLoading, error} = useGetStartCallQuery(props);
 
   //   Callbacks
   const connectionData = {
     appId: '12b44196cb9242b3ad51e03ff34da1a5',
-    channel: data?.data?.data?.channelName,
-    token: data?.data?.data?.token,
-    uid: data?.data?.data?.uId, // must be a number
-  };
+    channel: route?.channelName || data?.data?.data?.channelName,
+    token: route?.token || data?.data?.data?.token,
+    uid: Number(route?.uid) || data?.data?.data?.uId,
+  } as any;
 
   const rtcCallbacks: Partial<CallbacksInterface> = {
     EndCall: () => {
       setVideoCall(false);
-      navigate(undefined, undefined, 'goBack');
+      navigate("Call");
+      notifee.cancelNotification('ongoing');
     },
   };
 

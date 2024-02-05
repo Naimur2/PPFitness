@@ -2,8 +2,6 @@ import notifee, {
   AndroidCategory,
   AndroidImportance,
 } from '@notifee/react-native';
-import React from 'react';
-import CustomCallComponent from 'src/components/CustomCallComponent';
 
 interface MessageData {
   collapseKey: string;
@@ -46,8 +44,6 @@ export interface SenderProfile {
 }
 
 async function onMessageReceived(message: MessageData) {
-  console.log('message', message);
-
   const notification = (
     message?.data?.notifee ? JSON.parse(message?.data?.notifee) : {}
   ) as NotificationData<Data>;
@@ -59,7 +55,7 @@ async function onMessageReceived(message: MessageData) {
     await notifee.createChannel({
       id: 'call',
       name: 'Incoming',
-      sound: 'default',
+      sound: 'sound',
       importance: AndroidImportance.HIGH,
     });
     await notifee.displayNotification({
@@ -69,6 +65,7 @@ async function onMessageReceived(message: MessageData) {
 
       android: {
         channelId: 'call',
+       
         pressAction: {
           id: 'call',
           launchActivity: 'com.ppfitness.app.MainActivity',
@@ -81,11 +78,7 @@ async function onMessageReceived(message: MessageData) {
         //   launchActivity: 'com.ppfitness.app.MainActivity',
 
         // },
-        // asForegroundService: true,
         timestamp: Date.now(),
-        // showTimestamp: true,
-        // showChronometer: true,
-        // ongoing: true,
         autoCancel: false,
         actions: [
           {
@@ -102,6 +95,7 @@ async function onMessageReceived(message: MessageData) {
           },
         ],
       },
+
       ios: {
         foregroundPresentationOptions: {
           badge: true,

@@ -1,8 +1,26 @@
-import notifee, { EventDetail, EventType } from '@notifee/react-native';
-// import { callApiSlice } from '@store/api/callApi/callApiSlice';
-import { callTimerNotification } from './callTimerNotification';
-import { Linking } from 'react-native';
+import notifee, {
+  AndroidCategory,
+  AndroidImportance,
+  EventDetail,
+  EventType,
+} from '@notifee/react-native';
+import {Linking} from 'react-native';
 
+type PropsData<T> = {
+  channelName: string;
+  type: string;
+  from: string;
+  uid: number;
+  to: string;
+  token: string;
+  senderProfile: T;
+};
+type PropsSendProfile = {
+  fullName: string;
+  role: string;
+  _id: string;
+  avatar: string;
+};
 
 async function handleNotification({
   type,
@@ -11,44 +29,63 @@ async function handleNotification({
   type: EventType;
   detail: EventDetail;
 }) {
-  const { notification, pressAction } = detail;
-  console.log({notification});
+  const {notification, pressAction} = detail;
 
-  if (type === EventType.ACTION_PRESS && pressAction?.id === 'view') {
-    const {id, currentUser} = notification?.data;
-    Linking.openURL(`com.ppfitness.app://chatScreen/${id}/${currentUser}`);
-  }
+  if (type === EventType.ACTION_PRESS) {
+    const {data, id} = notification || {};
+    const {channelName, uid, senderProfile, token} =
+      data as PropsData<PropsSendProfile>;
+    //  Call
+    if (pressAction?.id === 'Accept') {
+      // Handle Accept action
+      if (channelName && token && uid) {
+        console.log(
+          'url',
+          `channelName=>${channelName}\\\ token=>    ${token}  \\\\ uid =>${uid}`,
+        );
+        // 'call/:channelName/:token/:uid'
+        Linking.openURL(`ppfitness://call/${channelName}/${token}/${uid}`);
+        if (id) {
+          notifee.cancelNotification(id);
+        }
+        // set new notification
+        await notifee.createChannel({
+          id: 'ongoing',
+          name: 'Running Call',
+          importance: AndroidImportance.HIGH,
+        });
+        await notifee.displayNotification({
+          title: 'Running Call',
+          body: senderProfile?.fullName,
+          android: {
+            channelId: 'call',
+            pressAction: {
+              id: 'ongoing',
+              launchActivity: 'com.ppfitness.app.MainActivity',
+            },
+            timestamp: Date.now(),
+            showTimestamp: true,
+            showChronometer: true,
+            ongoing: true,
+            autoCancel: false,
+          },
 
-  if (type === EventType.ACTION_PRESS && pressAction?.id === 'accept') {
-    try {
-      const callDetails = notification?.data;
-      const callChannelId = callDetails?.callChannelId;
-      // await store
-      //   .dispatch(callApiSlice.endpoints.acceptCall.initiate(callDetails))
-      //   .unwrap();
-      await notifee.cancelNotification(notification?.id);
-      Linking.openURL(`com.ppfitness.app://call/${callChannelId}`);
-      callTimerNotification(callChannelId);
-    } catch (error) {
-      console.log(error);
+          ios: {
+            foregroundPresentationOptions: {
+              badge: true,
+              sound: true,
+              banner: true,
+              list: true,
+            },
+          },
+        });
+      }
+    } else if (pressAction?.id === 'Decline') {
+      // Handle Decline action
+      if (id) {
+        notifee.cancelNotification(id);
+      }
     }
-  } else if (type === EventType.DISMISSED || pressAction?.id === 'reject') {
-    try {
-      const callDetails = notification?.data;
-      // await store
-      //   .dispatch(callApiSlice.endpoints.rejectCall.initiate(callDetails))
-      //   .unwrap();
-      await notifee.cancelNotification(notification?.id);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (pressAction?.id === 'View') {
-    const callChannelId = notification?.data?.callChannelId;
-  
-    Linking.openURL(`com.ppfitness.app://call/${callChannelId}`);
-    await notifee.cancelNotification(notification?.id);
   }
 }
 
