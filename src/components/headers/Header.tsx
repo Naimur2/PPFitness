@@ -30,7 +30,7 @@ export default function Header({
         />
       ),
     });
-  }, [navigation]);
+  }, [navigation, title, onPress, iconRightType, onRightPress, type]);
 
   return <></>;
 }

@@ -54,6 +54,19 @@ export default function GroceryList() {
             </HStack>
           );
         })}
+        {!groceryList || groceryList?.length === 0 ? (
+          <HStack
+            backgroundColor={'#ffffff'}
+            alignItems="center"
+            justifyContent={'center'}
+            rounded={'lg'}
+            py={4}
+            mb={5}>
+            <Text fontWeight={'600'} color={'#58565E'} fontSize={'md'}>
+              No grocery list found for this day
+            </Text>
+          </HStack>
+        ) : null}
       </ScrollView>
     </VStack>
   );

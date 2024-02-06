@@ -67,21 +67,22 @@ export default function CircumfenceMeasurement() {
       <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
         Circumference Measurements
       </NText>
-      <Center>
-        <HStack justifyContent={'space-between'} bg={'white'} p={4} rounded={8}>
+      <Center bg={'white'} p={4} rounded={8}>
+        <HStack justifyContent={'space-between'}>
           <YAxis
             data={dataForChart}
             contentInset={{
               top: 15,
               bottom: 25,
+              
             }}
             min={minimumCircumference || 0}
             max={maximumCircumference || 100}
             svg={{
               fill: 'grey',
-              fontSize: 11,
+              fontSize: 8,
             }}
-            style={{width: 'auto'}}
+            style={{width: 35}}
             numberOfTicks={dataForChart.length}
             formatLabel={value => `${value}`}
           />
@@ -108,7 +109,7 @@ export default function CircumfenceMeasurement() {
           </VStack>
         </HStack>
         <Pressable
-          mt={4}
+          mt={6}
           w="56%"
           display="flex"
           flexDirection="row"

@@ -5,8 +5,6 @@ import React from 'react';
 import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
 
 export default function WorkoutPerWeek() {
-
-
   const {data: workoutData} = useGetWorkoutPerWeekQuery();
 
   const workoutsInEvery4Weeks = React.useMemo(() => {
@@ -41,7 +39,6 @@ export default function WorkoutPerWeek() {
 
   const data = workoutsInEvery4Weeks?.map(item => item.sum) || [];
 
-
   return (
     <VStack space={4}>
       <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
@@ -59,9 +56,9 @@ export default function WorkoutPerWeek() {
           max={maximumWorkout?.sum || 100}
           svg={{
             fill: 'grey',
-            fontSize: 11,
+            fontSize: 8,
           }}
-          style={{width: 'auto'}}
+          style={{width: 35}}
           numberOfTicks={data.length}
           formatLabel={value => `${value}`}
         />
@@ -83,7 +80,7 @@ export default function WorkoutPerWeek() {
             data={data}
             contentInset={{left: 10, right: 10}}
             svg={{fontSize: 8, fill: 'black'}}
-            formatLabel={(value, index) => index + 1 + 'W'}
+            formatLabel={(value, index) => `${(index + 1) * 4}w`}
           />
         </VStack>
       </HStack>

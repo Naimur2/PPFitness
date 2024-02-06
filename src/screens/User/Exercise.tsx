@@ -18,6 +18,7 @@ import {fontSizes} from '@theme/typography';
 import {useGetAllExerciseQuery} from '@store/apis/exercise';
 import {SkeletonsExerciseItem} from 'src/components/skeletons';
 import NotFoundCard from 'src/components/not-found-card';
+import Header from 'src/components/headers/Header';
 
 export default function Exercise() {
   const navigation = useNavigation();
@@ -48,6 +49,7 @@ export default function Exercise() {
         flexGrow: 1,
         gap: 4,
       }}>
+      <Header title={'Exercise'} />
       <HStack justifyContent={'space-between'} alignItems={'center'}>
         <Input
           w={'80%'}

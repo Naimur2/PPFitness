@@ -24,7 +24,7 @@ export default function App() {
   }, []);
 
   //
-  React.useEffect(async () => {
+  React.useEffect(() => {
     messaging().onMessage(onMessageReceived);
   }, []);
 

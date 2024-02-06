@@ -24,6 +24,7 @@ import useShowToastMessage from '@hooks/useShowToastMessage';
 import {Linking} from 'react-native';
 import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
 import LazyImage from 'src/components/LazyImage';
+import WeightChart from 'src/layouts/WeightChart';
 
 export default function ProfileTab() {
   // Hooks
@@ -57,6 +58,8 @@ export default function ProfileTab() {
     }
   };
   const {data: workoutData} = useGetWorkoutPerWeekQuery();
+
+  // TODO: Add DailyMacroChart
 
   return (
     <ScrollView
@@ -186,6 +189,7 @@ export default function ProfileTab() {
       <WorkoutPerWeek />
       {/* <DailyMacroChart />  */}
       {/* <BenchPress /> */}
+      <WeightChart />
       <CircumfenceMeasurement />
     </ScrollView>
   );

@@ -1,7 +1,9 @@
 import React from 'react';
-import {Modal} from 'native-base';
+import {Button, Modal, Text, VStack} from 'native-base';
 import * as Yup from 'yup';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
+import dayjs from 'dayjs';
+import {fontConfig} from '@theme/fontConfig';
 
 interface IProps {
   value: string;
@@ -16,21 +18,52 @@ export default function CalenderPickerModal({
   onSetValue,
   value,
 }: IProps) {
+  const [selectedDate, setSelectedDate] = React.useState(
+    dayjs().format('YYYY-MM-DD'),
+  );
+
+  React.useEffect(() => {
+    if (value) {
+      setSelectedDate(value);
+    }
+  }, [value]);
+
   return (
     <Modal zIndex={99} isOpen={isOpen} onClose={onClose}>
-      <Modal.Content w="100%" h="50%">
-        <Calendar
-          onDayPress={day => {
-            onSetValue?.(day.dateString);
-          }}
-          markedDates={{
-            [value]: {
-              selected: true,
-              disableTouchEvent: true,
-              selectedDotColor: 'orange',
-            },
-          }}
-        />
+      <Modal.Content w="90%" p={4} maxW="500px">
+        <VStack space={4}>
+          <Text fontSize="lg" fontWeight={700}>
+            Select Date
+          </Text>
+          <Calendar
+            onDayPress={day => {
+              setSelectedDate(dayjs(day.dateString));
+            }}
+            markedDates={{
+              [selectedDate]: {
+                selected: true,
+                disableTouchEvent: true,
+                selectedDotColor: 'orange',
+              },
+            }}
+            current={selectedDate}
+            theme={{
+              textDayFontFamily: fontConfig.Outfit[400].normal,
+              textMonthFontFamily: fontConfig.Outfit[400].normal,
+              textDayHeaderFontFamily: fontConfig.Outfit[400].normal,
+            }}
+          />
+          <Button
+            bg={'#C7B4A0'}
+            _pressed={{bg: '#C7B4A090'}}
+            _text={{color: '#1A1929', fontWeight: 700}}
+            onPress={() => {
+              onSetValue?.(selectedDate);
+              onClose();
+            }}>
+            Done
+          </Button>
+        </VStack>
       </Modal.Content>
     </Modal>
   );

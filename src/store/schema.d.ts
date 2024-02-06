@@ -11,7 +11,7 @@
 
 export interface PostV1AuthLoginSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65bfc77a0109df67d7baacb2","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
+  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65c287e573d75b6fd63b0ad4","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
   data: {
     message: string;
     data: {
@@ -905,7 +905,7 @@ export type PostV1FileDeleteRequestBody = ((object & object) & object) & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65bfc77b0109df67d7baacc0","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65c287e673d75b6fd63b0ae2","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1066,7 +1066,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77b0109df67d7baacc2","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e673d75b6fd63b0ae4","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -1197,7 +1197,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65bfc77b0109df67d7baacc4","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65c287e673d75b6fd63b0ae6","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1698,6 +1698,7 @@ export interface GetV1ProfileGetSingleSuccessfulResponse {
         weight: string;
         week: string;
         month: string;
+        year?: string;
       }[];
       /** @format any */
       _id?: any;
@@ -1765,6 +1766,7 @@ export interface GetV1ProfileGetSingleIdSuccessfulResponse {
         weight: string;
         week: string;
         month: string;
+        year?: string;
       }[];
       /** @format any */
       _id?: any;
@@ -1844,6 +1846,7 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
         weight: string;
         week: string;
         month: string;
+        year?: string;
       }[];
       /** @format any */
       _id?: any;
@@ -1870,6 +1873,33 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
 }
 
 export interface GetV1ProfileGetAllErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type GetV1ProfileGetWeightsParameterWeek = string;
+
+export type GetV1ProfileGetWeightsParameterMonth = string;
+
+export type GetV1ProfileGetWeightsParameterYear = string;
+
+export interface GetV1ProfileGetWeightsSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Profile Updated","data":[{"weight":"70","week":"1","month":"January","year":"2021"}]} */
+  data: {
+    message: string;
+    data: {
+      weight: string;
+      week: string;
+      month: string;
+      year?: string;
+    }[];
+  };
+}
+
+export interface GetV1ProfileGetWeightsErrorResponse {
   status: 'error';
   error: {
     message: string;
@@ -1920,6 +1950,7 @@ export type PostV1ProfileUpdateRequestBody = ((object & object) & object) & {
     weight: string;
     week: string;
     month: string;
+    year?: string;
   }[];
 };
 
@@ -1981,7 +2012,7 @@ export type GetV1ProgramGetParameterSearch = string;
 
 export interface GetV1ProgramGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77c0109df67d7baaccb","name":"abc","assignedUsers":[{"_id":"65bfc77c0109df67d7baaccc","email":"abc","createdAt":"2024-02-04T17:21:00.139Z","updatedAt":"2024-02-04T17:21:00.139Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-04T17:21:00.139Z","updatedAt":"2024-02-04T17:21:00.139Z","startingDate":"2024-02-04T17:21:00.139Z","endingDate":"2024-02-04T17:21:00.139Z"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e773d75b6fd63b0aed","name":"abc","assignedUsers":[{"_id":"65c287e773d75b6fd63b0aee","email":"abc","createdAt":"2024-02-06T19:26:31.394Z","updatedAt":"2024-02-06T19:26:31.394Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-06T19:26:31.394Z","updatedAt":"2024-02-06T19:26:31.394Z","startingDate":"2024-02-06T19:26:31.394Z","endingDate":"2024-02-06T19:26:31.394Z"}]} */
   data: {
     message: string;
     meta: {
@@ -2031,7 +2062,7 @@ export interface GetV1ProgramGetSuccessfulResponse {
         createdAt: string;
         /** YYYY-MM-DDTHH:mm:ss.sssZ */
         updatedAt: string;
-        profile: {
+        profile?: {
           avatar: string;
           fullName: string;
         };
@@ -2087,7 +2118,7 @@ export type GetV1ProgramGetIdParameterId = string;
 
 export interface GetV1ProgramGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65bfc77c0109df67d7baacce","name":"abc","assignedUsers":[{"_id":"65bfc77c0109df67d7baaccf","email":"abc","createdAt":"2024-02-04T17:21:00.144Z","updatedAt":"2024-02-04T17:21:00.144Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-04T17:21:00.144Z","updatedAt":"2024-02-04T17:21:00.144Z","startingDate":"2024-02-04T17:21:00.144Z","endingDate":"2024-02-04T17:21:00.144Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c287e773d75b6fd63b0af0","name":"abc","assignedUsers":[{"_id":"65c287e773d75b6fd63b0af1","email":"abc","createdAt":"2024-02-06T19:26:31.399Z","updatedAt":"2024-02-06T19:26:31.399Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-06T19:26:31.399Z","updatedAt":"2024-02-06T19:26:31.399Z","startingDate":"2024-02-06T19:26:31.399Z","endingDate":"2024-02-06T19:26:31.399Z"}} */
   data: {
     message: string;
     data: {
@@ -2103,7 +2134,7 @@ export interface GetV1ProgramGetIdSuccessfulResponse {
         createdAt: string;
         /** YYYY-MM-DDTHH:mm:ss.sssZ */
         updatedAt: string;
-        profile: {
+        profile?: {
           avatar: string;
           fullName: string;
         };
@@ -2433,7 +2464,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-02-04T17:21:00.159Z","assignedTo":"abc","programId":{"_id":"65bfc77c0109df67d7baacd0","name":"abc","startingDate":"2024-02-04T17:21:00.159Z","endingDate":"2024-02-04T17:21:00.159Z","assignedUsers":[],"createdAt":"2024-02-04T17:21:00.159Z","updatedAt":"2024-02-04T17:21:00.159Z"},"isCompleted":false,"workouts":[{"_id":"65bfc77c0109df67d7baacd1","exerciseId":"65bfc77c0109df67d7baacd2","programId":"65bfc77c0109df67d7baacd3","createdAt":"2024-02-04T17:21:00.159Z","updatedAt":"2024-02-04T17:21:00.159Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65bfc77c0109df67d7baacd4","notes":["notes"],"type":"circuit"}],"createdAt":"2024-02-04T17:21:00.159Z","updatedAt":"2024-02-04T17:21:00.159Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-02-06T19:26:31.415Z","assignedTo":"abc","programId":{"_id":"65c287e773d75b6fd63b0af2","name":"abc","startingDate":"2024-02-06T19:26:31.415Z","endingDate":"2024-02-06T19:26:31.415Z","assignedUsers":[],"createdAt":"2024-02-06T19:26:31.415Z","updatedAt":"2024-02-06T19:26:31.415Z"},"isCompleted":false,"workouts":[{"_id":"65c287e773d75b6fd63b0af3","exerciseId":"65c287e773d75b6fd63b0af4","programId":"65c287e773d75b6fd63b0af5","createdAt":"2024-02-06T19:26:31.415Z","updatedAt":"2024-02-06T19:26:31.415Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65c287e773d75b6fd63b0af6","notes":["notes"],"type":"circuit"}],"createdAt":"2024-02-06T19:26:31.415Z","updatedAt":"2024-02-06T19:26:31.415Z"}]} */
   data: {
     message: string;
     data: {
@@ -2667,10 +2698,10 @@ export interface PostV1WorkoutAddErrorResponse {
 }
 
 export type PostV1WorkoutAddRequestBody = ((object & object) & object) & {
-  exerciseId: string;
+  exerciseId?: string;
   programId: string;
   notes?: string[];
-  sets: {
+  sets?: {
     reps?: number | string;
     weight?: number | string;
     rest?: number | string;
@@ -2679,7 +2710,7 @@ export type PostV1WorkoutAddRequestBody = ((object & object) & object) & {
   }[];
   circuit?: string;
   warmup?: string;
-  type?: 'warmup' | 'circuit' | 'workout' | 'benchpress';
+  type: 'warmup' | 'circuit' | 'workout' | 'benchpress';
   dateTime: {
     /**
      * @format double
@@ -2721,7 +2752,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77c0109df67d7baacf5","createdBy":"65bfc77c0109df67d7baacf6","exerciseId":"65bfc77c0109df67d7baacf7","programId":"65bfc77c0109df67d7baacf8","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65bfc77c0109df67d7baacf9","createdAt":"2024-02-04T17:21:00.493Z","updatedAt":"2024-02-04T17:21:00.493Z"}],"createdAt":"2024-02-04T17:21:00.493Z","updatedAt":"2024-02-04T17:21:00.493Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-04T17:21:00.493Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e773d75b6fd63b0b17","createdBy":"65c287e773d75b6fd63b0b18","exerciseId":"65c287e773d75b6fd63b0b19","programId":"65c287e773d75b6fd63b0b1a","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c287e773d75b6fd63b0b1b","createdAt":"2024-02-06T19:26:31.742Z","updatedAt":"2024-02-06T19:26:31.742Z"}],"createdAt":"2024-02-06T19:26:31.742Z","updatedAt":"2024-02-06T19:26:31.742Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-06T19:26:31.742Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -2863,7 +2894,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65bfc77c0109df67d7baacfb","createdBy":"65bfc77c0109df67d7baacfc","exerciseId":"65bfc77c0109df67d7baacfd","programId":"65bfc77c0109df67d7baacfe","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65bfc77c0109df67d7baacff","createdAt":"2024-02-04T17:21:00.497Z","updatedAt":"2024-02-04T17:21:00.497Z"}],"createdAt":"2024-02-04T17:21:00.497Z","updatedAt":"2024-02-04T17:21:00.497Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-04T17:21:00.497Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c287e773d75b6fd63b0b1d","createdBy":"65c287e773d75b6fd63b0b1e","exerciseId":"65c287e773d75b6fd63b0b1f","programId":"65c287e773d75b6fd63b0b20","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c287e773d75b6fd63b0b21","createdAt":"2024-02-06T19:26:31.746Z","updatedAt":"2024-02-06T19:26:31.746Z"}],"createdAt":"2024-02-06T19:26:31.746Z","updatedAt":"2024-02-06T19:26:31.746Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-06T19:26:31.746Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -2982,7 +3013,7 @@ export type GetV1WorkoutFilterParameterDay = number | string;
 
 export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65bfc77c0109df67d7baad02","createdBy":"65bfc77c0109df67d7baad03","exerciseId":"65bfc77c0109df67d7baad04","programId":"65bfc77c0109df67d7baad05","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65bfc77c0109df67d7baad06","createdAt":"2024-02-04T17:21:00.515Z","updatedAt":"2024-02-04T17:21:00.515Z"}],"createdAt":"2024-02-04T17:21:00.515Z","updatedAt":"2024-02-04T17:21:00.515Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-04T17:21:00.515Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65c287e773d75b6fd63b0b24","createdBy":"65c287e773d75b6fd63b0b25","exerciseId":"65c287e773d75b6fd63b0b26","programId":"65c287e773d75b6fd63b0b27","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c287e773d75b6fd63b0b28","createdAt":"2024-02-06T19:26:31.762Z","updatedAt":"2024-02-06T19:26:31.762Z"}],"createdAt":"2024-02-06T19:26:31.762Z","updatedAt":"2024-02-06T19:26:31.762Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-06T19:26:31.762Z"},"isCompleted":false}]} */
   data: {
     message: string;
     data: {
@@ -3105,7 +3136,7 @@ export interface PostV1WorkoutUpdateIdErrorResponse {
 
 export type PostV1WorkoutUpdateIdRequestBody = ((object & object) & object) & {
   notes?: string[];
-  sets: {
+  sets?: {
     reps?: number | string;
     weight?: number | string;
     rest?: number | string;
@@ -3114,7 +3145,7 @@ export type PostV1WorkoutUpdateIdRequestBody = ((object & object) & object) & {
   }[];
   circuit?: string;
   warmup?: string;
-  type?: 'warmup' | 'circuit' | 'workout' | 'benchpress';
+  type: 'warmup' | 'circuit' | 'workout' | 'benchpress';
 };
 
 export type DeleteV1WorkoutDeleteIdParameterId = string;
@@ -3151,10 +3182,10 @@ export interface PostV1WorkoutAdminAddErrorResponse {
 
 export type PostV1WorkoutAdminAddRequestBody = (((object & object) & object) &
   object) & {
-  exerciseId: string;
+  exerciseId?: string;
   programId: string;
   notes?: string[];
-  sets: {
+  sets?: {
     reps?: number | string;
     weight?: number | string;
     rest?: number | string;
@@ -3163,7 +3194,7 @@ export type PostV1WorkoutAdminAddRequestBody = (((object & object) & object) &
   }[];
   circuit?: string;
   warmup?: string;
-  type?: 'warmup' | 'circuit' | 'workout' | 'benchpress';
+  type: 'warmup' | 'circuit' | 'workout' | 'benchpress';
   dateTime: {
     /**
      * @format double
@@ -3672,7 +3703,7 @@ export interface DeleteV1RecipeDeleteIdErrorResponse {
 
 export interface PostV1ChatSendMessagesSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","data":{"_id":"65bfc77c0109df67d7baad11","text":"text","files":["files"],"createdAt":"2024-02-04T17:21:00.692Z","updatedAt":"2024-02-04T17:21:00.692Z","sender":"65bfc77c0109df67d7baad12"}} */
+  /** @example {"message":"Message Sent Successfully","data":{"_id":"65c287e773d75b6fd63b0b33","text":"text","files":["files"],"createdAt":"2024-02-06T19:26:31.921Z","updatedAt":"2024-02-06T19:26:31.921Z","sender":"65c287e773d75b6fd63b0b34"}} */
   data: {
     message: string;
     data: {
@@ -3723,7 +3754,7 @@ export type GetV1ChatChatParameterLimit = string;
 
 export interface GetV1ChatChatSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77c0109df67d7baad0c","text":"text","files":["files"],"createdAt":"2024-02-04T17:21:00.622Z","updatedAt":"2024-02-04T17:21:00.622Z","sender":"65bfc77c0109df67d7baad0d"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e773d75b6fd63b0b2e","text":"text","files":["files"],"createdAt":"2024-02-06T19:26:31.853Z","updatedAt":"2024-02-06T19:26:31.853Z","sender":"65c287e773d75b6fd63b0b2f"}]} */
   data: {
     message: string;
     meta: {
@@ -3804,7 +3835,7 @@ export type GetV1ChatGetIdParameterId = string;
 
 export interface GetV1ChatGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77c0109df67d7baad0e","text":"text","files":["files"],"createdAt":"2024-02-04T17:21:00.628Z","updatedAt":"2024-02-04T17:21:00.628Z","sender":"65bfc77c0109df67d7baad0f"}]} */
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e773d75b6fd63b0b30","text":"text","files":["files"],"createdAt":"2024-02-06T19:26:31.859Z","updatedAt":"2024-02-06T19:26:31.859Z","sender":"65c287e773d75b6fd63b0b31"}]} */
   data: {
     message: string;
     meta: {
@@ -3902,7 +3933,7 @@ export type PutV1ContactDetailsUpdateRequestBody = (((object & object) &
 
 export interface GetV1ContactDetailsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65bfc77c0109df67d7baad13","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-02-04T17:21:00.742Z","updatedAt":"2024-02-04T17:21:00.742Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c287e773d75b6fd63b0b35","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-02-06T19:26:31.961Z","updatedAt":"2024-02-06T19:26:31.961Z"}} */
   data: {
     message: string;
     data: {
@@ -3935,7 +3966,7 @@ export interface GetV1ContactDetailsGetErrorResponse {
 
 export interface PostV1NotificationFcmSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Added Successfully","data":{"_id":"65bfc77c0109df67d7baad14","token":"abc","userId":"65bfc77c0109df67d7baad15","createdAt":"2024-02-04T17:21:00.823Z","updatedAt":"2024-02-04T17:21:00.823Z","type":"web"}} */
+  /** @example {"message":"Token Added Successfully","data":{"_id":"65c287e873d75b6fd63b0b36","token":"abc","userId":"65c287e873d75b6fd63b0b37","createdAt":"2024-02-06T19:26:32.028Z","updatedAt":"2024-02-06T19:26:32.028Z","type":"web"}} */
   data: {
     message: string;
     data: {
@@ -4028,7 +4059,7 @@ export type GetV1NotificationGetParameterSearch = string;
 
 export interface GetV1NotificationGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65bfc77c0109df67d7baad16","title":"title","body":"body","userId":{"_id":"65bfc77c0109df67d7baad17","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-02-04T17:21:00.845Z","updatedAt":"2024-02-04T17:21:00.845Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c287e873d75b6fd63b0b38","title":"title","body":"body","userId":{"_id":"65c287e873d75b6fd63b0b39","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-02-06T19:26:32.044Z","updatedAt":"2024-02-06T19:26:32.044Z"}]} */
   data: {
     message: string;
     meta: {
@@ -4109,7 +4140,7 @@ export enum GetV1CallStartParameterType {
 
 export interface GetV1CallStartSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Generated Successfully","data":{"token":"a96c9ccd-a530-40eb-b2e9-497ce8951057","channelName":"cd44d1f9-d1f2-4c9f-a70d-d16f0fc8df20","uId":"7af3be99-f938-4cc3-84b1-c0d830f38902"}} */
+  /** @example {"message":"Token Generated Successfully","data":{"token":"4cb4ddc0-bd0e-479e-9334-03e30d4daf34","channelName":"c4de4577-30c3-45e9-a332-4ad13e89dca0","uId":"e0f3b3bc-6db0-413d-a11c-88bcf150ba00"}} */
   data: {
     message: string;
     data: {
@@ -5218,6 +5249,38 @@ export class Api<
         GetV1ProfileGetAllErrorResponse
       >({
         path: `/v1/profile/get/all`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Profile
+     * @name GetV1ProfileGetWeights
+     * @summary Update Profile endpoint
+     * @request GET:/v1/profile/get/weights
+     * @secure
+     */
+    getV1ProfileGetWeights: (
+      query?: {
+        /** GET /v1/profile/get/weights parameter */
+        week?: GetV1ProfileGetWeightsParameterWeek;
+        /** GET /v1/profile/get/weights parameter */
+        month?: GetV1ProfileGetWeightsParameterMonth;
+        /** GET /v1/profile/get/weights parameter */
+        year?: GetV1ProfileGetWeightsParameterYear;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ProfileGetWeightsSuccessfulResponse,
+        GetV1ProfileGetWeightsErrorResponse
+      >({
+        path: `/v1/profile/get/weights`,
         method: 'GET',
         query: query,
         secure: true,

@@ -29,6 +29,11 @@ const tabItems = [
     nav: 'ChangePassword',
   },
   {
+    label: 'Delete Account',
+    icon: LockV2,
+    nav: 'DeleteAccount',
+  },
+  {
     label: 'Notification Preference',
     icon: Bell,
     nav: 'NotificationPreference',

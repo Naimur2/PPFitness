@@ -67,7 +67,7 @@ export default function History() {
         }}
       />
       {/*  */}
-      <HStack justifyContent={'space-between'} alignItems={'center'}>
+      {/* <HStack justifyContent={'space-between'} alignItems={'center'}>
         <Input
           w={'80%'}
           bg="white"
@@ -86,7 +86,7 @@ export default function History() {
         <Button onPress={handelClear} variant={'unstyled'}>
           Clear
         </Button>
-      </HStack>
+      </HStack> */}
 
       {/* <HStack justifyContent={'space-between'} alignItems={'center'}>
         <Pressable

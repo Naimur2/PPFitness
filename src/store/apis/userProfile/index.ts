@@ -5,6 +5,7 @@ import {
   GetV1ProfileGetSingleIdParameterId,
   GetV1ProfileGetSingleIdSuccessfulResponse,
   GetV1ProfileGetSingleSuccessfulResponse,
+  GetV1ProfileGetWeightsSuccessfulResponse,
   PostV1FileDeleteRequestBody,
   PostV1FileDeleteSuccessfulResponse,
   PostV1FileUploadRequestBody,
@@ -13,6 +14,8 @@ import {
   PostV1ProfileUpdateSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
+import {TGetWeightParams} from './types';
+import queryString from 'query-string';
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
@@ -31,6 +34,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
     >({
       query: id => ({
         url: `profile/get/single/${id}`,
+      }),
+    }),
+    getUserWeights: builder.query<
+      GetV1ProfileGetWeightsSuccessfulResponse,
+      TGetWeightParams
+    >({
+      query: args => ({
+        url: `profile/get/weights?${queryString.stringify(args)}`,
       }),
     }),
     getAllProfile: builder.query<GetV1ProfileGetAllSuccessfulResponse, string>({
@@ -89,4 +100,5 @@ export const {
   useDeleteProfileMutation,
   useUpdateFileMutation,
   useDeleteFileMutation,
+  useGetUserWeightsQuery,
 } = authApiSlice;

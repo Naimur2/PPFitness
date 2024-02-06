@@ -11,11 +11,11 @@ import useToggle from '@hooks/useToggle';
 import appleAuth, {
   appleAuthAndroid,
 } from '@invertase/react-native-apple-authentication';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {useNavigation} from '@react-navigation/native';
-import {useRegisterMutation} from '@store/apis/auth';
-import {PostV1AuthRegisterRequestBody} from '@store/schema';
-import {useFormik} from 'formik';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { useNavigation } from '@react-navigation/native';
+import { useRegisterMutation } from '@store/apis/auth';
+import { PostV1AuthRegisterRequestBody } from '@store/schema';
+import { useFormik } from 'formik';
 import {
   Box,
   Button,
@@ -30,10 +30,10 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import {Alert, ImageBackground, Platform} from 'react-native';
-import {AccessToken, LoginManager, Profile} from 'react-native-fbsdk-next';
+import { Alert, ImageBackground, Platform } from 'react-native';
+import { AccessToken, LoginManager, Profile } from 'react-native-fbsdk-next';
 import * as Yup from 'yup';
-import crypto from 'crypto';
+
 
 const FBgImage = Factory(ImageBackground);
 

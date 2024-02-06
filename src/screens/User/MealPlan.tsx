@@ -120,6 +120,8 @@ export default function MealPlan() {
   }, [data]);
   //  header set
 
+  console.log('data', data?.data?.data?.groceryList);
+
   return (
     <Box>
       <Header
