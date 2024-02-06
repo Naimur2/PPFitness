@@ -37,7 +37,7 @@ const renderBubble = props => (
     }}
     textProps={{
       style: {
-        color: props.position === 'left' ? '#fff' : '#000',
+        color:'#000',
       },
     }}
     textStyle={{
@@ -48,7 +48,9 @@ const renderBubble = props => (
         color: '#000',
       },
     }}
-    style={styles.container}
+    style={{
+      width: '100%',
+    }}
   />
 );
 
@@ -174,6 +176,18 @@ export default function CallScreen() {
         //     width: '85%',
         //   },
         // }}
+
+        textInputProps={{
+          placeholder: 'Type a message...',
+          style: {
+            color: 'black',
+            backgroundColor: 'white',
+            fontSize: 16,
+            fontFamily: fontConfig.Outfit[400].normal,
+            width: '85%',
+            marginLeft: 10,
+          },
+        }}
 
         listViewProps={{
           paddingVertical: 16,
