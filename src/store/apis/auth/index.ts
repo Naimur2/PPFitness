@@ -36,6 +36,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 user: result.data.data?.user,
                 accessToken: result.data.data?.accessToken,
                 refreshToken: result.data.data?.refreshToken,
+                method: result.data.data?.method,
               }),
             );
           }

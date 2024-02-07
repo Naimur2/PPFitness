@@ -9,6 +9,7 @@ export interface AuthState {
   fcmTokenId?: string | null;
   showWelcome?: boolean;
   language?: string;
+  method?: string;
 }
 
 const initialState: AuthState = {
@@ -32,12 +33,15 @@ const authSlice = createSlice({
           user: any;
           accessToken?: string;
           refreshToken?: string;
+          method?: PostV1AuthLoginSuccessfulResponse['data']['data']['method'];
         };
       },
     ) => {
       state.user = action.payload.user;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
+      state.showWelcome = false;
+      state.method = action.payload?.method;
     },
     logout: state => {
       state.user = undefined;
@@ -45,6 +49,7 @@ const authSlice = createSlice({
       state.refreshToken = null;
       state.fcmToken = null;
       state.fcmTokenId = null;
+      state.method = undefined;
     },
     updateToken: (
       state,
@@ -59,32 +64,6 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
       if (action.payload.refreshToken)
         state.refreshToken = action.payload.refreshToken;
-    },
-    setProfile: (
-      state,
-      action: {
-        payload: {
-          avatar?: string;
-          country?: string;
-          fullName?: string;
-          gender?: string;
-          goal?: string;
-          height?: string;
-          phone?: string;
-        };
-      },
-    ) => {
-      if (action.payload)
-        state.user = {
-          avatar: action.payload?.avatar,
-          country: action.payload?.country,
-          fullName: action.payload?.fullName,
-          gender: action.payload?.gender,
-          goal: action.payload?.goal,
-          height: action.payload?.height,
-          phone: action.payload?.phone,
-          ...state.user,
-        };
     },
     setFcmToken: (state, action: {payload: string}) => {
       if (action.payload) {
@@ -113,7 +92,6 @@ export const {
   setFcmTokenId,
   setShowWelcome,
   setLanguage,
-  setProfile,
 } = authSlice.actions;
 
 export const selectAuth = (state: {auth: AuthState}) => state.auth;
