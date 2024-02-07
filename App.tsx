@@ -42,6 +42,7 @@ export default function App() {
     screens: {
       mealPlan: 'meal-plan/:day',
       AudioCall: 'call/:channelName/:token/:uid',
+      Call: 'chat',
     },
   };
 

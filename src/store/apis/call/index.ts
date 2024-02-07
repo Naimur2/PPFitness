@@ -5,18 +5,22 @@ import {
   PostV1CallDeclineSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
+import queryString from 'query-string';
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const callApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getStartCall: builder.query<
       GetV1CallStartSuccessfulResponse,
-      GetV1CallStartParameterTo
+      {
+        to: GetV1CallStartParameterTo;
+        type: 'video' | 'audio';
+      }
     >({
       query: props => ({
-        url: `call/start${props}`,
+        url: `call/start${queryString.stringify(props)}`,
       }),
     }),
-    endCall: builder.mutation<
+    declineCall: builder.mutation<
       PostV1CallDeclineSuccessfulResponse,
       PostV1CallDeclineRequestBody
     >({
@@ -34,5 +38,5 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
   useLazyGetStartCallQuery,
   useGetStartCallQuery,
-  useEndCallMutation,
-} = authApiSlice;
+  useDeclineCallMutation,
+} = callApiSlice;
