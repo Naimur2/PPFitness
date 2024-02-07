@@ -1,11 +1,85 @@
 import {fontSizes} from '@theme/typography';
-import {HStack, VStack, Text as NText, View, Box} from 'native-base';
+import {
+  HStack,
+  VStack,
+  Text as NText,
+  View,
+  Box,
+  Pressable,
+  Actionsheet,
+  ScrollView,
+} from 'native-base';
 import {Circle, G, Line, Text} from 'react-native-svg';
 import {BarChart, PieChart, XAxis, YAxis} from 'react-native-svg-charts';
 import React, {useState} from 'react';
 import {Dimensions} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {useGetAllMealPlanQuery} from '@store/apis/mealPlan';
+import {ArrowDownIcon} from '@assets/icons';
 
-const CUT_OFF = 10;
+const dailyMicros = [
+  {
+    title: 'Calories',
+    key: 'calories',
+    image: require('@assets/images/calories.png'),
+  },
+  {
+    title: 'Protein',
+    key: 'protein',
+    image: require('@assets/images/protein.png'),
+  },
+  {
+    title: 'Carbs',
+    key: 'carbs',
+    image: require('@assets/images/carbs.png'),
+  },
+  {
+    title: 'Fat',
+    key: 'fat',
+    image: require('@assets/images/fat.png'),
+  },
+  {
+    title: 'Fiber',
+    key: 'fiber',
+    image: require('@assets/images/fiber.png'),
+  },
+  {
+    title: 'Water',
+    key: 'water',
+    image: require('@assets/images/water.png'),
+  },
+];
+
+const dayTabs = [
+  {
+    title: 'Mon',
+    key: 'Monday',
+  },
+  {
+    title: 'Tue',
+    key: 'Tuesday',
+  },
+  {
+    title: 'Wed',
+    key: 'Wednesday',
+  },
+  {
+    title: 'Thu',
+    key: 'Thursday',
+  },
+  {
+    title: 'Fri',
+    key: 'Friday',
+  },
+  {
+    title: 'Sat',
+    key: 'Saturday',
+  },
+  {
+    title: 'Sun',
+    key: 'Sunday',
+  },
+];
 
 const Labels = ({slices}) => {
   return slices.map((slice, index) => {
@@ -52,13 +126,42 @@ export default function DailyMacroChart() {
     label: '',
     value: 0,
   });
-  const [labelWidth, setLabelWidth] = useState(0);
+  const [activeTab, setActiveTab] = React.useState('Sunday');
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+
+  // APIS
+  const {data, isLoading, isFetching} = useGetAllMealPlanQuery(activeTab);
 
   const {label, value} = selectedSlice;
-  const keys = ['google', 'facebook', 'linkedin'];
-  const values = [15, 25, 35];
-  const colors = ['#FFC857', '#F39479', '#2A9BCE'];
-  const data = keys.map((key, index) => {
+  // const keys = ['google', 'facebook', 'linkedin'];
+  // const values = [15, 25, 35];
+  // const colors = ['#FFC857', '#F39479', '#2A9BCE'];
+  const dailyMacroData = data?.data?.data?.dailyMacro;
+  const defaultColors = [
+    '#FFC857',
+    '#F39479',
+    '#2A9BCE',
+    '#ffc757cc',
+    '#f39379cb',
+    '#2A9BCE',
+    '#b18121',
+    '#aa6754',
+    '#59c3f3',
+  ];
+  const keys = dailyMacroData?.map(item => item.name) ?? [];
+  const values = dailyMacroData?.map(item => item.quantity) ?? [];
+
+  // Assigning
+  const colors =
+    dailyMacroData?.map(
+      (item, index) => defaultColors[index % defaultColors.length],
+    ) ?? [];
+
+  // console.log('keys', keys);
+  // console.log('values', values);
+  // console.log('colors', colors);
+  // demo data
+  const demoData = keys.map((key, index) => {
     return {
       key,
       value: values[index],
@@ -70,7 +173,6 @@ export default function DailyMacroChart() {
       onPress: () => setSelectedSlice({label: key, value: values[index]}),
     };
   });
-  const deviceWidth = Dimensions.get('window').width;
 
   return (
     <VStack space={4} mt={4}>
@@ -79,15 +181,35 @@ export default function DailyMacroChart() {
       </NText>
 
       <VStack bg={'white'} rounded={'xl'} px={4} py={4} space={4}>
-        <NText color={'#1A1929'} fontSize={fontSizes.sm} fontWeight={500}>
-          Total
-        </NText>
+        <HStack justifyContent={'space-between'} alignItems={'center'}>
+          <HStack space={2} alignItems={'center'}>
+            <NText color={'#1A1929'} fontSize={fontSizes.xs}>
+              Total
+            </NText>
+          </HStack>
+          <Pressable
+            onPress={() => setIsDropdownOpen(true)}
+            px={3}
+            py={1}
+            rounded={16}
+            borderWidth={1}
+            borderColor="#8B8B8B"
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            justifyContent="center">
+            <NText color={'#8B8B8B'} fontSize={fontSizes.xs} mr={2}>
+              {activeTab}
+            </NText>
+            <ArrowDownIcon height={12} width={12} color={'#8B8B8B'} />
+          </Pressable>
+        </HStack>
         <View style={{justifyContent: 'center'}} position={'relative'}>
           <PieChart
             style={{height: 250}}
             outerRadius={'80%'}
             innerRadius={'45%'}
-            data={data}>
+            data={demoData}>
             <Labels />
             <VStack
               position={'absolute'}
@@ -101,21 +223,32 @@ export default function DailyMacroChart() {
               bottom={0}
               zIndex={-1}
               space={4}>
-              <NText backgroundColor={'#ccc'}>
+              <NText textTransform={'capitalize'} backgroundColor={'#ccc'}>
                 {label} {value}%
               </NText>
             </VStack>
           </PieChart>
         </View>
 
-        <HStack justifyContent={'center'} alignItems={'center'} space={8}>
-          <HStack space={2} alignItems={'center'}>
-            <Box bg={'#FFC857'} w={2} h={2} rounded={'full'} />
-            <NText fontSize={fontSizes.xs} color={'#1A1929'}>
-              Protein
-            </NText>
-          </HStack>
-          <HStack space={2} alignItems={'center'}>
+        {/*  bottom list */}
+        <HStack
+          justifyContent={'center'}
+          alignItems={'center'}
+          flexWrap={'wrap'}
+          space={8}>
+          {dailyMacroData?.map((item, index) => (
+            <HStack space={2} alignItems={'center'}>
+              <Box bg={defaultColors?.[index]} w={2} h={2} rounded={'full'} />
+              <NText
+                textTransform={'capitalize'}
+                fontSize={fontSizes.xs}
+                color={'#1A1929'}>
+                {item?.name}
+              </NText>
+            </HStack>
+          ))}
+
+          {/* <HStack space={2} alignItems={'center'}>
             <Box bg={'#F39479'} w={2} h={2} rounded={'full'} />
             <NText fontSize={fontSizes.xs} color={'#1A1929'}>
               Carbs
@@ -126,9 +259,29 @@ export default function DailyMacroChart() {
             <NText fontSize={fontSizes.xs} color={'#1A1929'}>
               Fats
             </NText>
-          </HStack>
+          </HStack> */}
         </HStack>
       </VStack>
+
+      {/* day list */}
+      <Actionsheet
+        isOpen={isDropdownOpen}
+        onClose={() => setIsDropdownOpen(false)}>
+        <Actionsheet.Content py={4}>
+          <ScrollView w="full" showsVerticalScrollIndicator={false}>
+            {dayTabs.map((item, index) => (
+              <Actionsheet.Item
+                key={index}
+                onPress={() => {
+                  setActiveTab(item?.key);
+                  setIsDropdownOpen(false);
+                }}>
+                {item.key}
+              </Actionsheet.Item>
+            ))}
+          </ScrollView>
+        </Actionsheet.Content>
+      </Actionsheet>
     </VStack>
   );
 }

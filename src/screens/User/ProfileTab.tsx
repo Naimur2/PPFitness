@@ -187,7 +187,7 @@ export default function ProfileTab() {
       </HStack>
 
       <WorkoutPerWeek />
-      {/* <DailyMacroChart />  */}
+      <DailyMacroChart /> 
       {/* <BenchPress /> */}
       <WeightChart />
       <CircumfenceMeasurement />
