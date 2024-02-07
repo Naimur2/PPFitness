@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {PostV1AuthLoginSuccessfulResponse} from '@store/schema';
 
 export interface AuthState {
-  user?: any;
+  user?: PostV1AuthLoginSuccessfulResponse['data']['data']['user'];
   accessToken?: string | null;
   refreshToken?: string | null;
   fcmToken?: string | null;
@@ -39,7 +40,7 @@ const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
     },
     logout: state => {
-      state.user = null;
+      state.user = undefined;
       state.accessToken = null;
       state.refreshToken = null;
       state.fcmToken = null;

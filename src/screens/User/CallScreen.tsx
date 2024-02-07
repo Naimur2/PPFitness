@@ -9,9 +9,13 @@ import {
   VStack,
   View,
 } from 'native-base';
-import {Bubble, GiftedChat, Send} from 'react-native-gifted-chat';
-import {useGetChatByIdQuery, useSendMessageMutation} from '@store/apis/chat';
-import {useSelector} from 'react-redux';
+import {Bubble, GiftedChat, IMessage, Send} from 'react-native-gifted-chat';
+import {
+  chatApiSlice,
+  useGetChatByIdQuery,
+  useSendMessageMutation,
+} from '@store/apis/chat';
+import {useDispatch, useSelector} from 'react-redux';
 import {selectUser} from '@store/features/authSlice';
 import {useGetSingleProfileQuery} from '@store/apis/userProfile';
 import {Image, StyleSheet} from 'react-native';
@@ -37,7 +41,7 @@ const renderBubble = props => (
     }}
     textProps={{
       style: {
-        color:'#000',
+        color: '#000',
       },
     }}
     textStyle={{
@@ -55,21 +59,20 @@ const renderBubble = props => (
 );
 
 export default function CallScreen() {
-  // state
-  const [messages, setMessages] = useState([]);
-  const [onCallOpen, setOnCallOpen] = useState(false);
   // hooks
   const navigate = useNavigation();
   const authUser = useSelector(selectUser);
   // console.log('authUser', authUser);
+
+  const dispatch = useDispatch();
 
   // apis
   const [sendMessage, {}] = useSendMessageMutation();
   const {data} = useGetChatByIdQuery(authUser?._id);
   const {data: profile} = useGetSingleProfileQuery();
 
-  useEffect(() => {
-    if (data?.data && profile) {
+  const messageData: IMessage[] = React.useMemo(() => {
+    if (data?.data?.data && profile) {
       const newData = data?.data?.data?.map(mes => {
         return {
           _id: mes?._id,
@@ -83,23 +86,21 @@ export default function CallScreen() {
           },
         };
       });
-      setMessages(newData);
+
+      return newData;
     }
+
+    return [];
   }, [data?.data, profile]);
 
   //
-  const onSend = useCallback(async (messages = []) => {
+  const onSend = useCallback(async (messages: IMessage[] = []) => {
     //
     try {
       const res = await sendMessage({
         message: messages?.[0]?.text,
-        createdAt: messages?.[0]?.createdAt,
-        updatedAt: messages?.[0]?.updatedAt,
+        id: authUser?._id,
       }).unwrap();
-      console.log('res', res);
-      setMessages(previousMessages =>
-        GiftedChat.append(previousMessages, messages),
-      );
     } catch (error) {
       console.log('error', error);
     }
@@ -137,7 +138,6 @@ export default function CallScreen() {
       </>
     );
   };
-  // call
 
   const handelAudioCall = () => {
     navigate.navigate('AudioCall');
@@ -146,8 +146,23 @@ export default function CallScreen() {
     navigate.navigate('AudioCall');
   };
 
-  // TODO: add infinite scroll
-  // TODO: Add Socket.io
+  const onLoadMore = async () => {
+    if (
+      data?.data?.meta.page &&
+      data?.data?.meta.page < data?.data?.meta.totalPages
+    ) {
+      try {
+        const reducer = chatApiSlice.endpoints.getMoreChatById.initiate({
+          id: authUser?._id,
+          page: data?.data?.meta.page + 1,
+          limit: data?.data?.meta.limit,
+        });
+        const res = await dispatch(reducer as any).unwrap();
+      } catch (error) {
+        console.log('error', error);
+      }
+    }
+  };
 
   return (
     <>
@@ -160,23 +175,12 @@ export default function CallScreen() {
 
       {/*  chat */}
       <GiftedChat
-        messages={messages}
+        messages={messageData}
         onSend={messages => onSend(messages)}
         user={{
           _id: profile?.data?.data?.userId?._id,
         }}
         renderMessage={props => <MessageContainer {...props} />}
-        // textInputProps={{
-        //   placeholder: 'Type a message...',
-        //   style: {
-        //     color: 'black',
-        //     backgroundColor: 'white',
-        //     fontSize: 16,
-        //     fontFamily: fontConfig.Outfit[400].normal,
-        //     width: '85%',
-        //   },
-        // }}
-
         textInputProps={{
           placeholder: 'Type a message...',
           style: {
@@ -188,9 +192,10 @@ export default function CallScreen() {
             marginLeft: 10,
           },
         }}
-
         listViewProps={{
           paddingVertical: 16,
+          onEndReached: onLoadMore,
+          onEndReachedThreshold: 0.5,
         }}
         keyboardShouldPersistTaps={'handled'}
         renderSend={props => {
