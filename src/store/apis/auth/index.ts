@@ -78,6 +78,13 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body,
       }),
     }),
+    deleteAccount: builder.mutation({
+      query: body => ({
+        url: 'delete-account',
+        method: 'POST',
+        body,
+      }),
+    }),
     passwordReset: builder.mutation<
       PostV1AuthPasswordResetSuccessfulResponse,
       PostV1AuthPasswordResetRequestBody
@@ -109,4 +116,5 @@ export const {
   usePasswordChangeMutation,
   usePasswordResetMutation,
   useVerifyOtpMutation,
+  useDeleteAccountMutation
 } = authApiSlice;

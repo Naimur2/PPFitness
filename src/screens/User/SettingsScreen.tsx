@@ -1,5 +1,12 @@
 import React from 'react';
-import {HStack, Pressable, ScrollView, Text, VStack} from 'native-base';
+import {
+  DeleteIcon,
+  HStack,
+  Pressable,
+  ScrollView,
+  Text,
+  VStack,
+} from 'native-base';
 import {
   ArrowDownIcon,
   Bell,
@@ -12,10 +19,12 @@ import {
 } from '@assets/icons';
 import {fontSizes} from '@theme/typography';
 import useNavigate from '@hooks/useNavigate';
-import {logout, selectFcmTokenId} from '@store/features/authSlice';
+import {logout, selectFcmTokenId, selectUser} from '@store/features/authSlice';
 import {useDispatch, useSelector} from 'react-redux';
-import {useLoginMutation} from '@store/apis/auth';
+import {useDeleteAccountMutation, useLoginMutation} from '@store/apis/auth';
 import {useDeleteFcmTokenMutation} from '@store/apis/notification';
+import {Alert} from 'react-native';
+import useShowToastMessage from '@hooks/useShowToastMessage';
 
 const tabItems = [
   {
@@ -58,14 +67,22 @@ const tabItems = [
     icon: LogoutIcon,
     nav: 'logout',
   },
+  {
+    label: 'Delete Your Account',
+    icon: LogoutIcon,
+    nav: 'delete',
+  },
 ];
 
 export default function SettingsScreen() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const authUser = useSelector(selectUser);
   const fcmId = useSelector(selectFcmTokenId);
+  const toast = useShowToastMessage();
   // APIS
   const [handelFcmDelete] = useDeleteFcmTokenMutation();
+  const [handelAccountDelete] = useDeleteAccountMutation();
   // admin@ppfitness.com
   const handelLogout = async () => {
     try {
@@ -76,6 +93,39 @@ export default function SettingsScreen() {
     } catch (error) {
       dispatch(logout());
     }
+  };
+  // handelDeleteAccount
+
+  const handelDeleteAccount = async () => {
+    // Show a confirmation dialog
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to delete your account? This action cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+          onPress: () => {
+            console.log('Account deletion canceled by the user.');
+          },
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+              const res = await handelAccountDelete({
+                email: authUser?.email,
+              }).unwrap();
+              console.log('res', res);
+              toast(res.data?.message);
+            } catch (error: any) {
+              console.error('Error deleting account:', error);
+              toast(error?.data?.error?.message, 'error');
+            }
+          },
+        },
+      ],
+    );
   };
 
   return (
@@ -93,7 +143,7 @@ export default function SettingsScreen() {
         <Pressable
           key={index}
           w="100%"
-          bg="white"
+          bg={item?.nav === 'delete' ? '#ff7c7c39' : 'white'}
           px={4}
           py={4}
           rounded="xl"
@@ -102,11 +152,20 @@ export default function SettingsScreen() {
           justifyContent="space-between"
           alignItems="center"
           onPress={() =>
-            item?.nav !== 'logout' ? navigate(item?.nav) : handelLogout()
+            item?.nav === 'logout'
+              ? handelLogout()
+              : item?.nav === 'delete'
+              ? handelDeleteAccount()
+              : navigate(item?.nav)
           }
           _pressed={{bg: 'gray.100'}}>
           <HStack space={4}>
-            <item.icon />
+            {item?.nav === 'delete' ? (
+              <DeleteIcon size={6} color={'#cd07079b'} />
+            ) : (
+              <item.icon />
+            )}
+
             <VStack alignItems="flex-start" justifyContent="center" gap={2}>
               <Text fontSize={fontSizes.sm} color="#1A1929">
                 {item.label}
