@@ -162,3 +162,13 @@ export const SkeletonsDailyMacro = () => {
     </HStack>
   );
 };
+
+export const SkeletonsNotification = () => {
+  return (
+    <VStack mb={4} bg="#ffffff" px={3} p={4} rounded={'md'}>
+      <VStack>
+        <Skeleton.Text lines={2} />
+      </VStack>
+    </VStack>
+  );
+};
