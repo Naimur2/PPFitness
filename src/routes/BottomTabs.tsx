@@ -27,6 +27,7 @@ import CallScreen from '@screens/User/CallScreen';
 import ProfileTab from '@screens/User/ProfileTab';
 import useNavigate from '@hooks/useNavigate';
 import MainHeader from 'src/components/headers/MainHeader';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
@@ -82,15 +83,62 @@ const tabbarOptions: TBottomTabNavigationOptions = ({route}) => ({
   },
   title: '',
   tabBarHideOnKeyboard: true,
-  tabBarStyle: {
-    height: 70,
-  },
 });
 
 export default function BottomTabs() {
   const navigate = useNavigate();
+  const insets = useSafeAreaInsets();
   return (
-    <Tab.Navigator screenOptions={tabbarOptions as any}>
+    <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          switch (route.name) {
+            case 'MealPlan':
+              return focused ? (
+                <MealFillIcon height={size} width={size} />
+              ) : (
+                <MealIcon height={size} width={size} />
+              );
+            case 'Exercise':
+              return focused ? (
+                <ExerciseFillIcon height={size} width={size} />
+              ) : (
+                <ExerciseIcon height={size} width={size} />
+              );
+            case 'Program':
+              return focused ? (
+                <ChartFillIcon height={size} width={size} />
+              ) : (
+                <ChartIcon height={size} width={size} />
+              );
+            case 'History':
+              return focused ? (
+                <HistoryFillIcon height={size} width={size} />
+              ) : (
+                <HistoryIcon height={size} width={size} />
+              );
+            case 'Call':
+              return focused ? (
+                <PhoneFillIcon height={size} width={size} />
+              ) : (
+                <PhoneIcon height={size} width={size} />
+              );
+            case 'Profile':
+              return focused ? (
+                <ProfileFillIcon height={size} width={size} />
+              ) : (
+                <ProfileIcon height={size} width={size} />
+              );
+            default:
+              return null;
+          }
+        },
+        title: '',
+        tabBarHideOnKeyboard: true,
+          tabBarStyle: {
+            height: 70 + insets.bottom,
+          }
+      })}>
       <Tab.Screen
         name="MealPlan"
         options={{
@@ -109,10 +157,7 @@ export default function BottomTabs() {
         component={ProgramTab}
       />
       <Tab.Screen name="History" component={HistoryTab} />
-      <Tab.Screen
-        name="Call"
-        component={CallScreen}
-      />
+      <Tab.Screen name="Call" component={CallScreen} />
       <Tab.Screen
         name="Profile"
         options={{
