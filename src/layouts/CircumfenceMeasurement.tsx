@@ -1,6 +1,6 @@
-import { AddIcon } from '@assets/icons';
-import { useGetSingleProfileQuery } from '@store/apis/userProfile';
-import { fontSizes } from '@theme/typography';
+import {AddIcon} from '@assets/icons';
+import {useGetSingleProfileQuery} from '@store/apis/userProfile';
+import {fontSizes} from '@theme/typography';
 import {
   Center,
   HStack,
@@ -10,7 +10,7 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import { BarChart, XAxis, YAxis } from 'react-native-svg-charts';
+import {BarChart, XAxis, YAxis} from 'react-native-svg-charts';
 import UpdateMeasurementsModal from 'src/actionSheets/UpdateMeasurements';
 
 const circumferenceKeys: Record<string, string> = {
@@ -27,10 +27,63 @@ const circumferenceKeys: Record<string, string> = {
   rightCalf: 'Right Calf',
 };
 
+const months = [
+  {
+    label: 'January',
+    value: 1,
+  },
+  {
+    label: 'February',
+    value: 2,
+  },
+  {
+    label: 'March',
+    value: 3,
+  },
+  {
+    label: 'April',
+    value: 4,
+  },
+  {
+    label: 'May',
+    value: 5,
+  },
+  {
+    label: 'June',
+    value: 6,
+  },
+  {
+    label: 'July',
+    value: 7,
+  },
+  {
+    label: 'August',
+    value: 8,
+  },
+  {
+    label: 'September',
+    value: 9,
+  },
+  {
+    label: 'October',
+    value: 10,
+  },
+  {
+    label: 'November',
+    value: 11,
+  },
+  {
+    label: 'December',
+    value: 12,
+  },
+];
+
 export default function CircumfenceMeasurement() {
   const {data: profileData} = useGetSingleProfileQuery();
+  const [selectedMonth, setSelectedMonth] = React.useState(months[0]);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isActionSheetOpen, setIsActionSheetOpen] = React.useState(false);
 
   const circumference = profileData?.data?.data?.circumferences || [];
 
@@ -64,9 +117,33 @@ export default function CircumfenceMeasurement() {
 
   return (
     <VStack space={4}>
-      <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
-        Circumference Measurements
-      </NText>
+      <HStack
+        justifyContent={'space-between'}
+        alignItems={'center'}
+        w="100%"
+        space={4}>
+        <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
+          Circumference Measurements
+        </NText>
+        <Pressable
+          borderWidth={1}
+          borderColor={'#8B8B8B'}
+          px={4}
+          py={2}
+          rounded={8}
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          onPress={() => {
+            setIsActionSheetOpen(true);
+          }}>
+          <NText color={'#7D7C81'} fontSize={fontSizes.sm} fontWeight={400}>
+            {selectedMonth.label}
+          </NText>
+          <ChevronDownIcon size={4} color={'#7D7C81'} />
+        </Pressable>
+      </HStack>
+
       <Center bg={'white'} p={4} rounded={8}>
         <HStack justifyContent={'space-between'}>
           <YAxis
@@ -74,7 +151,6 @@ export default function CircumfenceMeasurement() {
             contentInset={{
               top: 15,
               bottom: 25,
-              
             }}
             min={minimumCircumference || 0}
             max={maximumCircumference || 100}
@@ -131,6 +207,26 @@ export default function CircumfenceMeasurement() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
+      <Actionsheet
+        isOpen={isActionSheetOpen}
+        onClose={() => {
+          setIsActionSheetOpen(false);
+        }}>
+        <Actionsheet.Content>
+          <VStack space={4}>
+            {months.map(month => (
+              <Pressable
+                key={month.value}
+                onPress={() => {
+                  setSelectedMonth(month);
+                  setIsActionSheetOpen(false);
+                }}>
+                <NText>{month.label}</NText>
+              </Pressable>
+            ))}
+          </VStack>
+        </Actionsheet.Content>
+      </Actionsheet>
     </VStack>
   );
 }

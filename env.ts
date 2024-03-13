@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://ppfitness-server.onrender.com';
+export const BASE_URL = 'http://192.168.0.105:8000';
 export const API_URL = BASE_URL + '/v1/';
 
 export const AGORA_APP_ID = '12b44196cb9242b3ad51e03ff34da1a5';

@@ -72,10 +72,20 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: props,
       }),
     }),
-    getWorkoutPerWeek: builder.query<GetV1WorkoutPerWeekSuccessfulResponse, void>({
-      query: () => ({
-        url: `workout/per-week`,
-      }),
+    getWorkoutPerWeek: builder.query<
+      GetV1WorkoutPerWeekSuccessfulResponse,
+      number | void
+    >({
+      query: (month) => {
+        if(month) {
+          return {
+            url: `workout/per-week?month=${month}`,
+          };
+        }
+        return {
+          url: `workout/per-week`,
+        };
+      },
       providesTags: ['WorkoutPerWeek'],
     }),
   }),
