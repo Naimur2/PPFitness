@@ -142,7 +142,7 @@ const Decorator = ({x, y, data}) => {
 };
 
 const LineComp = ({line}) => <Path d={line} stroke={'#1AE13A'} fill={'none'} />;
-const contentInset = {top: 20, bottom: 5, left: 15};
+const contentInset = {top: 20, bottom: 0, left: 15};
 
 export default function DailyMacroChart() {
   const [selectedSlice, setSelectedSlice] = useState({
@@ -181,6 +181,8 @@ export default function DailyMacroChart() {
         value: item.quantity,
       };
     }) ?? [];
+
+    console.log('dataToShow', dataToShow);
 
   // Assigning
   const colors =
@@ -288,12 +290,12 @@ export default function DailyMacroChart() {
             data={dataToShow.map((item, index) => item.label)}
             contentInset={{left: 20, right: 10}}
             svg={{fontSize: 8, fill: 'black'}}
-            formatLabel={(value, index) => `W${index + 1}`}
+            formatLabel={(value, index) => dataToShow[index]?.label}
           />
         </VStack>
 
         {/*  bottom list */}
-        <HStack
+        {/* <HStack
           justifyContent={'center'}
           alignItems={'center'}
           flexWrap={'wrap'}
@@ -309,20 +311,7 @@ export default function DailyMacroChart() {
               </NText>
             </HStack>
           ))}
-
-          {/* <HStack space={2} alignItems={'center'}>
-            <Box bg={'#F39479'} w={2} h={2} rounded={'full'} />
-            <NText fontSize={fontSizes.xs} color={'#1A1929'}>
-              Carbs
-            </NText>
-          </HStack>
-          <HStack space={2} alignItems={'center'}>
-            <Box bg={'#2A9BCE'} w={2} h={2} rounded={'full'} />
-            <NText fontSize={fontSizes.xs} color={'#1A1929'}>
-              Fats
-            </NText>
-          </HStack> */}
-        </HStack>
+        </HStack> */}
       </VStack>
 
       {/* day list */}
