@@ -9,8 +9,15 @@ import {
   Actionsheet,
   ScrollView,
 } from 'native-base';
-import {Circle, G, Line, Text} from 'react-native-svg';
-import {BarChart, PieChart, XAxis, YAxis} from 'react-native-svg-charts';
+import {Circle, G, Line, Path, Text} from 'react-native-svg';
+import {
+  AreaChart,
+  BarChart,
+  Grid,
+  PieChart,
+  XAxis,
+  YAxis,
+} from 'react-native-svg-charts';
 import React, {useState} from 'react';
 import {Dimensions} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
@@ -121,6 +128,22 @@ const Labels = ({slices}) => {
   });
 };
 
+const Decorator = ({x, y, data}) => {
+  return data.map((value, index) => (
+    <Circle
+      key={index}
+      cx={x(index)}
+      cy={y(value)}
+      r={3}
+      stroke={'#1AE13A'}
+      fill={'white'}
+    />
+  ));
+};
+
+const LineComp = ({line}) => <Path d={line} stroke={'#1AE13A'} fill={'none'} />;
+const contentInset = {top: 20, bottom: 5, left: 15};
+
 export default function DailyMacroChart() {
   const [selectedSlice, setSelectedSlice] = useState({
     label: '',
@@ -150,6 +173,14 @@ export default function DailyMacroChart() {
   ];
   const keys = dailyMacroData?.map(item => item.name) ?? [];
   const values = dailyMacroData?.map(item => item.quantity) ?? [];
+
+  const dataToShow =
+    dailyMacroData?.map(item => {
+      return {
+        label: item.name,
+        value: item.quantity,
+      };
+    }) ?? [];
 
   // Assigning
   const colors =
@@ -204,7 +235,7 @@ export default function DailyMacroChart() {
             <ArrowDownIcon height={12} width={12} color={'#8B8B8B'} />
           </Pressable>
         </HStack>
-        <View style={{justifyContent: 'center'}} position={'relative'}>
+        {/* <View style={{justifyContent: 'center'}} position={'relative'}>
           <PieChart
             style={{height: 250}}
             outerRadius={'80%'}
@@ -228,7 +259,38 @@ export default function DailyMacroChart() {
               </NText>
             </VStack>
           </PieChart>
-        </View>
+        </View> */}
+
+        <VStack space={4} py={4} bg="white" px={4} rounded={8}>
+          <HStack justifyContent={'space-between'} w="full">
+            <YAxis
+              data={dataToShow.map(item => item.value)}
+              contentInset={contentInset}
+              svg={{
+                fill: 'grey',
+                fontSize: 8,
+              }}
+              numberOfTicks={10}
+              formatLabel={value => value}
+              style={{width: 30}}
+            />
+            <AreaChart
+              style={{height: 210, width: '90%', paddingHorizontal: 2}}
+              data={dataToShow?.map(item => item.value)}
+              svg={{fill: '#1AE13A80'}}
+              contentInset={{top: 20, bottom: 5}}>
+              <Grid svg={{stroke: '#E8E9EB'}} />
+              <LineComp />
+              <Decorator />
+            </AreaChart>
+          </HStack>
+          <XAxis
+            data={dataToShow.map((item, index) => item.label)}
+            contentInset={{left: 20, right: 10}}
+            svg={{fontSize: 8, fill: 'black'}}
+            formatLabel={(value, index) => `W${index + 1}`}
+          />
+        </VStack>
 
         {/*  bottom list */}
         <HStack

@@ -10,8 +10,8 @@ import {
   GetV1ProgramUserSuccessfulResponse,
   PostV1ProgramAddRequestBody,
   PostV1ProgramAddSuccessfulResponse,
-  PutV1ProgramAssignRequestBody,
-  PutV1ProgramAssignSuccessfulResponse,
+  PutV1ProgramAssignIdRequestBody,
+  PutV1ProgramAssignIdSuccessfulResponse,
   PutV1ProgramUpdateIdRequestBody,
   PutV1ProgramUpdateIdSuccessfulResponse,
 } from '@store/schema';
@@ -79,8 +79,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     assignProgram: builder.mutation<
-      PutV1ProgramAssignSuccessfulResponse,
-      PutV1ProgramAssignRequestBody
+      PutV1ProgramAssignIdSuccessfulResponse,
+      PutV1ProgramAssignIdRequestBody
     >({
       query: props => ({
         url: `program/assign`,

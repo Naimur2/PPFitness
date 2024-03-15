@@ -2,6 +2,7 @@ import React from 'react';
 import {
   DeleteIcon,
   HStack,
+  Modal,
   Pressable,
   ScrollView,
   Text,
@@ -76,7 +77,7 @@ export default function SettingsScreen() {
   const fcmId = useSelector(selectFcmTokenId);
   const toast = useShowToastMessage();
   // APIS
-  const [handelFcmDelete] = useDeleteFcmTokenMutation();
+  const [handelFcmDelete, handelFcmDeleteRes] = useDeleteFcmTokenMutation();
   const [handelAccountDelete] = useDeleteAccountMutation();
   // admin@ppfitness.com
   const handelLogout = async () => {
@@ -146,6 +147,7 @@ export default function SettingsScreen() {
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
+          isDisabled={handelFcmDeleteRes.isLoading}
           onPress={() =>
             item?.nav === 'logout'
               ? handelLogout()
@@ -170,6 +172,15 @@ export default function SettingsScreen() {
           <ArrowDownIcon style={{transform: [{rotate: '-90deg'}]}} />
         </Pressable>
       ))}
+      <Modal isOpen={handelFcmDeleteRes.isLoading} onClose={() => {}}>
+        <Modal.Content>
+          <Modal.CloseButton />
+          <Modal.Header>Logging out</Modal.Header>
+          <Modal.Body>
+            <Text>Logging out...</Text>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
     </ScrollView>
   );
 }

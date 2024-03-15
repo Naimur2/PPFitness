@@ -44,7 +44,7 @@ export default function WeightChart() {
         key={index}
         cx={x(index)}
         cy={y(value)}
-        r={4}
+        r={3}
         stroke={'#1AE13A'}
         fill={'white'}
       />

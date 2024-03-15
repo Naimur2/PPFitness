@@ -17,7 +17,6 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import {Line} from 'react-native-svg';
 
 import UpdateMeasurementsModal from 'src/actionSheets/UpdateMeasurements';
 import DropDown from 'src/components/DropDown';
@@ -153,6 +152,8 @@ const Decorators = ({x, y, data}: {x: any; y: any; data: any}) => {
     />
   ));
 };
+
+const Line = ({line}) => <Path d={line} stroke={'#1AE13A'} fill={'none'} />;
 
 const contentInset = {top: 20, bottom: 5, left: 10};
 

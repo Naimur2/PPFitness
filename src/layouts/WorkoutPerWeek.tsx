@@ -13,7 +13,7 @@ import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
 
 import weekOfYear from 'dayjs/plugin/weekOfYear';
 import dayjs from 'dayjs';
-import {Circle, Line} from 'react-native-svg';
+import {Circle, Path} from 'react-native-svg';
 import DropDown from 'src/components/DropDown';
 
 dayjs.extend(weekOfYear);
@@ -81,6 +81,8 @@ const Decorators = ({x, y, data}: {x: any; y: any; data: any}) => {
     />
   ));
 };
+
+const Line = ({line}) => <Path d={line} stroke={'#1AE13A'} fill={'none'} />;
 
 const contentInset = {top: 20, bottom: 5, left: 10};
 

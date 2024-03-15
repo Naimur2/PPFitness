@@ -20,9 +20,9 @@ const baseQueryWithReAuth = async (
 ): Promise<any> => {
   const result = await baseQuery(args, api, extraOptions);
   const status = result?.meta?.response?.status;
-  const unauthorizedStatuses = [401, 403, 400];
+  const unauthorizedStatuses = [401];
   if (status && unauthorizedStatuses.includes(status)) {
-    // api.dispatch(logout());
+    api.dispatch(logout());
   }
   return result;
 };
@@ -37,6 +37,7 @@ export const apiSlice = createApi({
     'AddWorkout',
     'AddProgram',
     'WorkoutPerWeek',
+    'checklist',
   ],
   endpoints: () => ({}),
 });

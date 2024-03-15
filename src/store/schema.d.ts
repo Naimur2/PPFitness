@@ -11,7 +11,7 @@
 
 export interface PostV1AuthLoginSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65f2a7814125defaa281a769","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
+  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65f48bf8d4b9c70693068c16","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
   data: {
     message: string;
     data: {
@@ -447,18 +447,18 @@ export type PostV1ExerciseAddRequestBody = (((object & object) & object) &
   /** Name of the Exercise */
   name: string;
   /** Tags of the Exercise */
-  tags: string[];
+  tags?: string[];
   /** Body Part Name of the Exercise */
   bodyPart?: string;
   /** Equipment of the Exercise */
   equipment?: string;
   /** Instruction of the Exercise */
-  instruction: string;
+  instruction?: string;
   /**
    * Video of the Exercise
    * @format url
    */
-  video: string;
+  video?: string;
 };
 
 /**
@@ -528,11 +528,11 @@ export interface GetV1ExerciseGetSuccessfulResponse {
        * Video of the Exercise
        * @format url
        */
-      video: string;
+      video?: string;
       /** Instruction of the Exercise */
-      instruction: string;
+      instruction?: string;
       /** Tags of the Exercise */
-      tags: string[];
+      tags?: string[];
       /** Body Part Name of the Exercise */
       bodyPart?: string;
       /** Equipment of the Exercise */
@@ -569,11 +569,11 @@ export interface GetV1ExerciseGetIdSuccessfulResponse {
        * Video of the Exercise
        * @format url
        */
-      video: string;
+      video?: string;
       /** Instruction of the Exercise */
-      instruction: string;
+      instruction?: string;
       /** Tags of the Exercise */
-      tags: string[];
+      tags?: string[];
       /** Body Part Name of the Exercise */
       bodyPart?: string;
       /** Equipment of the Exercise */
@@ -610,11 +610,11 @@ export interface PutV1ExerciseUpdateIdSuccessfulResponse {
        * Video of the Exercise
        * @format url
        */
-      video: string;
+      video?: string;
       /** Instruction of the Exercise */
-      instruction: string;
+      instruction?: string;
       /** Tags of the Exercise */
-      tags: string[];
+      tags?: string[];
       /** Body Part Name of the Exercise */
       bodyPart?: string;
       /** Equipment of the Exercise */
@@ -641,18 +641,18 @@ export type PutV1ExerciseUpdateIdRequestBody = (((object & object) & object) &
   /** Name of the Exercise */
   name: string;
   /** Tags of the Exercise */
-  tags: string[];
+  tags?: string[];
   /** Body Part Name of the Exercise */
   bodyPart?: string;
   /** Equipment of the Exercise */
   equipment?: string;
   /** Instruction of the Exercise */
-  instruction: string;
+  instruction?: string;
   /**
    * Video of the Exercise
    * @format url
    */
-  video: string;
+  video?: string;
 };
 
 export type DeleteV1ExerciseDeleteIdParameterId = string;
@@ -751,11 +751,11 @@ export interface GetV1ExerciseHistorySuccessfulResponse {
            * Video of the Exercise
            * @format url
            */
-          video: string;
+          video?: string;
           /** Instruction of the Exercise */
-          instruction: string;
+          instruction?: string;
           /** Tags of the Exercise */
-          tags: string[];
+          tags?: string[];
           /** Body Part Name of the Exercise */
           bodyPart?: string;
           /** Equipment of the Exercise */
@@ -852,11 +852,11 @@ export interface GetV1ExerciseHistoryIdSuccessfulResponse {
            * Video of the Exercise
            * @format url
            */
-          video: string;
+          video?: string;
           /** Instruction of the Exercise */
-          instruction: string;
+          instruction?: string;
           /** Tags of the Exercise */
-          tags: string[];
+          tags?: string[];
           /** Body Part Name of the Exercise */
           bodyPart?: string;
           /** Equipment of the Exercise */
@@ -926,7 +926,7 @@ export type PostV1FileDeleteRequestBody = ((object & object) & object) & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f2a78a4125defaa281a782","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f48bf9d4b9c70693068c2f","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1087,7 +1087,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78a4125defaa281a784","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bf9d4b9c70693068c31","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -1218,7 +1218,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f2a78a4125defaa281a786","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f48bf9d4b9c70693068c33","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1719,7 +1719,7 @@ export interface GetV1ProfileGetSingleSuccessfulResponse {
       weightHistory?: {
         weight: string;
         week: string;
-        month: string;
+        month?: string;
         year?: string;
       }[];
       /** @format any */
@@ -1788,7 +1788,7 @@ export interface GetV1ProfileGetSingleIdSuccessfulResponse {
       weightHistory?: {
         weight: string;
         week: string;
-        month: string;
+        month?: string;
         year?: string;
       }[];
       /** @format any */
@@ -1903,7 +1903,7 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
       weightHistory?: {
         weight: string;
         week: string;
-        month: string;
+        month?: string;
         year?: string;
       }[];
       /** @format any */
@@ -1951,7 +1951,7 @@ export interface GetV1ProfileGetWeightsSuccessfulResponse {
     data: {
       weight: string;
       week: string;
-      month: string;
+      month?: string;
       year?: string;
     }[];
   };
@@ -1964,14 +1964,8 @@ export interface GetV1ProfileGetWeightsErrorResponse {
   };
 }
 
-/**
- * @format double
- * @min 1
- * @exclusiveMin false
- * @max 12
- * @exclusiveMax false
- */
-export type GetV1ProfileGetCircumferencesParameterMonth = number;
+/** @format any */
+export type GetV1ProfileGetCircumferencesParameterMonth = any;
 
 export type GetV1ProfileGetCircumferencesParameterBodyPart = string;
 
@@ -2039,7 +2033,7 @@ export type PostV1ProfileUpdateRequestBody = ((object & object) & object) & {
   weightHistory?: {
     weight: string;
     week: string;
-    month: string;
+    month?: string;
     year?: string;
   }[];
 };
@@ -2135,7 +2129,7 @@ export type GetV1ProgramGetParameterSearch = string;
 
 export interface GetV1ProgramGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a792","name":"abc","assignedUsers":[{"_id":"65f2a78b4125defaa281a793","email":"abc","createdAt":"2024-03-14T07:30:19.249Z","updatedAt":"2024-03-14T07:30:19.249Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-14T07:30:19.249Z","updatedAt":"2024-03-14T07:30:19.249Z","startingDate":"2024-03-14T07:30:19.249Z","endingDate":"2024-03-14T07:30:19.249Z"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bfad4b9c70693068c3f","name":"abc","assignedUsers":[{"_id":"65f48bfad4b9c70693068c40","email":"abc","createdAt":"2024-03-15T17:57:14.073Z","updatedAt":"2024-03-15T17:57:14.073Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-15T17:57:14.073Z","updatedAt":"2024-03-15T17:57:14.073Z","startingDate":"2024-03-15T17:57:14.073Z","endingDate":"2024-03-15T17:57:14.073Z"}]} */
   data: {
     message: string;
     meta: {
@@ -2241,7 +2235,7 @@ export type GetV1ProgramGetIdParameterId = string;
 
 export interface GetV1ProgramGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a78b4125defaa281a795","name":"abc","assignedUsers":[{"_id":"65f2a78b4125defaa281a796","email":"abc","createdAt":"2024-03-14T07:30:19.253Z","updatedAt":"2024-03-14T07:30:19.253Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-14T07:30:19.253Z","updatedAt":"2024-03-14T07:30:19.253Z","startingDate":"2024-03-14T07:30:19.253Z","endingDate":"2024-03-14T07:30:19.253Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f48bfad4b9c70693068c42","name":"abc","assignedUsers":[{"_id":"65f48bfad4b9c70693068c43","email":"abc","createdAt":"2024-03-15T17:57:14.078Z","updatedAt":"2024-03-15T17:57:14.078Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-15T17:57:14.078Z","updatedAt":"2024-03-15T17:57:14.078Z","startingDate":"2024-03-15T17:57:14.078Z","endingDate":"2024-03-15T17:57:14.078Z"}} */
   data: {
     message: string;
     data: {
@@ -2368,11 +2362,11 @@ export interface GetV1ProgramScheduleSuccessfulResponse {
            * Video of the Exercise
            * @format url
            */
-          video: string;
+          video?: string;
           /** Instruction of the Exercise */
-          instruction: string;
+          instruction?: string;
           /** Tags of the Exercise */
-          tags: string[];
+          tags?: string[];
           /** Body Part Name of the Exercise */
           bodyPart?: string;
           /** Equipment of the Exercise */
@@ -2499,11 +2493,11 @@ export interface GetV1ProgramScheduleIdSuccessfulResponse {
            * Video of the Exercise
            * @format url
            */
-          video: string;
+          video?: string;
           /** Instruction of the Exercise */
-          instruction: string;
+          instruction?: string;
           /** Tags of the Exercise */
-          tags: string[];
+          tags?: string[];
           /** Body Part Name of the Exercise */
           bodyPart?: string;
           /** Equipment of the Exercise */
@@ -2587,7 +2581,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-03-14T07:30:19.268Z","assignedTo":"abc","programId":{"_id":"65f2a78b4125defaa281a797","name":"abc","startingDate":"2024-03-14T07:30:19.268Z","endingDate":"2024-03-14T07:30:19.268Z","assignedUsers":[],"createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z"},"isCompleted":false,"workouts":[{"_id":"65f2a78b4125defaa281a798","exerciseId":"65f2a78b4125defaa281a799","programId":"65f2a78b4125defaa281a79a","createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65f2a78b4125defaa281a79b","notes":["notes"],"type":"circuit"}],"createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-03-15T17:57:14.096Z","assignedTo":"abc","programId":{"_id":"65f48bfad4b9c70693068c44","name":"abc","startingDate":"2024-03-15T17:57:14.096Z","endingDate":"2024-03-15T17:57:14.096Z","assignedUsers":[],"createdAt":"2024-03-15T17:57:14.096Z","updatedAt":"2024-03-15T17:57:14.096Z"},"isCompleted":false,"workouts":[{"_id":"65f48bfad4b9c70693068c45","exerciseId":"65f48bfad4b9c70693068c46","programId":"65f48bfad4b9c70693068c47","createdAt":"2024-03-15T17:57:14.096Z","updatedAt":"2024-03-15T17:57:14.096Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65f48bfad4b9c70693068c48","notes":["notes"],"type":"circuit"}],"createdAt":"2024-03-15T17:57:14.096Z","updatedAt":"2024-03-15T17:57:14.096Z"}]} */
   data: {
     message: string;
     data: {
@@ -2875,7 +2869,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a7bc","createdBy":"65f2a78b4125defaa281a7bd","exerciseId":"65f2a78b4125defaa281a7be","programId":"65f2a78b4125defaa281a7bf","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7c0","createdAt":"2024-03-14T07:30:19.738Z","updatedAt":"2024-03-14T07:30:19.738Z"}],"createdAt":"2024-03-14T07:30:19.738Z","updatedAt":"2024-03-14T07:30:19.738Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.738Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bfad4b9c70693068c69","createdBy":"65f48bfad4b9c70693068c6a","exerciseId":"65f48bfad4b9c70693068c6b","programId":"65f48bfad4b9c70693068c6c","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f48bfad4b9c70693068c6d","createdAt":"2024-03-15T17:57:14.609Z","updatedAt":"2024-03-15T17:57:14.609Z"}],"createdAt":"2024-03-15T17:57:14.609Z","updatedAt":"2024-03-15T17:57:14.609Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-15T17:57:14.609Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -3017,7 +3011,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a78b4125defaa281a7c2","createdBy":"65f2a78b4125defaa281a7c3","exerciseId":"65f2a78b4125defaa281a7c4","programId":"65f2a78b4125defaa281a7c5","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7c6","createdAt":"2024-03-14T07:30:19.742Z","updatedAt":"2024-03-14T07:30:19.742Z"}],"createdAt":"2024-03-14T07:30:19.742Z","updatedAt":"2024-03-14T07:30:19.742Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.742Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f48bfad4b9c70693068c6f","createdBy":"65f48bfad4b9c70693068c70","exerciseId":"65f48bfad4b9c70693068c71","programId":"65f48bfad4b9c70693068c72","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f48bfad4b9c70693068c73","createdAt":"2024-03-15T17:57:14.617Z","updatedAt":"2024-03-15T17:57:14.617Z"}],"createdAt":"2024-03-15T17:57:14.617Z","updatedAt":"2024-03-15T17:57:14.617Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-15T17:57:14.617Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -3136,7 +3130,7 @@ export type GetV1WorkoutFilterParameterDay = number | string;
 
 export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65f2a78b4125defaa281a7c9","createdBy":"65f2a78b4125defaa281a7ca","exerciseId":"65f2a78b4125defaa281a7cb","programId":"65f2a78b4125defaa281a7cc","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7cd","createdAt":"2024-03-14T07:30:19.759Z","updatedAt":"2024-03-14T07:30:19.759Z"}],"createdAt":"2024-03-14T07:30:19.759Z","updatedAt":"2024-03-14T07:30:19.759Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.759Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65f48bfad4b9c70693068c76","createdBy":"65f48bfad4b9c70693068c77","exerciseId":"65f48bfad4b9c70693068c78","programId":"65f48bfad4b9c70693068c79","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f48bfad4b9c70693068c7a","createdAt":"2024-03-15T17:57:14.667Z","updatedAt":"2024-03-15T17:57:14.667Z"}],"createdAt":"2024-03-15T17:57:14.667Z","updatedAt":"2024-03-15T17:57:14.667Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-15T17:57:14.667Z"},"isCompleted":false}]} */
   data: {
     message: string;
     data: {
@@ -3835,7 +3829,7 @@ export interface DeleteV1RecipeDeleteIdErrorResponse {
 
 export interface PostV1ChatSendMessagesSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","data":{"_id":"65f2a7844125defaa281a774","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.342Z","updatedAt":"2024-03-14T07:30:12.342Z","sender":"65f2a7844125defaa281a775"}} */
+  /** @example {"message":"Message Sent Successfully","data":{"_id":"65f48bf8d4b9c70693068c21","text":"text","files":["files"],"createdAt":"2024-03-15T17:57:12.986Z","updatedAt":"2024-03-15T17:57:12.986Z","sender":"65f48bf8d4b9c70693068c22"}} */
   data: {
     message: string;
     data: {
@@ -3886,7 +3880,7 @@ export type GetV1ChatChatParameterLimit = string;
 
 export interface GetV1ChatChatSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a7844125defaa281a76c","user":{"_id":"65f2a7844125defaa281a76d","email":"email","profile":{"_id":"65f2a7844125defaa281a76e","fullName":"fullName","avatar":"avatar"}},"lastMessage":{"_id":"65f2a7844125defaa281a76f","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.312Z","updatedAt":"2024-03-14T07:30:12.312Z","sender":"65f2a7844125defaa281a770"},"createdAt":"2024-03-14T07:30:12.312Z","updatedAt":"2024-03-14T07:30:12.312Z"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bf8d4b9c70693068c19","user":{"_id":"65f48bf8d4b9c70693068c1a","email":"email","profile":{"_id":"65f48bf8d4b9c70693068c1b","fullName":"fullName","avatar":"avatar"}},"lastMessage":{"_id":"65f48bf8d4b9c70693068c1c","text":"text","files":["files"],"createdAt":"2024-03-15T17:57:12.965Z","updatedAt":"2024-03-15T17:57:12.965Z","sender":"65f48bf8d4b9c70693068c1d"},"createdAt":"2024-03-15T17:57:12.965Z","updatedAt":"2024-03-15T17:57:12.965Z"}]} */
   data: {
     message: string;
     meta: {
@@ -3992,7 +3986,7 @@ export type GetV1ChatGetIdParameterId = string;
 
 export interface GetV1ChatGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a7844125defaa281a771","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.325Z","updatedAt":"2024-03-14T07:30:12.325Z","sender":"65f2a7844125defaa281a772"}]} */
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bf8d4b9c70693068c1e","text":"text","files":["files"],"createdAt":"2024-03-15T17:57:12.973Z","updatedAt":"2024-03-15T17:57:12.973Z","sender":"65f48bf8d4b9c70693068c1f"}]} */
   data: {
     message: string;
     meta: {
@@ -4090,7 +4084,7 @@ export type PutV1ContactDetailsUpdateRequestBody = (((object & object) &
 
 export interface GetV1ContactDetailsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a7844125defaa281a776","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-03-14T07:30:12.388Z","updatedAt":"2024-03-14T07:30:12.388Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f48bf9d4b9c70693068c23","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-03-15T17:57:13.028Z","updatedAt":"2024-03-15T17:57:13.028Z"}} */
   data: {
     message: string;
     data: {
@@ -4123,7 +4117,7 @@ export interface GetV1ContactDetailsGetErrorResponse {
 
 export interface PostV1NotificationFcmSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Added Successfully","data":{"_id":"65f2a78b4125defaa281a78c","token":"abc","userId":"65f2a78b4125defaa281a78d","createdAt":"2024-03-14T07:30:19.061Z","updatedAt":"2024-03-14T07:30:19.061Z","type":"web"}} */
+  /** @example {"message":"Token Added Successfully","data":{"_id":"65f48bf9d4b9c70693068c39","token":"abc","userId":"65f48bf9d4b9c70693068c3a","createdAt":"2024-03-15T17:57:13.861Z","updatedAt":"2024-03-15T17:57:13.861Z","type":"web"}} */
   data: {
     message: string;
     data: {
@@ -4216,7 +4210,7 @@ export type GetV1NotificationGetParameterSearch = string;
 
 export interface GetV1NotificationGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a78e","title":"title","body":"body","userId":{"_id":"65f2a78b4125defaa281a78f","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-03-14T07:30:19.073Z","updatedAt":"2024-03-14T07:30:19.073Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bf9d4b9c70693068c3b","title":"title","body":"body","userId":{"_id":"65f48bf9d4b9c70693068c3c","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-03-15T17:57:13.875Z","updatedAt":"2024-03-15T17:57:13.875Z"}]} */
   data: {
     message: string;
     meta: {
@@ -4297,7 +4291,7 @@ export enum GetV1CallStartParameterType {
 
 export interface GetV1CallStartSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Generated Successfully","data":{"token":"ed79f6f2-bc63-41ef-921e-00b0fc872e71","channelName":"0127db1a-d3d3-4ba3-bb4d-6f78da4fb9b1","uId":"d72eaa0b-6c70-461e-a2bf-4efe3b6e1bd7"}} */
+  /** @example {"message":"Token Generated Successfully","data":{"token":"153d113e-32bc-4c7a-a65c-2809295465a6","channelName":"a9453c71-5461-45b4-9529-d393407fda28","uId":"294a7ec2-0a47-4dc9-a78a-f24c94ed51ab"}} */
   data: {
     message: string;
     data: {
@@ -4334,6 +4328,407 @@ export type PostV1CallDeclineRequestBody = ((object & object) & object) & {
   channelName: string;
   type?: 'decline' | 'not-responded';
 };
+
+export interface PostV1ChecklistAddSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Checklist Added Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1ChecklistAddErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1ChecklistAddRequestBody = (((object & object) & object) &
+  object) & {
+  day:
+    | 'Monday'
+    | 'Tuesday'
+    | 'Wednesday'
+    | 'Thursday'
+    | 'Friday'
+    | 'Saturday'
+    | 'Sunday';
+  assignedUsers?: string[];
+  title: string;
+  description: string;
+};
+
+/**
+ * Page Number
+ * @minLength 1
+ */
+export type GetV1ChecklistGetParameterPage = string;
+
+/**
+ * Limit
+ * @minLength 1
+ */
+export type GetV1ChecklistGetParameterLimit = string;
+
+export type GetV1ChecklistGetParameterSearch = string;
+
+export enum GetV1ChecklistGetParameterDay {
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+}
+
+export interface GetV1ChecklistGetSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f48bfad4b9c70693068c81","title":"abc","description":"abc","day":"Friday","submissions":[{"user":{"_id":"65f48bfad4b9c70693068c83","email":"abc","createdAt":"2024-03-15T17:57:14.918Z","updatedAt":"2024-03-15T17:57:14.918Z","profile":{"avatar":"abc","fullName":"abc"}},"status":"abc","comment":"abc","profOfCompletion":"abc","date":"2024-03-15T17:57:14.918Z"}],"assignedUsers":[{"_id":"65f48bfad4b9c70693068c82","email":"abc","createdAt":"2024-03-15T17:57:14.918Z","updatedAt":"2024-03-15T17:57:14.918Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-15T17:57:14.918Z","updatedAt":"2024-03-15T17:57:14.918Z"}]} */
+  data: {
+    message: string;
+    meta: {
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      total: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      page: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      limit: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      totalPages: number;
+    };
+    data: {
+      /** @format any */
+      _id: any;
+      title: string;
+      description: string;
+      day:
+        | 'Monday'
+        | 'Tuesday'
+        | 'Wednesday'
+        | 'Thursday'
+        | 'Friday'
+        | 'Saturday'
+        | 'Sunday';
+      submissions?: {
+        user: {
+          /** @format any */
+          _id: any;
+          email: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          createdAt: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          updatedAt: string;
+          profile?: {
+            avatar: string;
+            fullName: string;
+          };
+        };
+        status: string;
+        comment: string;
+        profOfCompletion: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date: string;
+      }[];
+      assignedUsers?: {
+        /** @format any */
+        _id: any;
+        email: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        createdAt: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        updatedAt: string;
+        profile?: {
+          avatar: string;
+          fullName: string;
+        };
+      }[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt?: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt?: string;
+    }[];
+  };
+}
+
+export interface GetV1ChecklistGetErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type GetV1ChecklistGetIdParameterId = string;
+
+export interface GetV1ChecklistGetIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f48bfad4b9c70693068c85","title":"abc","description":"abc","day":"Friday","submissions":[{"user":{"_id":"65f48bfad4b9c70693068c87","email":"abc","createdAt":"2024-03-15T17:57:14.927Z","updatedAt":"2024-03-15T17:57:14.927Z","profile":{"avatar":"abc","fullName":"abc"}},"status":"abc","comment":"abc","profOfCompletion":"abc","date":"2024-03-15T17:57:14.927Z"}],"assignedUsers":[{"_id":"65f48bfad4b9c70693068c86","email":"abc","createdAt":"2024-03-15T17:57:14.927Z","updatedAt":"2024-03-15T17:57:14.927Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-15T17:57:14.927Z","updatedAt":"2024-03-15T17:57:14.927Z"}} */
+  data: {
+    message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      title: string;
+      description: string;
+      day:
+        | 'Monday'
+        | 'Tuesday'
+        | 'Wednesday'
+        | 'Thursday'
+        | 'Friday'
+        | 'Saturday'
+        | 'Sunday';
+      submissions?: {
+        user: {
+          /** @format any */
+          _id: any;
+          email: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          createdAt: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          updatedAt: string;
+          profile?: {
+            avatar: string;
+            fullName: string;
+          };
+        };
+        status: string;
+        comment: string;
+        profOfCompletion: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date: string;
+      }[];
+      assignedUsers?: {
+        /** @format any */
+        _id: any;
+        email: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        createdAt: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        updatedAt: string;
+        profile?: {
+          avatar: string;
+          fullName: string;
+        };
+      }[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt?: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt?: string;
+    };
+  };
+}
+
+export interface GetV1ChecklistGetIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export enum GetV1ChecklistUserParameterDay {
+  Monday = 'Monday',
+  Tuesday = 'Tuesday',
+  Wednesday = 'Wednesday',
+  Thursday = 'Thursday',
+  Friday = 'Friday',
+  Saturday = 'Saturday',
+  Sunday = 'Sunday',
+}
+
+export interface GetV1ChecklistUserSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65f48bfad4b9c70693068c88","title":"abc","description":"abc","day":"Friday","submissions":[{"user":{"_id":"65f48bfad4b9c70693068c8a","email":"abc","createdAt":"2024-03-15T17:57:14.934Z","updatedAt":"2024-03-15T17:57:14.934Z","profile":{"avatar":"abc","fullName":"abc"}},"status":"abc","comment":"abc","profOfCompletion":"abc","date":"2024-03-15T17:57:14.934Z"}],"assignedUsers":[{"_id":"65f48bfad4b9c70693068c89","email":"abc","createdAt":"2024-03-15T17:57:14.934Z","updatedAt":"2024-03-15T17:57:14.934Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-15T17:57:14.934Z","updatedAt":"2024-03-15T17:57:14.934Z"}]} */
+  data: {
+    message: string;
+    data: {
+      /** @format any */
+      _id: any;
+      title: string;
+      description: string;
+      day:
+        | 'Monday'
+        | 'Tuesday'
+        | 'Wednesday'
+        | 'Thursday'
+        | 'Friday'
+        | 'Saturday'
+        | 'Sunday';
+      submissions?: {
+        user: {
+          /** @format any */
+          _id: any;
+          email: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          createdAt: string;
+          /** YYYY-MM-DDTHH:mm:ss.sssZ */
+          updatedAt: string;
+          profile?: {
+            avatar: string;
+            fullName: string;
+          };
+        };
+        status: string;
+        comment: string;
+        profOfCompletion: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        date: string;
+      }[];
+      assignedUsers?: {
+        /** @format any */
+        _id: any;
+        email: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        createdAt: string;
+        /** YYYY-MM-DDTHH:mm:ss.sssZ */
+        updatedAt: string;
+        profile?: {
+          avatar: string;
+          fullName: string;
+        };
+      }[];
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      createdAt?: string;
+      /**
+       * YYYY-MM-DDTHH:mm:ss.sssZ
+       * @format date-time
+       */
+      updatedAt?: string;
+    }[];
+  };
+}
+
+export interface GetV1ChecklistUserErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export interface PutV1ChecklistSubmitSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Checklist Updated Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PutV1ChecklistSubmitErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PutV1ChecklistSubmitRequestBody = (((object & object) & object) &
+  object) & {
+  id?: string;
+  day:
+    | 'Monday'
+    | 'Tuesday'
+    | 'Wednesday'
+    | 'Thursday'
+    | 'Friday'
+    | 'Saturday'
+    | 'Sunday';
+  comment?: string;
+  profOfCompletion: string;
+  /**
+   * YYYY-MM-DDTHH:mm:ss.sssZ
+   * @format date-time
+   * @pattern ^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?)?Z?$
+   */
+  date: string;
+};
+
+export type PutV1ChecklistUpdateIdParameterId = string;
+
+export interface PutV1ChecklistUpdateIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Checklist Updated Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PutV1ChecklistUpdateIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PutV1ChecklistUpdateIdRequestBody = (((object & object) & object) &
+  object) & {
+  assignedUsers?: string[];
+  day:
+    | 'Monday'
+    | 'Tuesday'
+    | 'Wednesday'
+    | 'Thursday'
+    | 'Friday'
+    | 'Saturday'
+    | 'Sunday';
+  title: string;
+  description: string;
+};
+
+export type DeleteV1ChecklistDeleteIdParameterId = string;
+
+export interface DeleteV1ChecklistDeleteIdSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Checklist Removed Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface DeleteV1ChecklistDeleteIdErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, 'body' | 'bodyUsed'>;
@@ -6532,6 +6927,195 @@ export class Api<
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name PostV1ChecklistAdd
+     * @summary Add Checklist endpoint
+     * @request POST:/v1/checklist/add
+     * @secure
+     */
+    postV1ChecklistAdd: (
+      data: PostV1ChecklistAddRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1ChecklistAddSuccessfulResponse,
+        PostV1ChecklistAddErrorResponse
+      >({
+        path: `/v1/checklist/add`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name GetV1ChecklistGet
+     * @summary Get all Checklist endpoint
+     * @request GET:/v1/checklist/get
+     * @secure
+     */
+    getV1ChecklistGet: (
+      query?: {
+        /** Page Number */
+        page?: GetV1ChecklistGetParameterPage;
+        /** Limit */
+        limit?: GetV1ChecklistGetParameterLimit;
+        /** GET /v1/checklist/get parameter */
+        search?: GetV1ChecklistGetParameterSearch;
+        /** GET /v1/checklist/get parameter */
+        day?: GetV1ChecklistGetParameterDay;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ChecklistGetSuccessfulResponse,
+        GetV1ChecklistGetErrorResponse
+      >({
+        path: `/v1/checklist/get`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name GetV1ChecklistGetId
+     * @summary Get Single Checklist endpoint
+     * @request GET:/v1/checklist/get/{id}
+     * @secure
+     */
+    getV1ChecklistGetId: (
+      id: GetV1ChecklistGetIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ChecklistGetIdSuccessfulResponse,
+        GetV1ChecklistGetIdErrorResponse
+      >({
+        path: `/v1/checklist/get/${id}`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name GetV1ChecklistUser
+     * @summary Get Single Checklist endpoint
+     * @request GET:/v1/checklist/user
+     * @secure
+     */
+    getV1ChecklistUser: (
+      query: {
+        /** GET /v1/checklist/user parameter */
+        day: GetV1ChecklistUserParameterDay;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ChecklistUserSuccessfulResponse,
+        GetV1ChecklistUserErrorResponse
+      >({
+        path: `/v1/checklist/user`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name PutV1ChecklistSubmit
+     * @summary Update Checklist endpoint
+     * @request PUT:/v1/checklist/submit
+     * @secure
+     */
+    putV1ChecklistSubmit: (
+      data: PutV1ChecklistSubmitRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PutV1ChecklistSubmitSuccessfulResponse,
+        PutV1ChecklistSubmitErrorResponse
+      >({
+        path: `/v1/checklist/submit`,
+        method: 'PUT',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name PutV1ChecklistUpdateId
+     * @summary Update Checklist endpoint
+     * @request PUT:/v1/checklist/update/{id}
+     * @secure
+     */
+    putV1ChecklistUpdateId: (
+      data: PutV1ChecklistUpdateIdRequestBody,
+      id?: PutV1ChecklistUpdateIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PutV1ChecklistUpdateIdSuccessfulResponse,
+        PutV1ChecklistUpdateIdErrorResponse
+      >({
+        path: `/v1/checklist/update/${id}`,
+        method: 'PUT',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Checklist
+     * @name DeleteV1ChecklistDeleteId
+     * @summary Remove Checklist endpoint
+     * @request DELETE:/v1/checklist/delete/{id}
+     * @secure
+     */
+    deleteV1ChecklistDeleteId: (
+      id: DeleteV1ChecklistDeleteIdParameterId,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        DeleteV1ChecklistDeleteIdSuccessfulResponse,
+        DeleteV1ChecklistDeleteIdErrorResponse
+      >({
+        path: `/v1/checklist/delete/${id}`,
+        method: 'DELETE',
+        secure: true,
         format: 'json',
         ...params,
       }),
