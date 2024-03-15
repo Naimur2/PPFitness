@@ -1,8 +1,15 @@
 import {AddIcon} from '@assets/icons';
-import {useGetSingleProfileQuery} from '@store/apis/userProfile';
-import {fontSizes} from '@theme/typography';
 import {
+  useGetSingleProfileQuery,
+  useGetUserCircumferencesQuery,
+} from '@store/apis/userProfile';
+import {selectAccessToken} from '@store/features/authSlice';
+import {fontSizes} from '@theme/typography';
+import dayjs from 'dayjs';
+import {
+  Actionsheet,
   Center,
+  ChevronDownIcon,
   HStack,
   Text as NText,
   Pressable,
@@ -10,8 +17,13 @@ import {
   VStack,
 } from 'native-base';
 import React from 'react';
-import {BarChart, XAxis, YAxis} from 'react-native-svg-charts';
+import {Line} from 'react-native-svg';
+
 import UpdateMeasurementsModal from 'src/actionSheets/UpdateMeasurements';
+import DropDown from 'src/components/DropDown';
+
+import {AreaChart, Grid, XAxis, YAxis} from 'react-native-svg-charts';
+import {Circle, Path} from 'react-native-svg';
 
 const circumferenceKeys: Record<string, string> = {
   right: 'Right',
@@ -78,155 +90,197 @@ const months = [
   },
 ];
 
+const bodyParts = [
+  {
+    label: 'Right',
+    value: 'right',
+  },
+  {
+    label: 'Left',
+    value: 'left',
+  },
+  {
+    label: 'Neck',
+    value: 'neck',
+  },
+  {
+    label: 'Bicep',
+    value: 'bicep',
+  },
+  {
+    label: 'Chest',
+    value: 'chest',
+  },
+  {
+    label: 'Waist',
+    value: 'waist',
+  },
+  {
+    label: 'Hip',
+    value: 'hip',
+  },
+  {
+    label: 'Left Quad',
+    value: 'leftQuad',
+  },
+  {
+    label: 'Right Quad',
+    value: 'rightQuad',
+  },
+  {
+    label: 'Left Calf',
+    value: 'leftCalf',
+  },
+  {
+    label: 'Right Calf',
+    value: 'rightCalf',
+  },
+];
+
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+
+dayjs.extend(weekOfYear);
+
+const Decorators = ({x, y, data}: {x: any; y: any; data: any}) => {
+  return data.map((value, index) => (
+    <Circle
+      key={index}
+      cx={x(index)}
+      cy={y(value)}
+      r={4}
+      stroke={'#1AE13A'}
+      fill={'white'}
+    />
+  ));
+};
+
+const contentInset = {top: 20, bottom: 5, left: 10};
+
 export default function CircumfenceMeasurement() {
-  const {data: profileData} = useGetSingleProfileQuery();
   const [selectedMonth, setSelectedMonth] = React.useState(months[0]);
+  const [selectedBodyPart, setSelectedBodyPart] = React.useState(bodyParts[0]);
+
+  const {data: profileData} = useGetUserCircumferencesQuery({
+    month: selectedMonth.value,
+    bodyPart: selectedBodyPart.value,
+  });
+
+  console.log('profileData', profileData);
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isActionSheetOpen, setIsActionSheetOpen] = React.useState(false);
 
-  const circumference = profileData?.data?.data?.circumferences || [];
+  const circumference = profileData?.data?.data?.slice().sort((a, b) => {
+    return Number(a.week) - Number(b.week);
+  });
 
-  const dataToDisplay = React.useMemo(() => {
-    return Object.keys(circumferenceKeys).map(key => {
-      return {
-        name: circumferenceKeys[key],
-        value: parseInt(
-          circumference?.find(item => item.key === key)?.value || 0,
-        ),
-      };
-    });
-  }, [circumference]);
+  const dataToShow = React.useMemo(() => {
+    const startOfWeek = dayjs()
+      .set('month', selectedMonth.value - 1)
+      .startOf('month')
+      .week();
+    const endOfWeek = dayjs()
+      .set('month', selectedMonth.value - 1)
+      .endOf('month')
+      .week();
 
-  const dataForChart = dataToDisplay.map(item => item.value);
-  const labelsForChart = dataToDisplay.map(item => item.name);
+    const weeks: {label: string; value: string}[] = [];
+    for (let week = startOfWeek; week < endOfWeek; week++) {
+      const find = circumference?.find(item => item.week === week.toString());
+      if (find) {
+        weeks.push({label: 'W' + find.week, value: find.week});
+      } else {
+        weeks.push({label: 'W' + week.toString(), value: '0'});
+      }
+    }
+    return weeks;
+  }, [selectedMonth.value]);
 
-  const maximumCircumference = React.useMemo(() => {
-    return dataForChart?.reduce((acc, curr) => {
-      return acc > curr ? acc : curr;
-    }, 0);
-  }, [dataForChart]);
-
-  const minimumCircumference = React.useMemo(() => {
-    return dataForChart?.reduce((acc, curr) => {
-      return acc < curr ? acc : curr;
-    }, 0);
-  }, [dataForChart]);
-
-  console.log(dataForChart);
+  console.log('dataToShow', dataToShow);
 
   return (
     <VStack space={4}>
+      <NText color={'#1A1929'} fontSize={fontSizes.md} fontWeight={700}>
+        Circumference Measurements
+      </NText>
+
       <HStack
         justifyContent={'space-between'}
         alignItems={'center'}
         w="100%"
         space={4}>
-        <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
-          Circumference Measurements
-        </NText>
-        <Pressable
-          borderWidth={1}
-          borderColor={'#8B8B8B'}
-          px={4}
-          py={2}
-          rounded={8}
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          onPress={() => {
-            setIsActionSheetOpen(true);
-          }}>
-          <NText color={'#7D7C81'} fontSize={fontSizes.sm} fontWeight={400}>
-            {selectedMonth.label}
-          </NText>
-          <ChevronDownIcon size={4} color={'#7D7C81'} />
-        </Pressable>
+        <DropDown
+          label="Select Month"
+          data={months}
+          value={selectedMonth}
+          onChange={value => {
+            setSelectedMonth(value);
+          }}
+        />
+        <DropDown
+          label="Select Body Part"
+          data={bodyParts}
+          value={selectedBodyPart}
+          onChange={value => {
+            setSelectedBodyPart(value);
+          }}
+        />
       </HStack>
 
-      <Center bg={'white'} p={4} rounded={8}>
-        <HStack justifyContent={'space-between'}>
+      <VStack space={4} py={4} bg="white" px={4} rounded={8}>
+        <HStack justifyContent={'space-between'} w="full">
           <YAxis
-            data={dataForChart}
-            contentInset={{
-              top: 15,
-              bottom: 25,
-            }}
-            min={minimumCircumference || 0}
-            max={maximumCircumference || 100}
+            data={dataToShow.map(item => item.value)}
+            contentInset={contentInset}
             svg={{
               fill: 'grey',
               fontSize: 8,
             }}
-            style={{width: 35}}
-            numberOfTicks={dataForChart.length}
-            formatLabel={value => `${value}`}
+            numberOfTicks={10}
+            formatLabel={value => value}
+            style={{width: 30}}
           />
-          <VStack w="90%">
-            <BarChart
-              data={dataForChart}
-              gridMin={0}
-              svg={{fill: '#FFC857'}}
-              style={{height: 200, width: 'auto'}}
-              spacingInner={0.5}
-              xAccessor={({item}) => item}
-              yAccessor={({item}) => item}
-              contentInset={{
-                top: 10,
-                bottom: 10,
-              }}
-            />
-            <XAxis
-              data={labelsForChart}
-              contentInset={{left: 5, right: 20}}
-              svg={{fontSize: 5, fill: 'black'}}
-              formatLabel={(value, index) => labelsForChart[index]}
-            />
-          </VStack>
+          <AreaChart
+            style={{height: 210, width: '90%', paddingHorizontal: 2}}
+            data={dataToShow?.map(item => item.value)}
+            svg={{fill: '#1AE13A80'}}
+            contentInset={{top: 20, bottom: 5}}>
+            <Grid svg={{stroke: '#E8E9EB'}} />
+            <Line />
+            <Decorators />
+          </AreaChart>
         </HStack>
-        <Pressable
-          mt={6}
-          w="56%"
-          display="flex"
-          flexDirection="row"
-          justifyContent="center"
-          alignItems="center"
-          gap={2}
-          borderRadius={8}
-          borderWidth={2}
-          borderColor="primary.100"
-          py={2}
-          onPress={() => setIsModalOpen(true)}>
-          <AddIcon />
-          <Text color="primary.100" fontSize="xs" fontWeight={700}>
-            Update Measurements
-          </Text>
-        </Pressable>
-      </Center>
+        <XAxis
+          data={dataToShow.map((item, index) => item.label)}
+          contentInset={{left: 20, right: 10}}
+          svg={{fontSize: 8, fill: 'black'}}
+          formatLabel={(value, index) => `W${index + 1}`}
+        />
+      </VStack>
+
+      <Pressable
+        mx="auto"
+        mt={6}
+        w="56%"
+        display="flex"
+        flexDirection="row"
+        justifyContent="center"
+        alignItems="center"
+        gap={2}
+        borderRadius={8}
+        borderWidth={2}
+        borderColor="primary.100"
+        py={2}
+        onPress={() => setIsModalOpen(true)}>
+        <AddIcon />
+        <Text color="primary.100" fontSize="xs" fontWeight={700}>
+          Update Measurements
+        </Text>
+      </Pressable>
+
       <UpdateMeasurementsModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      <Actionsheet
-        isOpen={isActionSheetOpen}
-        onClose={() => {
-          setIsActionSheetOpen(false);
-        }}>
-        <Actionsheet.Content>
-          <VStack space={4}>
-            {months.map(month => (
-              <Pressable
-                key={month.value}
-                onPress={() => {
-                  setSelectedMonth(month);
-                  setIsActionSheetOpen(false);
-                }}>
-                <NText>{month.label}</NText>
-              </Pressable>
-            ))}
-          </VStack>
-        </Actionsheet.Content>
-      </Actionsheet>
     </VStack>
   );
 }

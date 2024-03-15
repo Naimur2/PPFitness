@@ -3,8 +3,8 @@ import {Box, Button, HStack} from 'native-base';
 import {IButtonComponentType} from 'native-base/lib/typescript/components/primitives/Button/types';
 import {IHStackProps} from 'native-base/lib/typescript/components/primitives/Stack/HStack';
 import {IViewProps} from 'native-base/lib/typescript/components/basic/View/types';
-import { scale } from 'react-native-size-matters';
-import { fontSizes } from '@theme/typography';
+import {scale} from 'react-native-size-matters';
+import {fontSizes} from '@theme/typography';
 
 interface TabProps {
   title: string;
@@ -17,7 +17,7 @@ interface Props {
   innerContainerStyle?: IHStackProps;
   tabs: TabProps[];
   onPress: (key: string) => void;
-  activeTab: string;
+  activeTab: string | string[];
 }
 
 export default function Tab({
@@ -31,8 +31,19 @@ export default function Tab({
   const [containerWidth, setContainerWidth] = React.useState(0);
 
   const buttonWidth = React.useMemo(() => {
-    return containerWidth ? containerWidth / tabs.length : 0;
+    return containerWidth
+      ? (containerWidth - tabs.length * 2.1) / tabs.length
+      : 0;
   }, [containerWidth, tabs.length]);
+
+  const isActiveTabArray = Array.isArray(activeTab);
+
+  const isActive = (key: string) => {
+    if (isActiveTabArray) {
+      return activeTab.includes(key);
+    }
+    return activeTab === key;
+  };
 
   return (
     <Box
@@ -47,18 +58,20 @@ export default function Tab({
           setContainerWidth(event.nativeEvent.layout.width);
         }}
         overflow="hidden"
-        gap={1}
+        style={{
+          gap: 1,
+        }}
         {..._innerContainerStyle}>
         {tabs.map(tab => (
           <Button
             key={tab.key}
             onPress={() => onPress?.(tab.key)}
             width={buttonWidth + 'px'}
-            bg={activeTab === tab.key ? 'secondary.100' : 'white'}
+            bg={isActive(tab.key) ? 'secondary.100' : 'white'}
             rounded="lg"
             _text={{
               color: 'black',
-              fontWeight: activeTab === tab.key ? 'bold' : 'normal',
+              fontWeight: isActive(tab.key) ? 'bold' : 'normal',
               fontSize: fontSizes['2xs'],
             }}
             _pressed={{

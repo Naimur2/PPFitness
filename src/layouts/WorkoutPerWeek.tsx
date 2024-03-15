@@ -7,9 +7,16 @@ import {
   Pressable,
   VStack,
 } from 'native-base';
-import {BarChart, XAxis, YAxis} from 'react-native-svg-charts';
+import {AreaChart, BarChart, Grid, XAxis, YAxis} from 'react-native-svg-charts';
 import React from 'react';
 import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
+
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import dayjs from 'dayjs';
+import {Circle, Line} from 'react-native-svg';
+import DropDown from 'src/components/DropDown';
+
+dayjs.extend(weekOfYear);
 
 const months = [
   {
@@ -62,42 +69,61 @@ const months = [
   },
 ];
 
+const Decorators = ({x, y, data}: {x: any; y: any; data: any}) => {
+  return data.map((value, index) => (
+    <Circle
+      key={index}
+      cx={x(index)}
+      cy={y(value)}
+      r={4}
+      stroke={'#1AE13A'}
+      fill={'white'}
+    />
+  ));
+};
+
+const contentInset = {top: 20, bottom: 5, left: 10};
+
 export default function WorkoutPerWeek() {
   const [selectedMonth, setSelectedMonth] = React.useState(months[0]);
   const [isActionSheetOpen, setIsActionSheetOpen] = React.useState(false);
   const {data: workoutData} = useGetWorkoutPerWeekQuery(selectedMonth.value);
 
-  const workoutsInEvery4Weeks = React.useMemo(() => {
-    const data = workoutData?.data?.data?.workoutsByWeek || [];
+  const dataToShow = React.useMemo(() => {
+    const startOfMonth = dayjs()
+      .set('month', selectedMonth.value - 1)
+      .startOf('month')
+      .week();
+    const endOfMonth = dayjs()
+      .set('month', selectedMonth.value - 1)
+      .endOf('month')
+      .week();
 
-    const sums = [];
-    for (let i = 0; i < 13; i++) {
-      const fourWeeks = data?.slice(i * 4, (i + 1) * 4);
-      const sum = fourWeeks?.reduce((acc, curr) => {
-        return acc + curr.totalWorkouts;
-      }, 0);
+    console.log('startOfMonth', startOfMonth);
+    console.log('endOfMonth', endOfMonth);
 
-      sums.push({
-        week: i + 1,
-        sum,
-      });
+    const weekData = [];
+
+    for (let week = startOfMonth; week < endOfMonth; week++) {
+      const findWeek = workoutData?.data?.data?.workoutsByWeek?.find(
+        item => item.week.toString() === week.toString(),
+      );
+
+      if (findWeek) {
+        weekData.push({
+          label: `W${week}`,
+          value: findWeek.totalWorkouts,
+        });
+      } else {
+        weekData.push({
+          label: `W${week}`,
+          value: 0,
+        });
+      }
     }
-    return sums;
-  }, [workoutData?.data?.data?.workoutsByWeek]);
 
-  const maximumWorkout = React.useMemo(() => {
-    return workoutsInEvery4Weeks?.reduce((acc, curr) => {
-      return acc.sum > curr.sum ? acc : curr;
-    }, {});
-  }, [workoutsInEvery4Weeks]);
-
-  const minimumWorkout = React.useMemo(() => {
-    return workoutsInEvery4Weeks?.reduce((acc, curr) => {
-      return acc.sum < curr.sum ? acc : curr;
-    }, {} as any);
-  }, [workoutsInEvery4Weeks]);
-
-  const data = workoutsInEvery4Weeks?.map(item => item.sum) || [];
+    return weekData;
+  }, [selectedMonth.value, workoutData?.data?.data?.workoutsByWeek]);
 
   return (
     <VStack space={4}>
@@ -109,64 +135,54 @@ export default function WorkoutPerWeek() {
         <NText color={'#1A1929'} fontSize={fontSizes.lg} fontWeight={700}>
           Workout per week
         </NText>
-        <Pressable
+        <DropDown
+          label={'Month'}
+          value={selectedMonth}
+          onChange={value => setSelectedMonth(value)}
+          data={months}
           borderWidth={1}
           borderColor={'#8B8B8B'}
-          px={4}
-          py={2}
-          rounded={8}
+          px={3}
+          py={1}
+          rounded={'full'}
+          flexDir={'row'}
           display={'flex'}
           alignItems={'center'}
-          justifyContent={'center'}
-          onPress={() => {
-            setIsActionSheetOpen(true);
-          }}>
-          <NText color={'#7D7C81'} fontSize={fontSizes.sm} fontWeight={400}>
-            {selectedMonth.label}
-          </NText>
-          <ChevronDownIcon size={4} color={'#7D7C81'} />
-        </Pressable>
+          justifyContent={'space-between'}
+          w={'auto'}
+        />
       </HStack>
 
-      <HStack justifyContent={'space-between'}>
-        <YAxis
-          data={data}
-          contentInset={{
-            top: 15,
-            bottom: 25,
-          }}
-          min={minimumWorkout?.sum || 0}
-          max={maximumWorkout?.sum || 100}
-          svg={{
-            fill: 'grey',
-            fontSize: 8,
-          }}
-          style={{width: 35}}
-          numberOfTicks={data.length}
-          formatLabel={value => `${value}`}
-        />
-        <VStack w="90%">
-          <BarChart
-            data={data}
-            gridMin={0}
-            svg={{fill: '#F39479'}}
-            style={{height: 200, width: 'auto'}}
-            spacingInner={0.5}
-            xAccessor={({item}) => item}
-            yAccessor={({item}) => item}
-            contentInset={{
-              top: 10,
-              bottom: 10,
+      <VStack space={4} py={4} bg="white" px={4} rounded={8}>
+        <HStack justifyContent={'space-between'} w="full">
+          <YAxis
+            data={dataToShow.map(item => item.value)}
+            contentInset={contentInset}
+            svg={{
+              fill: 'grey',
+              fontSize: 8,
             }}
+            numberOfTicks={10}
+            formatLabel={value => value}
+            style={{width: 30}}
           />
-          <XAxis
-            data={data}
-            contentInset={{left: 10, right: 10}}
-            svg={{fontSize: 8, fill: 'black'}}
-            formatLabel={(value, index) => `${(index + 1) * 4}w`}
-          />
-        </VStack>
-      </HStack>
+          <AreaChart
+            style={{height: 210, width: '90%', paddingHorizontal: 2}}
+            data={dataToShow?.map(item => item.value)}
+            svg={{fill: '#1AE13A80'}}
+            contentInset={{top: 20, bottom: 5}}>
+            <Grid svg={{stroke: '#E8E9EB'}} />
+            <Line />
+            <Decorators />
+          </AreaChart>
+        </HStack>
+        <XAxis
+          data={dataToShow?.map((item, index) => item.label)}
+          contentInset={{left: 20, right: 10}}
+          svg={{fontSize: 8, fill: 'black'}}
+          formatLabel={(value, index) => `W${index + 1}`}
+        />
+      </VStack>
 
       <Actionsheet
         isOpen={isActionSheetOpen}

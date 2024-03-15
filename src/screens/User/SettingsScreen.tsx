@@ -38,20 +38,15 @@ const tabItems = [
     nav: 'ChangePassword',
   },
   {
-    label: 'Delete Account',
-    icon: LockV2,
-    nav: 'DeleteAccount',
-  },
-  {
     label: 'Notification Preference',
     icon: Bell,
     nav: 'NotificationPreference',
   },
-  {
-    label: 'Account Management',
-    icon: Settings,
-    nav: 'SettingsScreen',
-  },
+  // {
+  //   label: 'Account Management',
+  //   icon: Settings,
+  //   nav: 'SettingsScreen',
+  // },
   {
     label: 'Privacy & Security',
     icon: Sheild,

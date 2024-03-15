@@ -11,7 +11,7 @@
 
 export interface PostV1AuthLoginSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65c359f82307462a805fac7b","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
+  /** @example {"message":"Login Successful","data":{"accessToken":"access token","refreshToken":"refresh token","user":{"_id":"65f2a7814125defaa281a769","email":"example@xyz.abc","emailVerified":false,"role":"user","method":"email"}}} */
   data: {
     message: string;
     data: {
@@ -180,6 +180,27 @@ export type PostV1AuthVerifyOtpRequestBody = ((object & object) & object) & {
   email: string;
   otp: string;
   otpToken: string;
+};
+
+export interface PostV1AuthDeleteAccountSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"User Deleted Successfully"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1AuthDeleteAccountErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1AuthDeleteAccountRequestBody = ((object & object) &
+  object) & {
+  /** @format email */
+  email: string;
 };
 
 /**
@@ -905,7 +926,7 @@ export type PostV1FileDeleteRequestBody = ((object & object) & object) & {
 
 export interface PostV1IngredientsAddSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65c359fe2307462a805fac89","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f2a78a4125defaa281a782","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1066,7 +1087,7 @@ export type GetV1IngredientsGetParameterCategory = string;
 
 export interface GetV1IngredientsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359fe2307462a805fac8b","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78a4125defaa281a784","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}]} */
   data: {
     message: string;
     meta: {
@@ -1197,7 +1218,7 @@ export type GetV1IngredientsGetIdParameterId = string;
 
 export interface GetV1IngredientsGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65c359fe2307462a805fac8d","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
+  /** @example {"message":"Ingredient Added Successfully","data":{"_id":"65f2a78a4125defaa281a786","name":"abc","category":"abc","unit":{"quantity":123,"unit":"cup"},"micronutrient":[{"quantity":123,"unit":"cup","name":"fat"}],"createdAt":"2021-09-25T06:30:00.000Z","updatedAt":"2021-09-25T06:30:00.000Z"}} */
   data: {
     message: string;
     data: {
@@ -1693,6 +1714,7 @@ export interface GetV1ProfileGetSingleSuccessfulResponse {
           | 'leftCalf'
           | 'rightCalf';
         value: string;
+        week?: string;
       }[];
       weightHistory?: {
         weight: string;
@@ -1761,6 +1783,7 @@ export interface GetV1ProfileGetSingleIdSuccessfulResponse {
           | 'leftCalf'
           | 'rightCalf';
         value: string;
+        week?: string;
       }[];
       weightHistory?: {
         weight: string;
@@ -1817,6 +1840,40 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
   status: 'success';
   data: {
     message: string;
+    meta: {
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      total: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      page: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      limit: number;
+      /**
+       * @format double
+       * @min 5e-324
+       * @exclusiveMin false
+       * @max 1.7976931348623157e+308
+       * @exclusiveMax false
+       */
+      totalPages: number;
+    };
     data: {
       fullName?: string;
       /** @format url */
@@ -1841,6 +1898,7 @@ export interface GetV1ProfileGetAllSuccessfulResponse {
           | 'leftCalf'
           | 'rightCalf';
         value: string;
+        week?: string;
       }[];
       weightHistory?: {
         weight: string;
@@ -1906,6 +1964,37 @@ export interface GetV1ProfileGetWeightsErrorResponse {
   };
 }
 
+/**
+ * @format double
+ * @min 1
+ * @exclusiveMin false
+ * @max 12
+ * @exclusiveMax false
+ */
+export type GetV1ProfileGetCircumferencesParameterMonth = number;
+
+export type GetV1ProfileGetCircumferencesParameterBodyPart = string;
+
+export interface GetV1ProfileGetCircumferencesSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Data fetched successfully","data":[{"key":"neck","value":"value","week":"week"}]} */
+  data: {
+    message: string;
+    data: {
+      key: string;
+      value: string;
+      week: string;
+    }[];
+  };
+}
+
+export interface GetV1ProfileGetCircumferencesErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
 export interface PostV1ProfileUpdateSuccessfulResponse {
   status: 'success';
   /** @example {"message":"Profile Updated"} */
@@ -1945,6 +2034,7 @@ export type PostV1ProfileUpdateRequestBody = ((object & object) & object) & {
       | 'leftCalf'
       | 'rightCalf';
     value: string;
+    week?: string;
   }[];
   weightHistory?: {
     weight: string;
@@ -1952,6 +2042,39 @@ export type PostV1ProfileUpdateRequestBody = ((object & object) & object) & {
     month: string;
     year?: string;
   }[];
+};
+
+export interface PostV1ProfileUpdateCircumferencesSuccessfulResponse {
+  status: 'success';
+  /** @example {"message":"Profile Updated"} */
+  data: {
+    message: string;
+  };
+}
+
+export interface PostV1ProfileUpdateCircumferencesErrorResponse {
+  status: 'error';
+  error: {
+    message: string;
+  };
+}
+
+export type PostV1ProfileUpdateCircumferencesRequestBody = ((object & object) &
+  object) & {
+  key:
+    | 'neck'
+    | 'left'
+    | 'bicep'
+    | 'right'
+    | 'chest'
+    | 'waist'
+    | 'hip'
+    | 'leftQuad'
+    | 'rightQuad'
+    | 'leftCalf'
+    | 'rightCalf';
+  value: string;
+  week: string;
 };
 
 export type DeleteV1ProfileDeleteIdParameterId = string;
@@ -2012,7 +2135,7 @@ export type GetV1ProgramGetParameterSearch = string;
 
 export interface GetV1ProgramGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359fe2307462a805fac94","name":"abc","assignedUsers":[{"_id":"65c359fe2307462a805fac95","email":"abc","createdAt":"2024-02-07T10:22:54.666Z","updatedAt":"2024-02-07T10:22:54.666Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-07T10:22:54.666Z","updatedAt":"2024-02-07T10:22:54.666Z","startingDate":"2024-02-07T10:22:54.666Z","endingDate":"2024-02-07T10:22:54.666Z"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a792","name":"abc","assignedUsers":[{"_id":"65f2a78b4125defaa281a793","email":"abc","createdAt":"2024-03-14T07:30:19.249Z","updatedAt":"2024-03-14T07:30:19.249Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-14T07:30:19.249Z","updatedAt":"2024-03-14T07:30:19.249Z","startingDate":"2024-03-14T07:30:19.249Z","endingDate":"2024-03-14T07:30:19.249Z"}]} */
   data: {
     message: string;
     meta: {
@@ -2118,7 +2241,7 @@ export type GetV1ProgramGetIdParameterId = string;
 
 export interface GetV1ProgramGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c359fe2307462a805fac97","name":"abc","assignedUsers":[{"_id":"65c359fe2307462a805fac98","email":"abc","createdAt":"2024-02-07T10:22:54.670Z","updatedAt":"2024-02-07T10:22:54.670Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-02-07T10:22:54.670Z","updatedAt":"2024-02-07T10:22:54.670Z","startingDate":"2024-02-07T10:22:54.670Z","endingDate":"2024-02-07T10:22:54.670Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a78b4125defaa281a795","name":"abc","assignedUsers":[{"_id":"65f2a78b4125defaa281a796","email":"abc","createdAt":"2024-03-14T07:30:19.253Z","updatedAt":"2024-03-14T07:30:19.253Z","profile":{"avatar":"abc","fullName":"abc"}}],"createdAt":"2024-03-14T07:30:19.253Z","updatedAt":"2024-03-14T07:30:19.253Z","startingDate":"2024-03-14T07:30:19.253Z","endingDate":"2024-03-14T07:30:19.253Z"}} */
   data: {
     message: string;
     data: {
@@ -2464,7 +2587,7 @@ export type GetV1ProgramUserParameterDate = string;
 
 export interface GetV1ProgramUserSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-02-07T10:22:54.685Z","assignedTo":"abc","programId":{"_id":"65c359fe2307462a805fac99","name":"abc","startingDate":"2024-02-07T10:22:54.685Z","endingDate":"2024-02-07T10:22:54.685Z","assignedUsers":[],"createdAt":"2024-02-07T10:22:54.685Z","updatedAt":"2024-02-07T10:22:54.685Z"},"isCompleted":false,"workouts":[{"_id":"65c359fe2307462a805fac9a","exerciseId":"65c359fe2307462a805fac9b","programId":"65c359fe2307462a805fac9c","createdAt":"2024-02-07T10:22:54.685Z","updatedAt":"2024-02-07T10:22:54.685Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65c359fe2307462a805fac9d","notes":["notes"],"type":"circuit"}],"createdAt":"2024-02-07T10:22:54.685Z","updatedAt":"2024-02-07T10:22:54.685Z"}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"abc","day":1,"week":1,"date":"2024-03-14T07:30:19.268Z","assignedTo":"abc","programId":{"_id":"65f2a78b4125defaa281a797","name":"abc","startingDate":"2024-03-14T07:30:19.268Z","endingDate":"2024-03-14T07:30:19.268Z","assignedUsers":[],"createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z"},"isCompleted":false,"workouts":[{"_id":"65f2a78b4125defaa281a798","exerciseId":"65f2a78b4125defaa281a799","programId":"65f2a78b4125defaa281a79a","createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z","sets":[{"reps":1,"weight":1,"rest":1,"time":1}],"circuit":"circuit","warmup":"warmup","createdBy":"65f2a78b4125defaa281a79b","notes":["notes"],"type":"circuit"}],"createdAt":"2024-03-14T07:30:19.268Z","updatedAt":"2024-03-14T07:30:19.268Z"}]} */
   data: {
     message: string;
     data: {
@@ -2752,7 +2875,7 @@ export type GetV1WorkoutGetParameterLimit = string;
 
 export interface GetV1WorkoutGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359fe2307462a805facbe","createdBy":"65c359fe2307462a805facbf","exerciseId":"65c359fe2307462a805facc0","programId":"65c359fe2307462a805facc1","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c359fe2307462a805facc2","createdAt":"2024-02-07T10:22:54.997Z","updatedAt":"2024-02-07T10:22:54.997Z"}],"createdAt":"2024-02-07T10:22:54.997Z","updatedAt":"2024-02-07T10:22:54.997Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-07T10:22:54.997Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a7bc","createdBy":"65f2a78b4125defaa281a7bd","exerciseId":"65f2a78b4125defaa281a7be","programId":"65f2a78b4125defaa281a7bf","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7c0","createdAt":"2024-03-14T07:30:19.738Z","updatedAt":"2024-03-14T07:30:19.738Z"}],"createdAt":"2024-03-14T07:30:19.738Z","updatedAt":"2024-03-14T07:30:19.738Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.738Z"},"isCompleted":false}]} */
   data: {
     message: string;
     meta: {
@@ -2894,7 +3017,7 @@ export type GetV1WorkoutGetIdParameterId = string;
 
 export interface GetV1WorkoutGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c359ff2307462a805facc4","createdBy":"65c359ff2307462a805facc5","exerciseId":"65c359ff2307462a805facc6","programId":"65c359ff2307462a805facc7","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c359ff2307462a805facc8","createdAt":"2024-02-07T10:22:55.001Z","updatedAt":"2024-02-07T10:22:55.001Z"}],"createdAt":"2024-02-07T10:22:55.001Z","updatedAt":"2024-02-07T10:22:55.001Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-07T10:22:55.001Z"},"isCompleted":false}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a78b4125defaa281a7c2","createdBy":"65f2a78b4125defaa281a7c3","exerciseId":"65f2a78b4125defaa281a7c4","programId":"65f2a78b4125defaa281a7c5","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7c6","createdAt":"2024-03-14T07:30:19.742Z","updatedAt":"2024-03-14T07:30:19.742Z"}],"createdAt":"2024-03-14T07:30:19.742Z","updatedAt":"2024-03-14T07:30:19.742Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.742Z"},"isCompleted":false}} */
   data: {
     message: string;
     data: {
@@ -3013,7 +3136,7 @@ export type GetV1WorkoutFilterParameterDay = number | string;
 
 export interface GetV1WorkoutFilterSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65c359ff2307462a805faccb","createdBy":"65c359ff2307462a805faccc","exerciseId":"65c359ff2307462a805faccd","programId":"65c359ff2307462a805facce","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65c359ff2307462a805faccf","createdAt":"2024-02-07T10:22:55.018Z","updatedAt":"2024-02-07T10:22:55.018Z"}],"createdAt":"2024-02-07T10:22:55.018Z","updatedAt":"2024-02-07T10:22:55.018Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-02-07T10:22:55.018Z"},"isCompleted":false}]} */
+  /** @example {"message":"Data fetched Successfully","data":[{"_id":"65f2a78b4125defaa281a7c9","createdBy":"65f2a78b4125defaa281a7ca","exerciseId":"65f2a78b4125defaa281a7cb","programId":"65f2a78b4125defaa281a7cc","notes":["notes"],"sets":[{"reps":1,"weight":1,"rest":1,"time":1,"_id":"65f2a78b4125defaa281a7cd","createdAt":"2024-03-14T07:30:19.759Z","updatedAt":"2024-03-14T07:30:19.759Z"}],"createdAt":"2024-03-14T07:30:19.759Z","updatedAt":"2024-03-14T07:30:19.759Z","circuit":"circuit","warmup":"warmup","type":"circuit","dateTime":{"day":1,"week":1,"date":"2024-03-14T07:30:19.759Z"},"isCompleted":false}]} */
   data: {
     message: string;
     data: {
@@ -3220,6 +3343,15 @@ export type PostV1WorkoutAdminAddRequestBody = (((object & object) & object) &
     date: string;
   };
 };
+
+/**
+ * @format double
+ * @min 1
+ * @exclusiveMin false
+ * @max 12
+ * @exclusiveMax false
+ */
+export type GetV1WorkoutPerWeekParameterMonth = number;
 
 export interface GetV1WorkoutPerWeekSuccessfulResponse {
   status: 'success';
@@ -3703,7 +3835,7 @@ export interface DeleteV1RecipeDeleteIdErrorResponse {
 
 export interface PostV1ChatSendMessagesSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","data":{"_id":"65c359ff2307462a805facdd","text":"text","files":["files"],"createdAt":"2024-02-07T10:22:55.802Z","updatedAt":"2024-02-07T10:22:55.802Z","sender":"65c359ff2307462a805facde"}} */
+  /** @example {"message":"Message Sent Successfully","data":{"_id":"65f2a7844125defaa281a774","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.342Z","updatedAt":"2024-03-14T07:30:12.342Z","sender":"65f2a7844125defaa281a775"}} */
   data: {
     message: string;
     data: {
@@ -3754,7 +3886,7 @@ export type GetV1ChatChatParameterLimit = string;
 
 export interface GetV1ChatChatSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359ff2307462a805facd5","user":{"_id":"65c359ff2307462a805facd6","email":"email","profile":{"_id":"65c359ff2307462a805facd7","fullName":"fullName","avatar":"avatar"}},"lastMessage":{"_id":"65c359ff2307462a805facd8","text":"text","files":["files"],"createdAt":"2024-02-07T10:22:55.157Z","updatedAt":"2024-02-07T10:22:55.157Z","sender":"65c359ff2307462a805facd9"},"createdAt":"2024-02-07T10:22:55.157Z","updatedAt":"2024-02-07T10:22:55.157Z"}]} */
+  /** @example {"message":"Data fetched Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a7844125defaa281a76c","user":{"_id":"65f2a7844125defaa281a76d","email":"email","profile":{"_id":"65f2a7844125defaa281a76e","fullName":"fullName","avatar":"avatar"}},"lastMessage":{"_id":"65f2a7844125defaa281a76f","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.312Z","updatedAt":"2024-03-14T07:30:12.312Z","sender":"65f2a7844125defaa281a770"},"createdAt":"2024-03-14T07:30:12.312Z","updatedAt":"2024-03-14T07:30:12.312Z"}]} */
   data: {
     message: string;
     meta: {
@@ -3860,7 +3992,7 @@ export type GetV1ChatGetIdParameterId = string;
 
 export interface GetV1ChatGetIdSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359ff2307462a805facda","text":"text","files":["files"],"createdAt":"2024-02-07T10:22:55.175Z","updatedAt":"2024-02-07T10:22:55.175Z","sender":"65c359ff2307462a805facdb"}]} */
+  /** @example {"message":"Message Sent Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a7844125defaa281a771","text":"text","files":["files"],"createdAt":"2024-03-14T07:30:12.325Z","updatedAt":"2024-03-14T07:30:12.325Z","sender":"65f2a7844125defaa281a772"}]} */
   data: {
     message: string;
     meta: {
@@ -3958,7 +4090,7 @@ export type PutV1ContactDetailsUpdateRequestBody = (((object & object) &
 
 export interface GetV1ContactDetailsGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Data fetched Successfully","data":{"_id":"65c359ff2307462a805facdf","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-02-07T10:22:55.841Z","updatedAt":"2024-02-07T10:22:55.841Z"}} */
+  /** @example {"message":"Data fetched Successfully","data":{"_id":"65f2a7844125defaa281a776","phone":"1234567890","email":"example@gmail.com","whatsapp":"https://www.google.com","twitter":"https://www.google.com","createdAt":"2024-03-14T07:30:12.388Z","updatedAt":"2024-03-14T07:30:12.388Z"}} */
   data: {
     message: string;
     data: {
@@ -3991,7 +4123,7 @@ export interface GetV1ContactDetailsGetErrorResponse {
 
 export interface PostV1NotificationFcmSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Added Successfully","data":{"_id":"65c359ff2307462a805face0","token":"abc","userId":"65c359ff2307462a805face1","createdAt":"2024-02-07T10:22:55.908Z","updatedAt":"2024-02-07T10:22:55.908Z","type":"web"}} */
+  /** @example {"message":"Token Added Successfully","data":{"_id":"65f2a78b4125defaa281a78c","token":"abc","userId":"65f2a78b4125defaa281a78d","createdAt":"2024-03-14T07:30:19.061Z","updatedAt":"2024-03-14T07:30:19.061Z","type":"web"}} */
   data: {
     message: string;
     data: {
@@ -4084,7 +4216,7 @@ export type GetV1NotificationGetParameterSearch = string;
 
 export interface GetV1NotificationGetSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65c359ff2307462a805face2","title":"title","body":"body","userId":{"_id":"65c359ff2307462a805face3","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-02-07T10:22:55.922Z","updatedAt":"2024-02-07T10:22:55.922Z"}]} */
+  /** @example {"message":"Ingredient Added Successfully","meta":{"total":1,"page":1,"limit":10,"totalPages":1},"data":[{"_id":"65f2a78b4125defaa281a78e","title":"title","body":"body","userId":{"_id":"65f2a78b4125defaa281a78f","email":"email","emailVerified":true,"role":"admin"},"type":"all","image":"image","createdAt":"2024-03-14T07:30:19.073Z","updatedAt":"2024-03-14T07:30:19.073Z"}]} */
   data: {
     message: string;
     meta: {
@@ -4165,7 +4297,7 @@ export enum GetV1CallStartParameterType {
 
 export interface GetV1CallStartSuccessfulResponse {
   status: 'success';
-  /** @example {"message":"Token Generated Successfully","data":{"token":"ea6b4296-7aaf-4e99-a921-65ec94775750","channelName":"5e3cc4a7-87c0-4f37-add0-c7e4f4d5486b","uId":"c60a703a-5a6e-46a1-918a-af3165a1f82b"}} */
+  /** @example {"message":"Token Generated Successfully","data":{"token":"ed79f6f2-bc63-41ef-921e-00b0fc872e71","channelName":"0127db1a-d3d3-4ba3-bb4d-6f78da4fb9b1","uId":"d72eaa0b-6c70-461e-a2bf-4efe3b6e1bd7"}} */
   data: {
     message: string;
     data: {
@@ -4601,6 +4733,32 @@ export class Api<
         path: `/v1/auth/verify-otp`,
         method: 'POST',
         body: data,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Authentication
+     * @name PostV1AuthDeleteAccount
+     * @summary Delete User
+     * @request POST:/v1/auth/delete-account
+     * @secure
+     */
+    postV1AuthDeleteAccount: (
+      data: PostV1AuthDeleteAccountRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1AuthDeleteAccountSuccessfulResponse,
+        PostV1AuthDeleteAccountErrorResponse
+      >({
+        path: `/v1/auth/delete-account`,
+        method: 'POST',
+        body: data,
+        secure: true,
         type: ContentType.Json,
         format: 'json',
         ...params,
@@ -5318,6 +5476,36 @@ export class Api<
      * No description
      *
      * @tags User Profile
+     * @name GetV1ProfileGetCircumferences
+     * @summary Get Circumference endpoint
+     * @request GET:/v1/profile/get/circumferences
+     * @secure
+     */
+    getV1ProfileGetCircumferences: (
+      query?: {
+        /** GET /v1/profile/get/circumferences parameter */
+        month?: GetV1ProfileGetCircumferencesParameterMonth;
+        /** GET /v1/profile/get/circumferences parameter */
+        bodyPart?: GetV1ProfileGetCircumferencesParameterBodyPart;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GetV1ProfileGetCircumferencesSuccessfulResponse,
+        GetV1ProfileGetCircumferencesErrorResponse
+      >({
+        path: `/v1/profile/get/circumferences`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Profile
      * @name PostV1ProfileUpdate
      * @summary Update Profile endpoint
      * @request POST:/v1/profile/update
@@ -5332,6 +5520,32 @@ export class Api<
         PostV1ProfileUpdateErrorResponse
       >({
         path: `/v1/profile/update`,
+        method: 'POST',
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User Profile
+     * @name PostV1ProfileUpdateCircumferences
+     * @summary Update Profile endpoint
+     * @request POST:/v1/profile/update/circumferences
+     * @secure
+     */
+    postV1ProfileUpdateCircumferences: (
+      data: PostV1ProfileUpdateCircumferencesRequestBody,
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        PostV1ProfileUpdateCircumferencesSuccessfulResponse,
+        PostV1ProfileUpdateCircumferencesErrorResponse
+      >({
+        path: `/v1/profile/update/circumferences`,
         method: 'POST',
         body: data,
         secure: true,
@@ -5871,13 +6085,20 @@ export class Api<
      * @request GET:/v1/workout/per-week
      * @secure
      */
-    getV1WorkoutPerWeek: (params: RequestParams = {}) =>
+    getV1WorkoutPerWeek: (
+      query?: {
+        /** GET /v1/workout/per-week parameter */
+        month?: GetV1WorkoutPerWeekParameterMonth;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<
         GetV1WorkoutPerWeekSuccessfulResponse,
         GetV1WorkoutPerWeekErrorResponse
       >({
         path: `/v1/workout/per-week`,
         method: 'GET',
+        query: query,
         secure: true,
         format: 'json',
         ...params,

@@ -3,45 +3,10 @@ import {useRoute} from '@react-navigation/native';
 import {useUpdateMealPlanMutation} from '@store/apis/mealPlan';
 import {useGetAllRecipeQuery} from '@store/apis/recipe';
 import {PostV1MealPlanUpdateErrorResponse} from '@store/schema';
-import {Button, Center, HStack, ScrollView, Text, VStack} from 'native-base';
+import {Button, Center, ScrollView, VStack} from 'native-base';
 import React from 'react';
 import Tab from 'src/components/Tab';
-import MealPlanCard from 'src/components/meal-plan/MealPlanCard';
 import MealPlanRowCard from 'src/components/meal-plan/MealPlanRowCard';
-import NotFoundCard from 'src/components/not-found-card';
-
-const dailyMicros = [
-  {
-    title: 'Calories',
-    value: '1800',
-    image: require('@assets/images/calories.png'),
-  },
-  {
-    title: 'Protein',
-    value: '150g',
-    image: require('@assets/images/protein.png'),
-  },
-  {
-    title: 'Carbs',
-    value: '300g',
-    image: require('@assets/images/carbs.png'),
-  },
-  {
-    title: 'Fat',
-    value: '50g',
-    image: require('@assets/images/fat.png'),
-  },
-  {
-    title: 'Fiber',
-    value: '220g',
-    image: require('@assets/images/fiber.png'),
-  },
-  {
-    title: 'Water',
-    value: '2.4l',
-    image: require('@assets/images/water.png'),
-  },
-];
 
 const dayTabs = [
   {
@@ -77,7 +42,7 @@ const dayTabs = [
 export default function CreateMealPlan() {
   const day = (useRoute()?.params as any)?.dailyMicro;
 
-  const [activeTab, setActiveTab] = React.useState(day);
+  const [activeTab, setActiveTab] = React.useState([day]);
 
   const [mealPlanData, setMealPlanData] = React.useState<string[]>([]);
 
@@ -86,18 +51,33 @@ export default function CreateMealPlan() {
   const [handelCreate, {isLoading}] = useUpdateMealPlanMutation();
   const {data} = useGetAllRecipeQuery();
   const handleSubmit = async () => {
-    const body = {
-      day: activeTab,
-      recipe: mealPlanData,
-    };
     try {
-      const res = await handelCreate(body).unwrap();
-      console.log('res', res);
-      toast(res?.data?.message);
+      if (mealPlanData.length === 0) {
+        toast('Please select at least one meal', 'error');
+        return;
+      }
+
+      if (activeTab.length === 0) {
+        toast('Please select at least one day', 'error');
+        return;
+      }
+
+      const promises = activeTab.map(async day => {
+        const body = {
+          day,
+          recipe: mealPlanData,
+        };
+        const res = await handelCreate(body).unwrap();
+        return res;
+      });
+      const res = await Promise.all(promises);
+      toast(res?.[0]?.data?.message);
     } catch (err) {
       console.log('err', err);
-      const error = err as PostV1MealPlanUpdateErrorResponse;
-      toast(error?.error?.message, 'error');
+      const error = err as {
+        data: PostV1MealPlanUpdateErrorResponse;
+      };
+      toast(error?.data?.error?.message, 'error');
     }
   };
 
@@ -128,7 +108,17 @@ export default function CreateMealPlan() {
       }}>
       <VStack space={4}>
         <VStack px={2}>
-          <Tab tabs={dayTabs} activeTab={activeTab} onPress={setActiveTab} />
+          <Tab
+            tabs={dayTabs}
+            activeTab={activeTab}
+            onPress={(key: string) => {
+              if (activeTab.includes(key)) {
+                setActiveTab(prev => prev.filter(item => item !== key));
+              } else {
+                setActiveTab(prev => [...prev, key]);
+              }
+            }}
+          />
         </VStack>
       </VStack>
       {/* cards */}

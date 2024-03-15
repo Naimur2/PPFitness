@@ -33,7 +33,7 @@ export default function WeightChart() {
     month: month.label,
   });
 
-  console.log('weightRes', JSON.stringify(weightRes));
+
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -53,7 +53,7 @@ export default function WeightChart() {
 
   const Line = ({line}) => <Path d={line} stroke={'#1AE13A'} fill={'none'} />;
 
-  const contentInset = {top: 20, bottom: 5, left: 20};
+  const contentInset = {top: 20, bottom: 5, left: 15};
 
   const monthsOfAYear = React.useMemo(() => {
     const months = [];
@@ -145,7 +145,7 @@ export default function WeightChart() {
         </HStack>
         <XAxis
           data={arrayOfWeeksOfThisMonth.map((item, index) => item.label)}
-          contentInset={{left: 10, right: 10}}
+          contentInset={{left: 20, right: 10}}
           svg={{fontSize: 8, fill: 'black'}}
           formatLabel={(value, index) => `W${index + 1}`}
         />

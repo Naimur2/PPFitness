@@ -142,13 +142,13 @@ export default function ProfileTab() {
           py={2}
           rounded={8}>
           <WeightLoss height={30} width={30} />
-          <VStack justifyContent={'space-between'} alignItems={'center'}>
+          <Pressable display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
             <Text
               color={'#1A1929'}
               fontSize={fontSizes.md}
               fontWeight={700}
               textAlign={'center'}>
-              Weight loss
+              {data?.data?.data?.goal || 'N/A'}
             </Text>
             <Text
               color={'#58565E'}
@@ -156,7 +156,7 @@ export default function ProfileTab() {
               textAlign={'center'}>
               {data?.data?.data?.goal || 'Goal'}
             </Text>
-          </VStack>
+          </Pressable>
         </HStack>
         <HStack
           justifyContent={'center'}

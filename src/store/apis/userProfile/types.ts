@@ -3,3 +3,9 @@ export type TGetWeightParams = {
   year?: string;
   month?: string;
 };
+
+
+export type TCircumferenceParams = {
+  month?: string | number;
+  bodyPart?: string;
+};

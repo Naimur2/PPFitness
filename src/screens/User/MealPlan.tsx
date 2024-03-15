@@ -44,16 +44,16 @@ const dailyMicros = [
     key: 'fat',
     image: require('@assets/images/fat.png'),
   },
-  {
-    title: 'Fiber',
-    key: 'fiber',
-    image: require('@assets/images/fiber.png'),
-  },
-  {
-    title: 'Water',
-    key: 'water',
-    image: require('@assets/images/water.png'),
-  },
+  // {
+  //   title: 'Fiber',
+  //   key: 'fiber',
+  //   image: require('@assets/images/fiber.png'),
+  // },
+  // {
+  //   title: 'Water',
+  //   key: 'water',
+  //   image: require('@assets/images/water.png'),
+  // },
 ];
 
 const dayTabs = [

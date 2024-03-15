@@ -2,6 +2,8 @@ import {
   DeleteV1ProfileDeleteIdParameterId,
   DeleteV1ProfileDeleteIdSuccessfulResponse,
   GetV1ProfileGetAllSuccessfulResponse,
+  GetV1ProfileGetCircumferencesErrorResponse,
+  GetV1ProfileGetCircumferencesSuccessfulResponse,
   GetV1ProfileGetSingleIdParameterId,
   GetV1ProfileGetSingleIdSuccessfulResponse,
   GetV1ProfileGetSingleSuccessfulResponse,
@@ -14,7 +16,7 @@ import {
   PostV1ProfileUpdateSuccessfulResponse,
 } from '@store/schema';
 import {apiSlice} from '../index';
-import {TGetWeightParams} from './types';
+import {TCircumferenceParams, TGetWeightParams} from './types';
 import queryString from 'query-string';
 
 export const authApiSlice = apiSlice.injectEndpoints({
@@ -48,6 +50,17 @@ export const authApiSlice = apiSlice.injectEndpoints({
       query: () => ({
         url: `profile/get/all`,
       }),
+    }),
+    getUserCircumferences: builder.query<
+      GetV1ProfileGetCircumferencesSuccessfulResponse,
+      TCircumferenceParams
+    >({
+      query: (body) => {
+        const qs = queryString.stringify(body);
+        return {
+          url: `profile/get/circumferences?` + qs,
+        };
+      },
     }),
     updateProfile: builder.mutation<
       PostV1ProfileUpdateSuccessfulResponse,
@@ -101,4 +114,5 @@ export const {
   useUpdateFileMutation,
   useDeleteFileMutation,
   useGetUserWeightsQuery,
+  useGetUserCircumferencesQuery
 } = authApiSlice;

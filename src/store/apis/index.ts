@@ -5,9 +5,9 @@ import {RootState} from '..';
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
   prepareHeaders: (headers, api) => {
-    const {auth}: any = api.getState() as RootState;
-    if (auth.accessToken) {
-      headers.set('authorization', `Bearer ${auth.accessToken}`);
+    const state: any = api?.getState?.() as RootState;
+    if (state?.auth?.accessToken) {
+      headers.set('authorization', `Bearer ${state?.auth?.accessToken}`);
     }
     return headers;
   },

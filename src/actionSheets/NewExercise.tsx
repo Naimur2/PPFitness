@@ -25,6 +25,7 @@ import useShowToastMessage from '@hooks/useShowToastMessage';
 import {useUpdateFileMutation} from '@store/apis/userProfile';
 import createFormFile from 'src/utils/fileDetails';
 import {useAddExerciseMutation} from '@store/apis/exercise';
+import DropDown from 'src/components/DropDown';
 
 const colors = [
   '#4FCF8C',
@@ -34,6 +35,42 @@ const colors = [
   '#FFC542',
   '#FF5959',
   '##2A9BCE',
+];
+
+const bodyPartData = [
+  {value: 'Arms', label: 'Arms'},
+  {value: 'Legs', label: 'Legs'},
+  {value: 'Chest', label: 'Chest'},
+  {value: 'Back', label: 'Back'},
+  {value: 'Abs', label: 'Abs'},
+  {value: 'Shoulders', label: 'Shoulders'},
+  {value: 'Glutes', label: 'Glutes'},
+  {value: 'Quads', label: 'Quads'},
+  {value: 'Hamstrings', label: 'Hamstrings'},
+  {value: 'Calves', label: 'Calves'},
+  {value: 'Core', label: 'Core'},
+  {value: 'Triceps, label: 'Triceps'},
+  {value: 'Biceps', label: 'Biceps'},
+  {value: 'Obliques, label: 'Obliques'},
+  {value: 'Forearms', label: 'Forearms'},
+];
+
+const equipmentData = [
+  {value: 'Dumbbells', label: 'Dumbbells'},
+  {value: 'Barbell', label: 'Barbell'},
+  {value: 'Resistance Bands', label: 'Resistance Bands'},
+  {value: 'Kettlebell', label: 'Kettlebell'},
+  {value: 'Medicine Ball', label: 'Medicine Ball'},
+  {value: 'Smith Machine', label: 'Smith Machine'},
+  {value: 'Pull-up Bar', label: 'Pull-up Bar'},
+  {value: 'Rowing Machine', label: 'Rowing Machine'},
+  {value: 'TRX Suspension Trainer', label: 'TRX Suspension Trainer'},
+  {value: 'Elliptical Trainer', label: 'Elliptical Trainer'},
+  {value: 'Stationary Bike', label: 'Stationary Bike'},
+  {value: 'Battle Ropes', label: 'Battle Ropes'},
+  {value: 'Pilates Ball', label: 'Pilates Ball'},
+  {value: 'Step Platform', label: 'Step Platform'},
+  {value: 'Gymnastic Rings', label: 'Gymnastic Rings'},
 ];
 
 const randomColor = (i: number) => {
@@ -46,7 +83,7 @@ const randomColor = (i: number) => {
 };
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  label: Yup.string().required('Name is required'),
   tags: Yup.array().of(Yup.string()).min(1, 'At least one tag is required'),
   bodyPart: Yup.string().required('Body part is required'),
   equipment: Yup.string().required('Equipment is required'),
@@ -75,7 +112,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
   //  formik
   const formik = useFormik({
     initialValues: {
-      name: '',
+      label: '',
       tags: [],
       bodyPart: '',
       equipment: '',
@@ -88,7 +125,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
         const fileRes = await fileUpload(values?.video).unwrap();
         const res = await addExercise({
           video: fileRes?.data?.data?.[0]?.url,
-          name: values?.name,
+          label: values?.name,
           tags: values?.tags,
           bodyPart: values?.bodyPart,
           equipment: values?.equipment,
@@ -177,7 +214,24 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                   </FormControl.Label>
                   <Center>
                     <Box w={'full'}>
-                      <Select
+
+                      <DropDown
+                       data={bodyPartData}
+                       label='Body Part'
+                       value={bodyPartData?.find(v => v?.label === formik?.values?.bodyPart)}
+                       onChange={(itemValue) => {
+                        formik?.setFieldValue('bodyPart', itemValue?.label);
+                       }}
+                       width={'100%'}
+                       rounded={5}
+                        borderWidth={1}
+                        borderColor={'#7D7C81'}
+                        _pressed={{
+                          bg: '#68696B90',
+                        }}
+                      />
+
+                      {/* <Select
                         selectedValue={formik?.values?.bodyPart}
                         minWidth="200"
                         accessibilityLabel="Body Part"
@@ -193,10 +247,10 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                         }}>
                         {bodyPartData?.map(v => {
                           return (
-                            <Select.Item label={v?.name} value={v?.name} />
+                            <Select.Item label={v?.label} value={v?.label} />
                           );
                         })}
-                      </Select>
+                      </Select> */}
                     </Box>
                   </Center>
                   <FormControl.ErrorMessage>
@@ -222,7 +276,22 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                   </FormControl.Label>
                   <Center>
                     <Box w={'full'}>
-                      <Select
+                      <DropDown
+                       data={equipmentData}
+                       label='Equipment'
+                       value={equipmentData?.find(v => v?.value === formik?.values?.equipment)}
+                       onChange={(itemValue) => {
+                        formik?.setFieldValue('equipment', itemValue?.value);
+                       }}
+                       width={'100%'}
+                       rounded={5}
+                        borderWidth={1}
+                        borderColor={'#7D7C81'}
+                        _pressed={{
+                          bg: '#68696B90',
+                        }}
+                      />
+                      {/* <Select
                         selectedValue={formik?.values?.equipment}
                         minWidth="200"
                         accessibilityLabel="Equipment"
@@ -238,10 +307,10 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                         }}>
                         {equipmentData?.map(v => {
                           return (
-                            <Select.Item label={v?.name} value={v?.name} />
+                            <Select.Item label={v?.label} value={v?.value} />
                           );
                         })}
-                      </Select>
+                      </Select> */}
                     </Box>
                   </Center>
                   <FormControl.ErrorMessage>
@@ -443,39 +512,3 @@ export default function NewExercise({isOpen, onClose}: IProps) {
     </Modal>
   );
 }
-
-const bodyPartData = [
-  {id: 1, name: 'Arms'},
-  {id: 2, name: 'Legs'},
-  {id: 3, name: 'Chest'},
-  {id: 4, name: 'Back'},
-  {id: 5, name: 'Abs'},
-  {id: 6, name: 'Shoulders'},
-  {id: 7, name: 'Glutes'},
-  {id: 8, name: 'Quads'},
-  {id: 9, name: 'Hamstrings'},
-  {id: 10, name: 'Calves'},
-  {id: 11, name: 'Core'},
-  {id: 12, name: 'Triceps'},
-  {id: 13, name: 'Biceps'},
-  {id: 14, name: 'Obliques'},
-  {id: 15, name: 'Forearms'},
-];
-
-const equipmentData = [
-  {id: 1, name: 'Dumbbells'},
-  {id: 2, name: 'Barbell'},
-  {id: 3, name: 'Resistance Bands'},
-  {id: 4, name: 'Kettlebell'},
-  {id: 5, name: 'Medicine Ball'},
-  {id: 6, name: 'Smith Machine'},
-  {id: 7, name: 'Pull-up Bar'},
-  {id: 8, name: 'Rowing Machine'},
-  {id: 9, name: 'TRX Suspension Trainer'},
-  {id: 10, name: 'Elliptical Trainer'},
-  {id: 11, name: 'Stationary Bike'},
-  {id: 12, name: 'Battle Ropes'},
-  {id: 13, name: 'Pilates Ball'},
-  {id: 14, name: 'Step Platform'},
-  {id: 15, name: 'Gymnastic Rings'},
-];
