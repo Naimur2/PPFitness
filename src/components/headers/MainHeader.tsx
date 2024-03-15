@@ -1,14 +1,24 @@
 import {
   CalenderIcon,
   CallFillIcon,
+  CheckListIcon,
   ListBucketIcon,
   Settings,
+  TIconProps,
   VideoFillIcon,
 } from '@assets/icons';
 import {HStack, Image, Text} from 'native-base';
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+const icons = {
+  setting: (props: TIconProps) => <Settings {...props} />,
+  listBucket: (props: TIconProps) => <ListBucketIcon {...props} />,
+  calender: (props: TIconProps) => <CalenderIcon {...props} />,
+  call: (props: TIconProps) => <CallFillIcon {...props} />,
+  checkList: (props: TIconProps) => <CheckListIcon {...props} />,
+};
 
 export default function MainHeader({
   title,
@@ -19,11 +29,13 @@ export default function MainHeader({
 }: {
   title?: string;
   type?: string;
-  iconRightType?: 'setting' | 'listBucket' | 'calender' | 'call';
+  iconRightType?: 'setting' | 'listBucket' | 'calender' | 'call' | 'checkList';
   onPress?: () => void;
   onRightPress?: () => void;
 }) {
   const insets = useSafeAreaInsets();
+
+  const Icon = icons[iconRightType] || icons.listBucket;
 
   return (
     <HStack
@@ -45,16 +57,7 @@ export default function MainHeader({
 
       <HStack alignItems={'center'} space={6}>
         <TouchableOpacity onPress={onPress}>
-          {onPress &&
-            (iconRightType === 'setting' ? (
-              <Settings />
-            ) : iconRightType === 'calender' ? (
-              <CalenderIcon />
-            ) : iconRightType === 'call' ? (
-              <VideoFillIcon width={22} height={22} />
-            ) : (
-              <ListBucketIcon />
-            ))}
+          {onPress && <Icon width={22} height={22} />}
         </TouchableOpacity>
         {/* {onRightPress && (
           <TouchableOpacity onPress={onRightPress}>

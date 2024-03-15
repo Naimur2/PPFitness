@@ -16,7 +16,7 @@ import {Image} from 'react-native';
 import useNavigate from '@hooks/useNavigate';
 import {GetV1ProgramScheduleSuccessfulResponse} from '@store/schema';
 import {SkeletonsProgramList} from 'src/components/skeletons';
-import NewExercise from 'src/actionSheets/NewExercise';
+import NewExercise from 'src/actionSheets/NewExerciseSheet';
 import CongratulationsModal from 'src/actionSheets/CongratulationsModal';
 
 const tabItems = [
@@ -67,33 +67,6 @@ export default function ProgramTab() {
         gap: 4,
         bgColor: '#F8F8F8',
       }}>
-      {/* <HStack
-        w="100%"
-        bg="white"
-        px={4}
-        py={4}
-        rounded="xl"
-        display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        onPress={() => console.log('Pressed')}
-        _pressed={{bg: 'gray.100'}}>
-        <Pressable>
-          <ArrowDownIcon style={{transform: [{rotate: '90deg'}]}} />
-        </Pressable>
-
-        <Text
-          fontSize={fontSizes.xs}
-          color="#1A1929"
-          style={{fontWeight: '600'}}>
-          Monday - February 28, 23
-        </Text>
-
-        <Pressable>
-          <ArrowDownIcon style={{transform: [{rotate: '-90deg'}]}} />
-        </Pressable>
-      </HStack> */}
       {isLoading ? (
         <SkeletonsProgramList />
       ) : data?.data?.data?.length > 0 ? (

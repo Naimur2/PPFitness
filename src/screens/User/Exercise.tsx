@@ -13,7 +13,7 @@ import {
 import ExerciseItem from 'src/components/exercise/ExerciseItem';
 import {useNavigation} from '@react-navigation/native';
 import {AddIcon, ArrowDownIcon, ArrowUpIcon, SearchIcon} from '@assets/icons';
-import NewExercise from 'src/actionSheets/NewExercise';
+import NewExercise from 'src/actionSheets/NewExerciseSheet';
 import {fontSizes} from '@theme/typography';
 import {useGetAllExerciseQuery} from '@store/apis/exercise';
 import {SkeletonsExerciseItem} from 'src/components/skeletons';

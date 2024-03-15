@@ -135,9 +135,9 @@ export default function BottomTabs() {
         },
         title: '',
         tabBarHideOnKeyboard: true,
-          tabBarStyle: {
-            height: 70 + insets.bottom,
-          }
+        tabBarStyle: {
+          height: 70 + insets.bottom,
+        },
       })}>
       <Tab.Screen
         name="MealPlan"
@@ -151,7 +151,13 @@ export default function BottomTabs() {
         name="Program"
         options={{
           header: (props: BottomTabHeaderProps) => {
-            return <MainHeader title={'Program'} />;
+            return (
+              <MainHeader
+                title={'Program'}
+                iconRightType="checkList"
+                onPress={() => navigate('CheckList')}
+              />
+            );
           },
         }}
         component={ProgramTab}

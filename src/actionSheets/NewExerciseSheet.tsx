@@ -37,7 +37,12 @@ const colors = [
   '##2A9BCE',
 ];
 
-const bodyPartData = [
+type TOptions = {
+  value: string;
+  label: string;
+};
+
+const bodyParts: TOptions[] = [
   {value: 'Arms', label: 'Arms'},
   {value: 'Legs', label: 'Legs'},
   {value: 'Chest', label: 'Chest'},
@@ -49,9 +54,9 @@ const bodyPartData = [
   {value: 'Hamstrings', label: 'Hamstrings'},
   {value: 'Calves', label: 'Calves'},
   {value: 'Core', label: 'Core'},
-  {value: 'Triceps, label: 'Triceps'},
+  {value: 'Triceps', label: 'Triceps'},
   {value: 'Biceps', label: 'Biceps'},
-  {value: 'Obliques, label: 'Obliques'},
+  {value: 'Obliques', label: 'Obliques'},
   {value: 'Forearms', label: 'Forearms'},
 ];
 
@@ -214,21 +219,21 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                   </FormControl.Label>
                   <Center>
                     <Box w={'full'}>
-
                       <DropDown
-                       data={bodyPartData}
-                       label='Body Part'
-                       value={bodyPartData?.find(v => v?.label === formik?.values?.bodyPart)}
-                       onChange={(itemValue) => {
-                        formik?.setFieldValue('bodyPart', itemValue?.label);
-                       }}
-                       width={'100%'}
-                       rounded={5}
-                        borderWidth={1}
-                        borderColor={'#7D7C81'}
-                        _pressed={{
-                          bg: '#68696B90',
+                        data={bodyParts}
+                        label="Body Part"
+                        value={bodyParts?.find(
+                          v => v?.label === formik?.values?.bodyPart,
+                        )}
+                        onChange={itemValue => {
+                          formik?.setFieldValue('bodyPart', itemValue?.label);
                         }}
+                        width={'100%'}
+                        rounded={5}
+                        borderWidth={1}
+                        py={'10px'}
+                        borderColor={'#F8F8F8'}
+                        backgroundColor={'#F8F8F8'}
                       />
 
                       {/* <Select
@@ -245,7 +250,7 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                           console.log('itemValue', itemValue);
                           formik?.setFieldValue('bodyPart', itemValue);
                         }}>
-                        {bodyPartData?.map(v => {
+                        {bodyParts?.map(v => {
                           return (
                             <Select.Item label={v?.label} value={v?.label} />
                           );
@@ -277,19 +282,20 @@ export default function NewExercise({isOpen, onClose}: IProps) {
                   <Center>
                     <Box w={'full'}>
                       <DropDown
-                       data={equipmentData}
-                       label='Equipment'
-                       value={equipmentData?.find(v => v?.value === formik?.values?.equipment)}
-                       onChange={(itemValue) => {
-                        formik?.setFieldValue('equipment', itemValue?.value);
-                       }}
-                       width={'100%'}
-                       rounded={5}
-                        borderWidth={1}
-                        borderColor={'#7D7C81'}
-                        _pressed={{
-                          bg: '#68696B90',
+                        data={equipmentData}
+                        label="Equipment"
+                        value={equipmentData?.find(
+                          v => v?.value === formik?.values?.equipment,
+                        )}
+                        onChange={itemValue => {
+                          formik?.setFieldValue('equipment', itemValue?.value);
                         }}
+                        width={'100%'}
+                        rounded={5}
+                        borderWidth={1}
+                        borderColor={'#F8F8F8'}
+                        backgroundColor={'#F8F8F8'}
+                        py={'10px'}
                       />
                       {/* <Select
                         selectedValue={formik?.values?.equipment}

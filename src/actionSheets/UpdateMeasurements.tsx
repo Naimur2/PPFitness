@@ -1,6 +1,8 @@
 import {useUpdateProfileMutation} from '@store/apis/userProfile';
 import {PostV1ProfileUpdateErrorResponse} from '@store/schema';
 import {fontSizes} from '@theme/typography';
+import dayjs from 'dayjs';
+
 import {useFormik} from 'formik';
 import {
   Actionsheet,
@@ -8,21 +10,24 @@ import {
   FormControl,
   Input,
   Modal,
-  Pressable,
   ScrollView,
   Stack,
   Text,
   VStack,
 } from 'native-base';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Alert} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import DropDown from 'src/components/DropDown';
 import * as Yup from 'yup';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+
+dayjs.extend(weekOfYear);
 
 const validationSchema = Yup.object().shape({
   key: Yup.string().required('Key is required'),
   value: Yup.string().required('Value is required'),
-  week: Yup.string().required('Week is required'),
+  week: Yup.number().required('Week is required'),
 });
 
 interface IProps {
@@ -43,6 +48,11 @@ const circumferenceKeys: Record<string, string> = {
   leftCalf: 'Left Calf',
   rightCalf: 'Right Calf',
 };
+
+const weeks = Array.from({length: 52}, (_, i) => ({
+  label: `Week ${i + 1}`,
+  value: i + 1,
+}));
 
 export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -77,6 +87,14 @@ export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
     },
   });
 
+  useEffect(() => {
+    const week = dayjs().week();
+    console.log('week', week);
+    formik?.setValues({
+      week: week,
+    });
+  }, [isOpen]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -85,7 +103,7 @@ export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
         onClose?.();
         formik.resetForm();
       }}>
-      <Modal.Content w="100%" flex={1} bg="gray.400">
+      <Modal.Content w="95%" bg="gray.400" maxW={'500px'}>
         <KeyboardAwareScrollView
           contentContainerStyle={{flexGrow: 1}}
           showsVerticalScrollIndicator={false}
@@ -102,6 +120,36 @@ export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
 
             <VStack px={4} py={2} bg="white" space={4}>
               {/*  Note */}
+
+              <FormControl isRequired isInvalid={Boolean(formik.errors.week)}>
+                <FormControl.Label
+                  color={'#1A1929'}
+                  _text={{
+                    color: 'black',
+                    fontSize: fontSizes.sm,
+                    fontWeight: 600,
+                  }}>
+                  Current Week
+                </FormControl.Label>
+                <DropDown
+                  data={weeks}
+                  label="Select Week"
+                  value={weeks?.find(v => v?.value === formik?.values?.week)}
+                  onChange={itemValue => {
+                    formik?.setFieldValue('week', itemValue?.label);
+                  }}
+                  width={'100%'}
+                  rounded={5}
+                  borderWidth={1}
+                  py={'10px'}
+                  borderColor={'#F8F8F8'}
+                  backgroundColor={'#F8F8F8'}
+                  isDisabled
+                />
+                <FormControl.ErrorMessage>
+                  {formik.errors.week}
+                </FormControl.ErrorMessage>
+              </FormControl>
               <FormControl
                 isRequired
                 isInvalid={Boolean(formik.errors.key && formik.touched.key)}>
@@ -161,29 +209,6 @@ export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
                 </Stack>
               </FormControl>
 
-              <FormControl isRequired isInvalid={Boolean(formik.errors.week)}>
-                <Pressable
-                  onPress={() => setShowWeeks(true)}
-                  bg={'#F8F8F8'}
-                  borderWidth={1}
-                  borderColor={
-                    formik.errors.week ? 'danger.500' : 'transparent'
-                  }
-                  py={2}
-                  rounded={8}>
-                  <Text
-                    color={'#1A1929'}
-                    fontSize={fontSizes.sm}
-                    fontWeight={700}
-                    textAlign={'center'}>
-                    {formik.values.week || 'Week'}
-                  </Text>
-                </Pressable>
-                <FormControl.ErrorMessage>
-                  {formik.errors.week}
-                </FormControl.ErrorMessage>
-              </FormControl>
-
               <Button
                 w="full"
                 bg={'primary.100'}
@@ -216,23 +241,6 @@ export default function UpdateMeasurementsModal({isOpen, onClose}: IProps) {
                   setIsDropdownOpen(false);
                 }}>
                 {item[1]}
-              </Actionsheet.Item>
-            ))}
-          </ScrollView>
-        </Actionsheet.Content>
-      </Actionsheet>
-
-      <Actionsheet isOpen={showWeeks} onClose={() => setShowWeeks(false)}>
-        <Actionsheet.Content py={4}>
-          <ScrollView w="full" showsVerticalScrollIndicator={false}>
-            {Array.from({length: 52}, (_, i) => i + 1).map((item, index) => (
-              <Actionsheet.Item
-                key={index}
-                onPress={() => {
-                  formik.setFieldValue('week', item);
-                  setShowWeeks(false);
-                }}>
-                {item}
               </Actionsheet.Item>
             ))}
           </ScrollView>

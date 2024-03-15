@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import VectorImage from 'react-native-vector-image';
 import React from 'react';
-type TIconProps = typeof VectorImage.defaultProps;
+export type TIconProps = typeof VectorImage.defaultProps;
 
 // not found
 export function WorkoutNotFoundIcon({...rest}: TIconProps) {
@@ -89,6 +89,8 @@ export function MicOutlineIcon({...rest}: TIconProps) {
     />
   );
 }
+
+
 export function VideoFillIcon({...rest}: TIconProps) {
   return (
     <VectorImage
@@ -110,6 +112,30 @@ export function VideoFillIcon({...rest}: TIconProps) {
     />
   );
 }
+
+export function CheckListIcon({...rest}: TIconProps) {
+  return (
+    <VectorImage
+      source={require('@assets/svg/check-list.svg')}
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
+      resizeMode="contain"
+      height={rest?.height ? rest?.height : 24}
+      width={rest?.width ? rest.width : 24}
+      style={{
+        height: rest?.height ? rest.height : 24,
+        width: rest?.width ? rest.width : 24,
+      }}
+      {...rest}
+    />
+  );
+}
+
+
 export function VideoOutlineIcon({...rest}: TIconProps) {
   return (
     <VectorImage

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AlertDialog,
   Box,
   Button,
   HStack,
@@ -25,6 +26,7 @@ import {Linking} from 'react-native';
 import {useGetWorkoutPerWeekQuery} from '@store/apis/workout';
 import LazyImage from 'src/components/LazyImage';
 import WeightChart from 'src/layouts/WeightChart';
+import UpdateGoalModal from 'src/actionSheets/UpdateGoalModal';
 
 export default function ProfileTab() {
   // Hooks
@@ -33,6 +35,12 @@ export default function ProfileTab() {
   // APIS
   const [handelProfile, {}] = useUpdateProfileMutation();
   const [handelFileUpload, {}] = useUpdateFileMutation();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const cancelRef = React.useRef(null);
+  const [showUpdateGoal, setShowUpdateGoal] = React.useState(false);
+
+  const onClose = () => setIsOpen(false);
+
   const {data} = useGetSingleProfileQuery();
   const handelImage = async () => {
     try {
@@ -132,9 +140,16 @@ export default function ProfileTab() {
       </HStack>
 
       <HStack justifyContent={'space-between'}>
-        <HStack
+        <Pressable
+          onPress={() => {
+            setIsOpen(true);
+          }}
+          display={'flex'}
+          flexDirection={'row'}
           justifyContent={'center'}
-          space={4}
+          style={{
+            gap: 16,
+          }}
           alignItems={'center'}
           w="48%"
           bg="white"
@@ -142,7 +157,10 @@ export default function ProfileTab() {
           py={2}
           rounded={8}>
           <WeightLoss height={30} width={30} />
-          <Pressable display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+          <VStack
+            display={'flex'}
+            justifyContent={'space-between'}
+            alignItems={'center'}>
             <Text
               color={'#1A1929'}
               fontSize={fontSizes.md}
@@ -156,8 +174,8 @@ export default function ProfileTab() {
               textAlign={'center'}>
               {data?.data?.data?.goal || 'Goal'}
             </Text>
-          </Pressable>
-        </HStack>
+          </VStack>
+        </Pressable>
         <HStack
           justifyContent={'center'}
           alignItems={'center'}
@@ -187,10 +205,50 @@ export default function ProfileTab() {
       </HStack>
 
       <WorkoutPerWeek />
-      <DailyMacroChart /> 
+      <DailyMacroChart />
       {/* <BenchPress /> */}
       <WeightChart />
       <CircumfenceMeasurement />
+
+      <AlertDialog
+        leastDestructiveRef={cancelRef}
+        isOpen={isOpen}
+        onClose={onClose}>
+        <AlertDialog.Content>
+          <AlertDialog.CloseButton />
+          <AlertDialog.Header>Warning</AlertDialog.Header>
+          <AlertDialog.Body>
+            By changing this goal you are letting the old you win, what will the
+            new you do?
+          </AlertDialog.Body>
+          <AlertDialog.Footer>
+            <Button.Group space={2}>
+              <Button
+                variant="unstyled"
+                colorScheme="coolGray"
+                onPress={onClose}
+                ref={cancelRef}>
+                Cancel
+              </Button>
+              <Button
+                colorScheme="danger"
+                onPress={() => {
+                  setShowUpdateGoal(true);
+                  onClose();
+                }}>
+                Change
+              </Button>
+            </Button.Group>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog>
+
+      <UpdateGoalModal
+        isOpen={showUpdateGoal}
+        onClose={() => {
+          setShowUpdateGoal(false);
+        }}
+      />
     </ScrollView>
   );
 }

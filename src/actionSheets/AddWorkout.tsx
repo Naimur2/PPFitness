@@ -26,7 +26,7 @@ import {AddIcon} from '@assets/icons';
 import {useAddWorkoutMutation} from '@store/apis/workout';
 import AddSet from './AddSet';
 import {GetV1ProgramScheduleSuccessfulResponse} from '@store/schema';
-import NewExercise from './NewExercise';
+import NewExercise from './NewExerciseSheet';
 import {Keyboard} from 'react-native';
 
 const validationSchema = Yup.object().shape({

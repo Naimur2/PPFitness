@@ -29,6 +29,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import useNotificationPermission from '@hooks/useNotificationPermission';
 import messaging from '@react-native-firebase/messaging';
+import CheckList from '@screens/User/CheckList';
 
 const Stack = createNativeStackNavigator();
 
@@ -226,6 +227,15 @@ export default function LayoutRoutes() {
         options={{
           header: props => {
             return <Header title={'Help & Support'} />;
+          },
+        }}
+      />
+      <Stack.Screen
+        name="CheckList"
+        component={CheckList}
+        options={{
+          header: props => {
+            return <Header title={'Daily Check list'} />;
           },
         }}
       />
