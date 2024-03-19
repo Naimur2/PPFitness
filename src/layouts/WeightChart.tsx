@@ -19,6 +19,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 dayjs.extend(weekOfYear);
 
 import {useGetUserWeightsQuery} from '@store/apis/userProfile';
+import AxesChart from 'src/components/AxesChart';
 
 export default function WeightChart() {
   const [month, setMonth] = React.useState({
@@ -32,8 +33,6 @@ export default function WeightChart() {
     year: year,
     month: month.label,
   });
-
-
 
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
