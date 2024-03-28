@@ -1,6 +1,6 @@
-import { Factory } from 'native-base';
-import React, { useEffect } from 'react';
-import { Image, ImageProps } from 'react-native';
+import {Factory} from 'native-base';
+import React, {useEffect} from 'react';
+import {Image, ImageProps} from 'react-native';
 
 const DEFAULT_IMAGE = require('@assets/images/default.png');
 const DEFAULT_IMAGE_URL = Image.resolveAssetSource(DEFAULT_IMAGE).uri;
@@ -11,6 +11,8 @@ type TProps = ImageProps & {
   source: {
     uri: string;
   };
+  height?: number | string;
+  width?: number | string;
 };
 
 export default function LazyImage({source, ...rest}: TProps) {
@@ -27,8 +29,6 @@ export default function LazyImage({source, ...rest}: TProps) {
     };
     loadImage();
   }, []);
-
-
 
   return (
     // @ts-ignore

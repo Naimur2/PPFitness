@@ -1,65 +1,9 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {FlatList} from 'native-base';
-import BlogCard from 'src/components/blog/BlogCard';
-import {useGetAllBlogsQuery} from '@store/apis/blogs';
 import {useNavigation} from '@react-navigation/native';
+import {useGetAllBlogsQuery} from '@store/apis/blogs';
+import {FlatList} from 'native-base';
+import React from 'react';
+import BlogCard from 'src/components/blog/BlogCard';
 import {SkeletonsBlogCard} from 'src/components/skeletons';
-
-const blogs = [
-  {
-    _id: '10',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '11',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '12',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-  {
-    _id: '13',
-    title: 'Australia’s New GYM',
-    description:
-      'Go from Figma to code in minimum amount of time using Locofy. Take your.',
-    image:
-      'https://images.unsplash.com/photo-1540497077202-7c8a3999166f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-    author: {
-      name: 'Shawn Mendes',
-      image:
-        'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80',
-    },
-  },
-];
 
 export default function Blogs() {
   // Hooks

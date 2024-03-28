@@ -1,25 +1,22 @@
-import {StyleSheet} from 'react-native';
-import React from 'react';
-import {useFormik} from 'formik';
-import * as Yup from 'yup';
-import {usePasswordChangeMutation} from '@store/apis/auth';
+import {EyeCloseIcon, EyeOpenIcon, LockIcon} from '@assets/icons';
+import useNavigate from '@hooks/useNavigate';
 import useShowToastMessage from '@hooks/useShowToastMessage';
+import useToggle from '@hooks/useToggle';
+import {usePasswordChangeMutation} from '@store/apis/auth';
+import {PutV1AuthPasswordChangeErrorResponse} from '@store/schema';
+import {useFormik} from 'formik';
 import {
-  Box,
   Button,
   Center,
-  Factory,
   FormControl,
-  Image,
   Input,
   Pressable,
   Text,
   VStack,
 } from 'native-base';
-import {EyeCloseIcon, EyeOpenIcon, LockIcon} from '@assets/icons';
-import useToggle from '@hooks/useToggle';
-import useNavigate from '@hooks/useNavigate';
-import {PutV1AuthPasswordChangeErrorResponse} from '@store/schema';
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import * as Yup from 'yup';
 //  validation
 const validationSchema = Yup.object().shape({
   password: Yup.string()

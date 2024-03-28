@@ -1,30 +1,19 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {
-  Box,
-  HStack,
-  Icon,
-  Pressable,
-  ScrollView,
-  Text,
-  VStack,
-  View,
-} from 'native-base';
-import {Bubble, GiftedChat, IMessage, Send} from 'react-native-gifted-chat';
+import {useNavigation} from '@react-navigation/native';
 import {
   chatApiSlice,
   useGetChatByIdQuery,
   useSendMessageMutation,
 } from '@store/apis/chat';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectUser} from '@store/features/authSlice';
 import {useGetSingleProfileQuery} from '@store/apis/userProfile';
-import {Image, StyleSheet} from 'react-native';
+import {selectUser} from '@store/features/authSlice';
+import {fontConfig} from '@theme/fontConfig';
+import {Box, HStack, Text, VStack} from 'native-base';
+import React, {useCallback} from 'react';
+import {Image} from 'react-native';
+import {Bubble, GiftedChat, IMessage, Send} from 'react-native-gifted-chat';
+import {useDispatch, useSelector} from 'react-redux';
 import LazyImage from 'src/components/LazyImage';
 import Header from 'src/components/headers/Header';
-import useNavigate from '@hooks/useNavigate';
-import {useNavigation} from '@react-navigation/native';
-import OnCalling from 'src/actionSheets/onCalling';
-import {fontConfig} from '@theme/fontConfig';
 const adminHelpImage = require('@assets/images/admin-help.png');
 const adminHelpImageUri = Image.resolveAssetSource(adminHelpImage)?.uri;
 
