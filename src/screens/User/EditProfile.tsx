@@ -72,6 +72,7 @@ export default function EditProfile() {
       number: data?.data?.data?.phone,
       country: data?.data?.data?.country,
       gender: data?.data?.data?.gender,
+      goal: '',
     },
     // validationSchema,
     onSubmit: async values => {

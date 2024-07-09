@@ -15,8 +15,8 @@ export interface RecipeInt {
 export default function RecipeCard({item, index}: RecipeInt) {
   const {data, error} = useGetSingleRecipeByIdQuery(item?._id);
   // console.log('RecipeCard Recipe', data?.data?.data?.quantityByMicroNutrient);
-  const description = data?.data?.data?.quantityByMicroNutrient
-    ?.map(item => `${item?.quantity}${item?.unit} ${item?.name} .`)
+  const description = data?.data?.data?.ingredients
+    ?.map(item => `${item?.quantity} ${item?.ingredient?.name} .`)
     ?.join(' ');
   return (
     <Pressable

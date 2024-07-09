@@ -3,10 +3,11 @@ import React from 'react';
 import {Box, CheckIcon, Pressable, Text, VStack} from 'native-base';
 import useNavigate from '@hooks/useNavigate';
 import LazyImage from '../LazyImage';
+import { GetV1MealPlanGetSuccessfulResponse } from '@store/schema';
 
 
 export interface MealPlanInt {
-  item: any;
+  item: GetV1MealPlanGetSuccessfulResponse['data']['data'];
   index: number;
   onPress: () => void;
   checked: boolean;

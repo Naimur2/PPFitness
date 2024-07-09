@@ -12,6 +12,8 @@ export default function RecipeDetails() {
   // Hooks
   //   console.log('data', JSON.stringify(data?.data?.data));
 
+   
+
   return (
     <Box>
       <Header title={data?.data?.data?.name} />;
@@ -77,9 +79,9 @@ export default function RecipeDetails() {
                     justifyContent={'space-around'}
                     rounded={'lg'}
                     py={4}>
-                    <Text>{ing?.name}</Text>
+                    <Text>{ing?.ingredient?.name}</Text>
                     <Text>
-                      {ing?.unit?.quantity} {ing?.unit?.unit}
+                      {ing?.quantity}
                     </Text>
                   </HStack>
                 );
